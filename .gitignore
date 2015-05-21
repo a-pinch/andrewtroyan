@@ -7,13 +7,3 @@ obj/
 *.save
 *.depend
 *.layout*
-*.sdf
-*.v12.suo
-*.tlog
-*.lastbuildstate
-*.idb
-*.log
-*.vcxproj
-*.vcxproj.filters
-*.pdb
-*.ilk
