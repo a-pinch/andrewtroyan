@@ -1,5 +1,12 @@
 #include "Fraction.h"
 
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+//ctors
+
 Fraction::Fraction()
 {
 	numerator = 0;
@@ -16,20 +23,23 @@ Fraction::Fraction(int num, unsigned int den) {
 	denominator = den;
 }
 
+//dtor
+
 Fraction::~Fraction()
 {
 }
 
+//methods
 
 Fraction Fraction::operator-() const {
-	Fraction result(numerator * (-1), denominator);
+	Fraction result(-numerator, denominator);
 	return result;
 }
 
 Fraction Fraction::operator+() const {
 	Fraction result(*this);
 	if (numerator < 0)
-		result.numerator *= (-1);
+		result.numerator = -numerator;
 	return result;
 }
 
@@ -39,10 +49,30 @@ Fraction& Fraction::operator*=(const Fraction& what) {
 	return *this;
 }
 
+Fraction& Fraction::operator*=(const int what) {
+	numerator *= what;
+	return *this;
+}
+
+Fraction& Fraction::operator*=(const double what) {
+	numerator *= what * getPrecision(what);
+	denominator *= getPrecision(what);
+	return *this;
+}
+
 Fraction Fraction::operator*(const Fraction& what) const {
 	Fraction result(*this);
-	result *= what;
-	return result;
+	return result *= what;
+}
+
+Fraction Fraction::operator*(const int what) const {
+	Fraction result(*this);
+	return result *= what;
+}
+
+Fraction Fraction::operator*(const double what) const {
+	Fraction result(*this);
+	return result *= what;
 }
 
 Fraction& Fraction::operator/=(const Fraction& what) {
@@ -51,19 +81,66 @@ Fraction& Fraction::operator/=(const Fraction& what) {
 	return *this;
 }
 
+Fraction& Fraction::operator/=(const int what) {
+	denominator *= what;
+	return *this;
+}
+
+Fraction& Fraction::operator/=(const double what) {
+	numerator *= getPrecision(what);
+	denominator *= what * getPrecision(what);
+	return *this;
+}
+
 Fraction Fraction::operator/(const Fraction& what) const {
 	Fraction result(*this);
-	result /= what;
-	return result;
+	return result /= what;
+}
+
+Fraction Fraction::operator/(const int what) const {
+	Fraction result(*this);
+	return result /= what;
+}
+
+Fraction Fraction::operator/(const double what) const {
+	Fraction result(*this);
+	return result /= what;
 }
 
 bool Fraction::operator==(const Fraction& what) const {
-	if (numerator == what.numerator && denominator == what.denominator)
+	Fraction a(*this), b(what);
+	a.cancel();
+	b.cancel();
+	if (a.numerator == b.numerator && a.denominator == b.denominator)
+		return true;
+	return false;
+}
+
+bool Fraction::operator==(const int what) const {
+	Fraction a(*this), b(what);
+	a.cancel();
+	if (a.numerator == b.numerator && a.denominator == b.denominator)
+		return true;
+	return false;
+}
+
+bool Fraction::operator==(const double what) const {
+	Fraction a(*this), b(what * getPrecision(what), getPrecision(what));
+	a.cancel();
+	if (a.numerator == b.numerator && a.denominator == b.denominator)
 		return true;
 	return false;
 }
 
 bool Fraction::operator!=(const Fraction& what) const {
+	return !(*this == what);
+}
+
+bool Fraction::operator!=(const int what) const {
+	return !(*this == what);
+}
+
+bool Fraction::operator!=(const double what) const {
 	return !(*this == what);
 }
 
@@ -73,7 +150,27 @@ bool Fraction::operator<(const Fraction& what) const {
 	return false;
 }
 
+bool Fraction::operator<(const int what) const {
+	if (numerator < (denominator * what))
+		return true;
+	return false;
+}
+
+bool Fraction::operator<(const double what) const {
+	if ((numerator * getPrecision(what)) < (denominator * what * getPrecision(what)))
+		return true;
+	return false;
+}
+
 bool Fraction::operator>(const Fraction& what) const {
+	return!(*this < what);
+}
+
+bool Fraction::operator>(const int what) const {
+	return!(*this < what);
+}
+
+bool Fraction::operator>(const double what) const {
 	return!(*this < what);
 }
 
@@ -81,25 +178,105 @@ bool Fraction::operator<=(const Fraction& what) const {
 	return (*this < what || *this == what);
 }
 
+bool Fraction::operator<=(const int what) const {
+	return (*this < what || *this == what);
+}
+
+bool Fraction::operator<=(const double what) const {
+	return (*this < what || *this == what);
+}
+
 bool Fraction::operator>=(const Fraction& what) const {
 	return (*this > what || *this == what);
 }
 
-Fraction& Fraction::operator+=(const Fraction& what) {
+bool Fraction::operator>=(const int what) const {
+	return (*this > what || *this == what);
+}
 
+bool Fraction::operator>=(const double what) const {
+	return (*this > what || *this == what);
+}
+
+Fraction& Fraction::operator+=(const Fraction& what) {
+	int lesComMul = lcm(denominator, what.denominator);
+	numerator = lesComMul / denominator * numerator + lesComMul / what.denominator * what.numerator;
+	denominator = lesComMul;
+	return *this;
+}
+
+Fraction& Fraction::operator+=(const int what) {
+	Fraction temp(what);
+	return *this += temp;
+}
+
+Fraction& Fraction::operator+=(const double what) {
+	Fraction temp(what * getPrecision(what), getPrecision(what));
+	return *this += temp;
+}
+
+Fraction Fraction::operator+(const Fraction& what) const {
+	Fraction temp(*this);
+	return temp += what;
+}
+
+Fraction Fraction::operator+(const int what) const {
+	Fraction temp(*this);
+	return temp += what;
+}
+
+Fraction Fraction::operator+(const double what) const {
+	Fraction temp(*this);
+	return temp += what;
+}
+
+Fraction& Fraction::operator-=(const Fraction& what) {
+	int lesComMul = lcm(denominator, what.denominator);
+	numerator = lesComMul / denominator * numerator - lesComMul / what.denominator * what.numerator;
+	denominator = lesComMul;
+	return *this;
+}
+
+Fraction& Fraction::operator-=(const int what) {
+	Fraction temp(what);
+	return *this -= temp;
+}
+
+Fraction& Fraction::operator-=(const double what) {
+	Fraction temp(what * getPrecision(what), getPrecision(what));
+	return *this -= temp;
+}
+
+Fraction Fraction::operator-(const Fraction& what) const {
+	Fraction temp(*this);
+	return temp -= what;
+}
+
+Fraction Fraction::operator-(const int what) const {
+	Fraction temp(*this);
+	return temp -= what;
+}
+
+Fraction Fraction::operator-(const double what) const {
+	Fraction temp(*this);
+	return temp -= what;
+}
+
+void Fraction::print() const {
+	cout << numerator << "/" << denominator;
 }
 
 Fraction& Fraction::cancel() {
-	if (numerator >= denominator)
+	if ((unsigned int)abs(numerator) >= denominator)
 	{
-		int div = gcd(numerator, denominator);
+		int div = gcd(abs(numerator), denominator);
 		numerator /= div;
 		denominator /= div;
 	}
 	return *this;
 }
 
-int gcd(int a, unsigned int b) {
+int gcd(unsigned int a, unsigned int b) {
 	if (b == 0)
 		return a;
 	while (a % b != 0)
@@ -109,4 +286,19 @@ int gcd(int a, unsigned int b) {
 		b = c;
 	}
 	return b;
+}
+
+//functions
+
+int lcm(unsigned int a, unsigned int b) {
+	return a * (b / gcd(a, b));
+}
+
+int getPrecision(double num) {
+	int precision = 1;
+	while (num - (int)num) {
+		precision *= 10;
+		num *= 10;
+	}
+	return precision;
 }
