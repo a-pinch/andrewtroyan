@@ -3,23 +3,33 @@
 #include <iostream>
 #include <cstdlib>
 
-Vector::Vector()
-{
+Vector::Vector() {
 	array = nullptr;
 	amountOfNumbers = 0;
 	sizeOfMemory = 0;
 }
 
-Vector::Vector(int num)
-{
-	array = (int *)malloc(num * sizeof(int));
+Vector::Vector(int size) {
+	array = (double *)malloc(size * sizeof(double));
 	amountOfNumbers = 0;
-	sizeOfMemory = num;
+	sizeOfMemory = 0;
+}
+
+Vector::Vector(std::initializer_list<double> list) {
+	auto first = list.begin(), last = list.end();
+	amountOfNumbers = last - first;
+	sizeOfMemory = amountOfNumbers + 4;
+	array = (double *)malloc(sizeOfMemory * sizeof(double));
+	for (int i = 0; first != last; ++i, ++first)
+		array[i] = *first;
 }
 
 Vector::Vector(const Vector& orig) {
-	if (orig.array)
-		array = (int *)malloc(orig.sizeOfMemory * sizeof(int));
+	if (orig.array) {
+		array = (double *)malloc(orig.sizeOfMemory * sizeof(double));
+		for (int i = 0; i < orig.amountOfNumbers; ++i)
+			array[i] = orig.array[i];
+	}
 	else
 		array = nullptr;
 	amountOfNumbers = orig.amountOfNumbers;
@@ -31,22 +41,22 @@ Vector::~Vector()
 	free(array);
 }
 
-Vector& Vector::pushFront(int num) {
+Vector& Vector::pushFront(double num) {
 	if (amountOfNumbers + 1 >= sizeOfMemory) {
-		array = (int *)realloc(array, (sizeOfMemory + 4) * sizeof(int));
+		array = (double *)realloc(array, (sizeOfMemory + 4) * sizeof(double));
 		if (!array)
 			return *this;
 		sizeOfMemory += 4;
 	}
-	memmove(array + sizeof(int), array, (sizeOfMemory - 1) * sizeof(int));
+	memmove(array + 1, array, amountOfNumbers * sizeof(double));
 	array[0] = num;
 	++amountOfNumbers;
 	return *this;
 }
 
-Vector& Vector::pushBack(int num) {
+Vector& Vector::pushBack(double num) {
 	if (amountOfNumbers + 1 >= sizeOfMemory) {
-		array = (int *)realloc(array, (sizeOfMemory + 4) * sizeof(int));
+		array = (double *)realloc(array, (sizeOfMemory + 4) * sizeof(double));
 		if (!array)
 			return *this;
 		sizeOfMemory += 4;
@@ -56,53 +66,60 @@ Vector& Vector::pushBack(int num) {
 	return *this;
 }
 
-int Vector::popFront() {
+double Vector::popFront() {
 	if (array) {
-		int retVal = array[0];
-		memmove(array, array + sizeof(int), (sizeOfMemory - 1) * sizeof(int));
+		double retVal = array[0];
+		memmove(array, array + 1, (amountOfNumbers - 1) * sizeof(double));
 		--amountOfNumbers;
 		if (sizeOfMemory - amountOfNumbers > 4) {
-			array = (int *)realloc(array, (sizeOfMemory - 4) * sizeof(int));
+			array = (double *)realloc(array, (sizeOfMemory - 4) * sizeof(double));
 			sizeOfMemory -= 4;
 		}
 		return retVal;
 	}
-	cout << "Error." << endl;
+	std::cout << "Error." << std::endl;
 	exit(EXIT_FAILURE);
 }
 
-int Vector::popBack() {
+double Vector::popBack() {
 	if (array) {
-		int retVal = array[amountOfNumbers - 1];
+		double retVal = array[amountOfNumbers - 1];
 		--amountOfNumbers;
 		if (sizeOfMemory - amountOfNumbers > 4) {
-			array = (int *)realloc(array, (sizeOfMemory - 4) * sizeof(int));
+			array = (double *)realloc(array, (sizeOfMemory - 4) * sizeof(double));
 			sizeOfMemory -= 4;
 		}
 		return retVal;
 	}
-	cout << "Error." << endl;
+	std::cout << "Error." << std::endl;
 	exit(EXIT_FAILURE);
 }
 
-/*
-Vector& Vector::plus(const Vector& what) {
-	if (amountOfNumbers < what.amountOfNumbers && sizeOfMemory < what.amountOfNumbers)
-		array = (int *)realloc(array, (what.amountOfNumbers + 4) * sizeof(int));
-	int i = 0;
-	for (; i < amountOfNumbers && i < ; ++i)
-		array[i] += what.array[i];
-	while (i < what.amountOfNumbers)
-		array[i] = what.array[i];
-	if (amountOfNumbers < what.amountOfNumbers && sizeOfMemory < what.amountOfNumbers) {
-		sizeOfMemory = what.amountOfNumbers + 4;
-		amountOfNumbers = what.amountOfNumbers;
-	}
+Vector& Vector::cat(const Vector& what) {
+	sizeOfMemory = amountOfNumbers + what.amountOfNumbers + 4;
+	array = (double *)realloc(array, sizeOfMemory * sizeof(double));
+	for (int i = amountOfNumbers, j = 0; j < what.amountOfNumbers; ++i, ++j)
+		array[i] = what.array[j];
+	amountOfNumbers += what.amountOfNumbers;
 	return *this;
-}*/
+}
 
-ostream& operator<<(ostream& out, const Vector& vector) {
-	for (int i = 0; i < vector.amountOfNumbers; ++i)
-		out << vector.array[i] << ' ';
+Vector& Vector::operator=(const Vector& what) {
+	array = (double *)realloc(array, what.sizeOfMemory * sizeof(double));
+	for (int i = 0; i < what.amountOfNumbers; ++i)
+		array[i] = what.array[i];
+	sizeOfMemory = what.sizeOfMemory;
+	amountOfNumbers = what.amountOfNumbers;
+	return *this;
+}
+
+std::ostream& operator<<(std::ostream& out, const Vector& vector) {
+	out << '{';
+	for (int i = 0; i < vector.amountOfNumbers; ++i) {
+		out << vector.array[i];
+		if (i != vector.amountOfNumbers - 1)
+			out << ", ";
+	}
+	out << '}';
 	return out;
 }

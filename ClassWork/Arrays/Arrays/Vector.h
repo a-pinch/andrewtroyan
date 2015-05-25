@@ -1,26 +1,27 @@
 #pragma once
 
 #include <iostream>
-
-using namespace std;
+#include <initializer_list>
 
 class Vector {
-	int* array;
+	double* array;
 	int amountOfNumbers, sizeOfMemory;
 public:
 	Vector();
-	Vector(int num);
+	Vector(int size);
+	Vector(std::initializer_list<double> list);
 	Vector(const Vector& orig);
 	~Vector();
 
-	Vector& pushFront(int num);
-	Vector& pushBack(int num);
-	int popFront();
-	int popBack();
-	Vector& plus(const Vector& what);
+	Vector& pushFront(double num);
+	Vector& pushBack(double num);
+	double popFront();
+	double popBack();
 	Vector& cat(const Vector& what);
+
+	Vector& operator=(const Vector& what);
 	 
-	friend ostream& operator<<(ostream& out, const Vector& vector);
+	friend std::ostream& operator<<(std::ostream& out, const Vector& vector);
 };
 
-ostream& operator<<(ostream& out, const Vector& vector);
+std::ostream& operator<<(std::ostream& out, const Vector& vector);

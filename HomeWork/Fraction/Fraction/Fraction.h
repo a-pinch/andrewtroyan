@@ -20,63 +20,22 @@ public:
 	Fraction operator-() const;
 	Fraction operator+() const;
 	
-	//overloading operators with different value types
+	//overloading binary operators 
 
 	Fraction& operator*=(const Fraction& what);
-	//Fraction& operator*=(const int what);
-	//Fraction& operator*=(const double what);
-
 	Fraction operator*(const Fraction& what) const;
-	//Fraction operator*(const int what) const;
-	//Fraction operator*(const double what) const;
-
 	Fraction& operator/=(const Fraction& what);
-	//Fraction& operator/=(const int what);
-	//Fraction& operator/=(const double what);
-
 	Fraction operator/(const Fraction& what) const;
-	//Fraction operator/(const int what) const;
-	//Fraction operator/(const double what) const;
-
 	bool operator==(const Fraction& what) const;
-	//bool operator==(const int what) const;
-	//bool operator==(const double what) const;
-
 	bool operator!=(const Fraction& what) const;
-	//bool operator!=(const int what) const;
-	//bool operator!=(const double what) const;
-
 	bool operator<(const Fraction& what) const;
-	//bool operator<(const int what) const;
-	//bool operator<(const double what) const;
-
 	bool operator>(const Fraction& what) const;
-	//bool operator>(const int what) const;
-	//bool operator>(const double what) const;
-
 	bool operator<=(const Fraction& what) const;
-	//bool operator<=(const int what) const;
-	//bool operator<=(const double what) const;
-
 	bool operator>=(const Fraction& what) const;
-	//bool operator>=(const int what) const;
-	//bool operator>=(const double what) const;
-
 	Fraction& operator+=(const Fraction& what);
-	//Fraction& operator+=(const int what);
-	//Fraction& operator+=(const double what);
-
 	Fraction operator+(const Fraction& what) const;
-	//Fraction operator+(const int what) const;
-	//Fraction operator+(const double what) const;
-
 	Fraction& operator-=(const Fraction& what);
-	//Fraction& operator-=(const int what);
-	//Fraction& operator-=(const double what);
-
 	Fraction operator-(const Fraction& what) const;
-	//Fraction operator-(const int what) const;
-	//Fraction operator-(const double what) const;
 
 	void print() const;
 	Fraction& cancel();
