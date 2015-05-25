@@ -1,14 +1,23 @@
-﻿Сборка начата 25.05.2015 2:17:57.
-     1>Проект "D:\andrewtroyan\andrewtroyan\Fraction\Fraction\Fraction.vcxproj" в узле 2 (целевые объекты Build).
+﻿Сборка начата 25.05.2015 7:06:27.
+     1>Проект "D:\andrewtroyan\andrewtroyan\HomeWork\Fraction\Fraction\Fraction.vcxproj" в узле 2 (целевые объекты Build).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Fraction.cpp main.cpp
          main.cpp
+         Fraction.cpp
+     1>d:\andrewtroyan\andrewtroyan\homework\fraction\fraction\fraction.cpp(22): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+     1>d:\andrewtroyan\andrewtroyan\homework\fraction\fraction\fraction.cpp(63): warning C4244: *=: преобразование "const double" в "int", возможна потеря данных
+     1>d:\andrewtroyan\andrewtroyan\homework\fraction\fraction\fraction.cpp(96): warning C4244: *=: преобразование "const double" в "unsigned int", возможна потеря данных
+     1>d:\andrewtroyan\andrewtroyan\homework\fraction\fraction\fraction.cpp(133): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+     1>d:\andrewtroyan\andrewtroyan\homework\fraction\fraction\fraction.cpp(159): warning C4018: <: несоответствие типов со знаком и без знака
+     1>d:\andrewtroyan\andrewtroyan\homework\fraction\fraction\fraction.cpp(219): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+     1>d:\andrewtroyan\andrewtroyan\homework\fraction\fraction\fraction.cpp(251): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+         Создание кода...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\andrewtroyan\andrewtroyan\Fraction\Debug\Fraction.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\andrewtroyan\andrewtroyan\Fraction\Debug\Fraction.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\andrewtroyan\andrewtroyan\Fraction\Debug\Fraction.lib" /MACHINE:X86 Debug\Fraction.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\andrewtroyan\andrewtroyan\HomeWork\Fraction\Debug\Fraction.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\andrewtroyan\andrewtroyan\HomeWork\Fraction\Debug\Fraction.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\andrewtroyan\andrewtroyan\HomeWork\Fraction\Debug\Fraction.lib" /MACHINE:X86 Debug\Fraction.obj
          Debug\main.obj
-         Fraction.vcxproj -> D:\andrewtroyan\andrewtroyan\Fraction\Debug\Fraction.exe
-     1>Сборка проекта "D:\andrewtroyan\andrewtroyan\Fraction\Fraction\Fraction.vcxproj" завершена (целевые объекты Build).
+         Fraction.vcxproj -> D:\andrewtroyan\andrewtroyan\HomeWork\Fraction\Debug\Fraction.exe
+     1>Сборка проекта "D:\andrewtroyan\andrewtroyan\HomeWork\Fraction\Fraction\Fraction.vcxproj" завершена (целевые объекты Build).
 
 Сборка успешно завершена.
 
-Затраченное время: 00:00:03.18
+Затраченное время: 00:00:08.06

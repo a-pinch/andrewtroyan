@@ -8,6 +8,7 @@ public:
 	//ctors and dtor
 	Fraction();
 	Fraction(int num);
+	Fraction(double num);
 	Fraction(int num, unsigned int den);
 	~Fraction();
 

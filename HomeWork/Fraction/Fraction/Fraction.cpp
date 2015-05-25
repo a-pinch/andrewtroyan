@@ -18,6 +18,11 @@ Fraction::Fraction(int num) {
 	denominator = 1;
 }
 
+Fraction::Fraction(double num) {
+	numerator = num * getPrecision(num);
+	denominator = getPrecision(num);
+}
+
 Fraction::Fraction(int num, unsigned int den) {
 	numerator = num;
 	denominator = den;
