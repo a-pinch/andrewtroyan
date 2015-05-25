@@ -54,6 +54,7 @@ Fraction& Fraction::operator*=(const Fraction& what) {
 	return *this;
 }
 
+
 Fraction& Fraction::operator*=(const int what) {
 	numerator *= what;
 	return *this;
@@ -306,4 +307,9 @@ int getPrecision(double num) {
 		num *= 10;
 	}
 	return precision;
+}
+
+ostream& operator<<(ostream& out, const Fraction& what) {
+	out << what.numerator << '/' << what.denominator;
+	return out;
 }

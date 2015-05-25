@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
 	Fraction a(14, 7), b(1, 2), c = a + b, d(5.732);
-
+	/*
 	a.print();
 	cout << endl;
 	b.print();
@@ -23,7 +23,9 @@ int main() {
 	cout << endl;
 
 	d.print();
-	cout << endl;
+	cout << endl;*/
+
+	cout << a << endl << b << endl;
 
 	getc(stdin);
 	return 0;
