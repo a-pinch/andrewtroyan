@@ -19,6 +19,8 @@ int main() {
 	
 	cout << d << endl;
 
+	cout << ++a;
+
 	getc(stdin);
 	return 0;
 }

@@ -19,6 +19,8 @@ public:
 	//unary operators
 	Fraction operator-() const;
 	Fraction operator+() const;
+	Fraction& operator--();
+	Fraction& operator++();
 	
 	//overloading binary operators 
 

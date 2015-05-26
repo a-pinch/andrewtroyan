@@ -48,6 +48,16 @@ Fraction Fraction::operator+() const {
 	return result;
 }
 
+Fraction& Fraction::operator--() {
+	numerator -= denominator;
+	return *this;
+}
+
+Fraction& Fraction::operator++() {
+	numerator += denominator;
+	return *this;
+}
+
 Fraction& Fraction::operator*=(const Fraction& what) {
 	numerator *= what.numerator;
 	denominator *= what.denominator;
