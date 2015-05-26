@@ -16,11 +16,11 @@ Vector::Vector(int size) {
 }
 
 Vector::Vector(std::initializer_list<double> list) {
-	auto first = list.begin(), last = list.end();
-	amountOfNumbers = last - first;
+	auto first = list.begin();
+	amountOfNumbers = list.size();
 	sizeOfMemory = amountOfNumbers + 4;
 	array = (double *)malloc(sizeOfMemory * sizeof(double));
-	for (int i = 0; first != last; ++i, ++first)
+	for (int i = 0; first != list.end(); ++i, ++first)
 		array[i] = *first;
 }
 
@@ -36,8 +36,7 @@ Vector::Vector(const Vector& orig) {
 	sizeOfMemory = orig.sizeOfMemory;
 }
 
-Vector::~Vector()
-{
+Vector::~Vector() {
 	free(array);
 }
 
