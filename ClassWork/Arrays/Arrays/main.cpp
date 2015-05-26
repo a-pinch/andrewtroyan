@@ -14,6 +14,9 @@ int main() {
 	Vector a{ 1, 2, 3 }, b{ 4, 5, 6 };
 	a.cat(b);
 	std::cout << a << std::endl;
+	double g = a[1];
+	std::cout << g << std::endl;
+	std::cout << a[4] << std::endl;
 	getc(stdin);
 	return 0;
 }

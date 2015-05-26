@@ -20,6 +20,7 @@ public:
 	Vector& cat(const Vector& what);
 
 	Vector& operator=(const Vector& what);
+	const double& operator[](size_t index) const;
 	 
 	friend std::ostream& operator<<(std::ostream& out, const Vector& vector);
 };

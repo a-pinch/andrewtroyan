@@ -112,6 +112,12 @@ Vector& Vector::operator=(const Vector& what) {
 	return *this;
 }
 
+const double& Vector::operator[](size_t index) const {
+	if (index >= 0 && amountOfNumbers > index)
+		return array[index];
+	exit(EXIT_FAILURE);
+}
+
 std::ostream& operator<<(std::ostream& out, const Vector& vector) {
 	out << '{';
 	for (int i = 0; i < vector.amountOfNumbers; ++i) {
