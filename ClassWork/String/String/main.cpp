@@ -12,9 +12,9 @@ int main() {
 	c.print();
 
 	char *search = "word";
-	
+
 	if (b.find(search))
-		cout << "\"" << search << "\" is found in \"" << b.c_str() << "\"." <<endl;
+		cout << "\"" << search << "\" is found in \"" << b.c_str() << "\"." << endl;
 	else
 		cout << "\"" << search << "\" is not found in \"" << b.c_str() << "\"." << endl;
 

@@ -6,7 +6,7 @@
 using namespace std;
 
 class Dog : public Animal {
-public: 
+public:
 	Dog(string name_);
 	virtual void voice();
 };

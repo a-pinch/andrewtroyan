@@ -68,7 +68,7 @@ String String::plus(const String& obj) const {
 void String::regUp() {
 	for (int i = 0; i <= length; ++i) {
 		if (s[i] >= 'a' && s[i] <= 'z')
-			s[i] = s[i] - ('A'-'a');
+			s[i] = s[i] - ('A' - 'a');
 	}
 }
 
@@ -141,7 +141,7 @@ int String::deleteSpaces() {
 		++spaces;
 	if (spaces > 0) {
 		length -= spaces;
-		s = (char *)realloc(s, length + 1); 
+		s = (char *)realloc(s, length + 1);
 		if (!s)
 			return 1;
 		s[length] = '\0';
