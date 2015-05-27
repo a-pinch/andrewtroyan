@@ -42,7 +42,31 @@ List& List::pushBack(int data) {
 		while (temp2->next != nullptr)
 			temp2 = temp2->next;
 		temp2->next = temp;
+
 		++size;
+	}
+	return *this;
+}
+
+List& List::pushInIndex(int data, size_t index) {
+	if (index >= 0 && index < size) {
+		if (index == 0)
+			pushFront(data);
+		else if (index == size - 1)
+			pushBack(data);
+		else {
+			Node *temp = new Node;
+			temp->data = data;
+
+			Node *temp2 = first;
+			for (size_t i = 0; i < index - 1; ++i)
+				temp2 = temp2->next;
+
+			temp->next = temp2->next;
+			temp2->next = temp;
+			
+			++size;
+		}
 	}
 	return *this;
 }
@@ -67,8 +91,30 @@ List& List::popBack() {
 				temp = temp->next;
 			free(temp->next);
 			temp->next = nullptr;
+			--size;
 		}
-		--size;
+	}
+	return *this;
+}
+
+List& List::popFromIndex(size_t index) {
+	if (index >= 0 && index < size) {
+		if (index == 0)
+			popFront();
+		else if (index == size - 1)
+			popBack();
+		else {
+			Node *temp = first;
+			for (size_t i = 0; i < index - 1; ++i)
+				temp = temp->next;
+
+			Node *nodeToDelete = temp->next;
+
+			temp->next = temp->next->next;
+			delete nodeToDelete;
+
+			--size;
+		}
 	}
 	return *this;
 }
