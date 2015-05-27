@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{75D52327-C4E2-40ED-9339-CF2500BD7AFD}</ProjectGuid>
+    <ProjectGuid>{9D948321-2AFC-421D-8249-B87108850DA9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>String</RootNamespace>
+    <RootNamespace>List</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -76,11 +76,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="String.cpp" />
+    <ClInclude Include="List.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="String.h" />
+    <ClCompile Include="List.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
