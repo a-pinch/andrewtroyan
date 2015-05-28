@@ -10,18 +10,17 @@ List::~List() {
 
 List& List::pushFront(int data) {
 	Node *temp = new Node;
-	if (temp != nullptr) {
-		temp->data = data;
-		temp->next = head;
-		temp->prev = nullptr;
+	temp->data = data;
+	temp->next = head;
+	temp->prev = nullptr;
 
-		head->prev = temp;
-		head = temp;
-		++size;
+	head->prev = temp;
+	head = temp;
+	++size;
 
-		if (size == 1)
-			tail = head;
-	}
+	if (size == 1)
+		tail = head;
+
 	return *this;
 }
 
@@ -30,15 +29,13 @@ List& List::pushBack(int data) {
 		pushFront(data);
 	else {
 		Node* temp = new Node;
-		if (temp != nullptr) {
-			temp->data = data;
-			temp->next = nullptr;
-			temp->prev = tail;
+		temp->data = data;
+		temp->next = nullptr;
+		temp->prev = tail;
 
-			tail->next = temp;
-			tail = temp;
-			++size;
-		}
+		tail->next = temp;
+		tail = temp;
+		++size;
 	}
 	return *this;
 }
