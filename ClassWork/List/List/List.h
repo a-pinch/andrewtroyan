@@ -9,7 +9,7 @@ private:
 
 	Node *first;
 	size_t size;
-	static int junk; //variable for errors
+	//static int junk; //variable for errors
 public:
 	class Iterator {
 	private:

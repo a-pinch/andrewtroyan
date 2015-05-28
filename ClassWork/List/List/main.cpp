@@ -5,27 +5,35 @@
 using namespace std;
 
 int main() {
-	List a;
-	/*a.pushFront(1).pushFront(2553).pushFront(54);
+	try {
+		List a;
+		/*a.pushFront(1).pushFront(2553).pushFront(54);
 
-	a.pushBack(10).pushBack(16).popBack();
-	a.printAll();
+		a.pushBack(10).pushBack(16).popBack();
+		a.printAll();
 
-	List b = a;
-	b.printAll();*/
+		List b = a;
+		b.printAll();*/
 
-	a.pushFront(1).pushFront(2553).pushFront(54);
-	a.pushBack(10).pushBack(16);
-	
-	for (List::Iterator i = a.begin(); i != a.end(); ++i)
-		cout << *i << ' ';
-	cout << endl;
+		a.pushFront(1).pushFront(2553).pushFront(54);
+		a.pushBack(10).pushBack(16);
 
-	a.pushInIndex(13, 4);
-	a.printAll();
+		for (List::Iterator i = a.begin(); i != a.end(); ++i)
+			cout << *i << ' ';
+		cout << endl;
 
-	a.popFromIndex(0);
-	a.printAll();
+		a.pushInIndex(13, 4);
+		a.printAll();
+
+		a.popFromIndex(0);
+		a.printAll();
+	}
+	catch (int e) {
+		if (e == 1)
+			cerr << "Memory allocation error!" << endl;
+		else if (e == 2)
+			cerr << "Memory access error!" << endl;
+	}
 
 	cin.get();
 	return 0;

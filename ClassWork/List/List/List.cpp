@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int List::junk; //reserve static memory for our static field (it doesn't belong to object, it belongs to class!)
+//int List::junk; //reserve static memory for our static field (it doesn't belong to object, it belongs to class!)
 
 List::List(const List& orig) {
 	first = nullptr;
@@ -26,7 +26,6 @@ List& List::pushFront(int data) {
 	temp->next = first;
 	first = temp;
 	++size;
-
 	return *this;
 }
 
@@ -77,8 +76,9 @@ List& List::popFront() {
 		first = first->next;
 		delete temp;
 		--size;
+		return *this;
 	}
-	return *this;
+	throw 1;
 }
 
 List& List::popBack() {
@@ -93,8 +93,9 @@ List& List::popBack() {
 			temp->next = nullptr;
 			--size;
 		}
+		return *this;
 	}
-	return *this;
+	throw 1;
 }
 
 List& List::popFromIndex(size_t index) {
@@ -115,8 +116,9 @@ List& List::popFromIndex(size_t index) {
 
 			--size;
 		}
+		return *this;
 	}
-	return *this;
+	throw 1;
 }
 
 void List::printAll() {
@@ -137,8 +139,7 @@ int& List::operator[](size_t index) {
 			temp = temp->next;
 		return temp->data;
 	}
-	cout << "Error." << endl;
-	return junk;
+	throw 2;
 }
 
 List& List::operator=(const List& orig) {
