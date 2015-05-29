@@ -1,5 +1,9 @@
 #pragma once
 
+#include <iostream>
+
+using namespace std;
+
 class List {
 private:
 	struct Node {
@@ -18,5 +22,9 @@ public:
 	List& popFront();
 	List& popBack();
 	bool empty() const;
+
+	friend ostream& operator<<(ostream& out, const List& what);
 };
+
+ostream& operator<<(ostream& out, const List& what);
 

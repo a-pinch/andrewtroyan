@@ -14,7 +14,9 @@ List& List::pushFront(int data) {
 	temp->next = head;
 	temp->prev = nullptr;
 
-	head->prev = temp;
+	if (head != nullptr)
+		head->prev = temp;
+	
 	head = temp;
 	++size;
 
@@ -58,4 +60,18 @@ List& List::popFront() {
 
 bool List::empty() const {
 	return head == nullptr;
+}
+
+ostream& operator<<(ostream& out, const List& what) {
+	List::Node *temp = what.head;
+	out << '{';
+	while (temp != nullptr) {
+		if (temp->next != nullptr)
+			out << temp->data << ", ";
+		else
+			out << temp->data;
+		temp = temp->next;
+	}
+	out << "}";
+	return out;
 }
