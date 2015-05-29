@@ -6,6 +6,8 @@
 using namespace std;
 
 List::~List() {
+	while (size > 0)
+		popFront();
 }
 
 List& List::pushFront(int data) {
@@ -46,7 +48,10 @@ List& List::popFront() {
 	if (size > 0) {
 		Node *temp = head;
 		head = head->next;
-		head->prev = nullptr;
+
+		if (head != nullptr)
+			head->prev = nullptr;
+
 		delete temp;
 		--size;
 
@@ -58,8 +63,14 @@ List& List::popFront() {
 	throw exception("In List::popFront(): empty list.\n");
 }
 
-bool List::empty() const {
-	return head == nullptr;
+int& List::operator[](size_t index) {
+	if (index >= 0 && index < size) {
+		Node *temp = head;
+		for (size_t i = 0; i < index; ++i)
+			temp = temp->next;
+		return temp->data;
+	}
+	throw exception("In List::operator[]: invalid index.\n");
 }
 
 ostream& operator<<(ostream& out, const List& what) {

@@ -12,7 +12,7 @@ private:
 	};
 
 	Node *head, *tail;
-	int size;
+	size_t size;
 public:
 	List() : head(nullptr), tail(nullptr), size(0) {};
 	~List();
@@ -21,8 +21,10 @@ public:
 	List& pushBack(int data);
 	List& popFront();
 	List& popBack();
-	bool empty() const;
+	bool empty() const { return head == nullptr; };
+	const size_t& getSize() const { return size; };
 
+	int& operator[](size_t index);
 	friend ostream& operator<<(ostream& out, const List& what);
 };
 
