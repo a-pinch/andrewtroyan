@@ -6,7 +6,9 @@ int main() {
 	a.pushFront(3);
 	a.pushBack(5);
 	cout << a << endl;
-	cout << a[0] << endl;
+	auto it = a.begin();
+	it[2].insert(4);
+	cout << a << endl;
 	cin.get();
 	return 0;
 }
