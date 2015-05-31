@@ -5,14 +5,25 @@
 
 using namespace std;
 
+//Iterator's methods
+
+List::List(const List& orig) {
+	head = nullptr;
+	tail = nullptr;
+	size = 0;
+	Node* temp = orig.head;
+	for (size_t i = 0; i < orig.size; ++i, temp = temp->next) 
+		pushBack(temp->data);
+}
+
 List::Iterator& List::Iterator::operator++() {
-	if (current != nullptr)
+	if (current != nullptr) 
 		current = current->next;
 	return *this;
 }
 
 List::Iterator& List::Iterator::operator--() {
-	if (current->prev != nullptr)
+	if (current->prev != nullptr) 
 		current = current->prev;
 	return *this;
 }
@@ -23,37 +34,7 @@ int& List::Iterator::operator*() const {
 	throw exception("In List::Iterator::operator*(): memory access denial.");
 }
 
-void List::Iterator::insert(const int& what) {
-	if (current == nullptr)
-		throw exception("In List::Iterator::push(const int&): invalid value of iterator.");
-	else if (current->prev == nullptr)
-		throw exception("In List::Iterator::push(const int&): you can't use 0 index of iterator.");
-		
-	Node *temp = new Node;
-	temp->data = what;
-	temp->prev = current->prev;
-	temp->next = current;
-
-	current->prev->next = temp;
-	current->prev = temp;
-}
-
-List::Iterator& List::Iterator::operator[](size_t index) {
-	if (current == nullptr) 
-		throw exception("In List::Iterator::operator[](): memory access denial.");
-
-	while (current->prev != nullptr)
-		current = current->prev;
-
-	size_t count = 0;
-	for (; current != nullptr, count < index; ++count)
-		current = current->next;
-	
-	if (current == nullptr)
-		throw exception("In List::Iterator::operator[](): memory access denial.");
-
-	return *this;
-}
+// List's methods
 
 List::~List() {
 	while (size > 0)
@@ -129,6 +110,72 @@ List& List::popBack() {
 	throw exception("In List::popFront(): empty list.");
 }
 
+List& List::insert(const size_t& index, const int& data) {
+	if (index > size)
+		throw out_of_range("In List::insert(const size_t&): index is out of range.");
+
+	if (index == 0)
+		pushFront(data);
+	else if (index == size)
+		pushBack(data);
+	else {
+		Node *temp;
+		if (index <= (size - 1) / 2) {
+			temp = head;
+			for (size_t i = 0; i != index - 1; ++i)
+				temp = temp->next;
+		}
+		else {
+			temp = tail;
+			for (size_t i = size - 1; i != index - 1; --i)
+				temp = temp->prev;
+		}
+
+		Node *newNode = new Node;
+		newNode->data = data;
+		newNode->prev = temp;
+		newNode->next = temp->next;
+		temp->next->prev = newNode;
+		temp->next = newNode;
+	}
+	return *this;
+}
+
+List& List::erase(const size_t& index) {
+	if (index >= size)
+		throw out_of_range("In List::insert(const size_t&): index is out of range.");
+
+	if (index == 0)
+		popFront();
+	else if (index == size - 1)
+		popBack();
+	else {
+		Node *temp;
+		if (index <= (size - 1) / 2) {
+			temp = head;
+			for (size_t i = 0; i != index; ++i)
+				temp = temp->next;
+		}
+		else {
+			temp = tail;
+			for (size_t i = size - 1; i != index; --i)
+				temp = temp->prev;
+		}
+
+		temp->prev->next = temp->next;
+		temp->next->prev = temp->prev;
+		delete temp;
+		--size;
+	}
+	return *this;
+}
+
+List& List::clear() {
+	while (size > 0)
+		popFront();
+	return *this;
+}
+
 List::Iterator List::begin() const {
 	return List::Iterator(head);
 }
@@ -136,6 +183,80 @@ List::Iterator List::begin() const {
 List::Iterator List::end() const {
 	return List::Iterator(tail->next);
 }
+
+List& List::merge(const List& what) {
+	Node *temp = what.head;
+	for (size_t i = 0; i < what.size; ++i, temp = temp->next)
+		pushBack(temp->data);
+	return *this;
+}
+
+void List::swap(List& what) {
+	Node *tempHead = head, *tempTail = tail;
+	size_t tempSize = size;
+	head = what.head;
+	tail = what.tail;
+	size = what.size;
+	what.head = tempHead;
+	what.tail = tempTail;
+	what.size = tempSize;
+}
+
+void List::sort(size_t startIndex, size_t endIndex) {
+	if (startIndex < endIndex && startIndex < size && endIndex <size) {
+		size_t i = startIndex;
+		Iterator it1 = (*this)[startIndex], it2 = (*this)[endIndex];
+		while (*it1 < *it2) {
+			++it1;
+			++i;
+		}
+		Iterator it3 = (*this)[i];
+		for (size_t j = i; j < endIndex; ++j, ++it3) {
+			if (*it3 < *it2) {
+				int temp = *it3;
+				*it3 = *it1;
+				*it1 = temp;
+				++i;
+				++it1;
+			}
+		}
+		int temp = *it1;
+		*it1 = *it2;
+		*it2 = temp;
+		sort(startIndex, i - 1);
+		sort(i + 1, endIndex);
+	}
+}
+
+List& List::operator=(const List& what) {
+	while (size > 0)
+		popFront();
+	Node* temp = what.head;
+	for (size_t i = 0; i < what.size; ++i, temp = temp->next) 
+		pushBack(temp->data);
+	return *this;
+}
+
+List::Iterator List::operator[](const size_t& index) const {
+	if (index >= size)
+		throw out_of_range("In List::insert(const size_t&): index is out of range.");
+
+	Node *temp;
+	if (index <= (size - 1) / 2) {
+		temp = head;
+		for (size_t i = 0; i != index; ++i)
+			temp = temp->next;
+	}
+	else {
+		temp = tail;
+		for (size_t i = size - 1; i != index; --i)
+			temp = temp->prev;
+	}
+
+	return Iterator(temp);
+}
+
+//Functions
 
 ostream& operator<<(ostream& out, const List& what) {
 	List::Node *temp = what.head;
