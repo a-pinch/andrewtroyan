@@ -1,8 +1,5 @@
 #include "List.h"
 
-#include <iostream>
-#include <new>
-
 using namespace std;
 
 //Iterator's methods
@@ -141,7 +138,7 @@ List& List::insert(const size_t& index, const int& data) {
 	return *this;
 }
 
-List& List::erase(const size_t& index) {
+List& List::erase(const size_t& index) { //delete list value with defined index
 	if (index >= size)
 		throw out_of_range("In List::insert(const size_t&): index is out of range.");
 
@@ -176,14 +173,6 @@ List& List::clear() {
 	return *this;
 }
 
-List::Iterator List::begin() const {
-	return List::Iterator(head);
-}
-
-List::Iterator List::end() const {
-	return List::Iterator(tail->next);
-}
-
 List& List::merge(const List& what) {
 	Node *temp = what.head;
 	for (size_t i = 0; i < what.size; ++i, temp = temp->next)
@@ -202,17 +191,17 @@ void List::swap(List& what) {
 	what.size = tempSize;
 }
 
-void List::sort(size_t startIndex, size_t endIndex) {
+void List::sort(size_t startIndex, size_t endIndex, bool(*function)(const int& a, const int& b)) {
 	if (startIndex < endIndex && startIndex < size && endIndex <size) {
 		size_t i = startIndex;
 		Iterator it1 = (*this)[startIndex], it2 = (*this)[endIndex];
-		while (*it1 < *it2) {
+		while (function(*it1, *it2)) {
 			++it1;
 			++i;
 		}
 		Iterator it3 = (*this)[i];
 		for (size_t j = i; j < endIndex; ++j, ++it3) {
-			if (*it3 < *it2) {
+			if (function(*it3, *it2)) {
 				int temp = *it3;
 				*it3 = *it1;
 				*it1 = temp;
@@ -223,9 +212,22 @@ void List::sort(size_t startIndex, size_t endIndex) {
 		int temp = *it1;
 		*it1 = *it2;
 		*it2 = temp;
-		sort(startIndex, i - 1);
-		sort(i + 1, endIndex);
+		sort(startIndex, i - 1, function);
+		sort(i + 1, endIndex, function);
 	}
+}
+
+List& List::reverse() {
+	if (size > 0) {
+		Iterator start = (*this)[0], end = (*this)[size - 1];
+		for (size_t i = 0; i < size / 2; ++i, ++start, --end) {
+			int temp = *start;
+			*start = *end;
+			*end = temp;
+		}
+		return *this;
+	}
+	throw exception("In List::reverse(): list is empty.");
 }
 
 List& List::operator=(const List& what) {
@@ -270,4 +272,12 @@ ostream& operator<<(ostream& out, const List& what) {
 	}
 	out << "}";
 	return out;
+}
+
+bool ascend(const int& a, const int& b) { //function for sorting (ascend list values)
+	return a < b;
+}
+
+bool reduce(const int& a, const int& b) { //function for sorting (reduce list values)
+	return a > b;
 }
