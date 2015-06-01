@@ -3,6 +3,50 @@
 #include <iostream>
 #include <cstdlib>
 
+Vector::iterator::iterator(double* current, double* begin, double* end) {
+	this->current = current;
+	this->begin = begin;
+	this->end = end;
+}
+
+double& Vector::iterator::operator*() {
+	if (current >= begin && current < end)
+		return *current;
+	throw std::invalid_argument("In Vector::iterator::operator*(): invalid iterator.");
+}
+
+Vector::iterator& Vector::iterator::operator++() {
+	if (current < end)
+		++current;
+	return *this;
+}
+
+Vector::iterator& Vector::iterator::operator++(int) {
+	if (current < end)
+		++current;
+	return *this;
+}
+
+Vector::iterator& Vector::iterator::operator--() {
+	if (current > begin)
+		--current;
+	return *this;
+}
+
+Vector::iterator& Vector::iterator::operator--(int) {
+	if (current > begin)
+		--current;
+	return *this;
+}
+
+bool Vector::iterator::operator==(const iterator& what) {
+	return current == what.current;
+}
+
+bool Vector::iterator::operator!=(const iterator& what) {
+	return current != what.current;
+}
+
 Vector::Vector() {
 	array = nullptr;
 	amountOfNumbers = 0;
@@ -12,7 +56,7 @@ Vector::Vector() {
 Vector::Vector(int size) {
 	array = (double *)malloc(size * sizeof(double));
 	amountOfNumbers = 0;
-	sizeOfMemory = 0;
+	sizeOfMemory = size;
 }
 
 Vector::Vector(std::initializer_list<double> list) {
@@ -101,6 +145,23 @@ Vector& Vector::cat(const Vector& what) {
 		array[i] = what.array[j];
 	amountOfNumbers += what.amountOfNumbers;
 	return *this;
+}
+
+Vector::iterator Vector::begin() {
+	return iterator(array, array, array + amountOfNumbers);
+}
+
+Vector::iterator Vector::end() {
+	return iterator(array + amountOfNumbers, array, array + amountOfNumbers);
+}
+
+Vector::iterator Vector::find(double value) {
+	double *ptr = array;
+	for (; ptr != (array + amountOfNumbers); ++ptr) {
+		if (*ptr == value)
+			return iterator(ptr, array, array + amountOfNumbers);
+	}
+	return iterator(ptr, array, array + amountOfNumbers);
 }
 
 Vector& Vector::operator=(const Vector& what) {

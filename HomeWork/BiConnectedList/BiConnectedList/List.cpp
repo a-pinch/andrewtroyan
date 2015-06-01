@@ -19,6 +19,12 @@ List::Iterator& List::Iterator::operator++() {
 	return *this;
 }
 
+List::Iterator& List::Iterator::operator++(int) {
+	if (current != nullptr)
+		current = current->next;
+	return *this;
+}
+
 List::Iterator& List::Iterator::operator--() {
 	if (current->prev != nullptr) 
 		current = current->prev;
@@ -219,11 +225,11 @@ void List::sort(size_t startIndex, size_t endIndex, bool(*function)(const int& a
 
 List& List::reverse() {
 	if (size > 0) {
-		Iterator start = (*this)[0], end = (*this)[size - 1];
-		for (size_t i = 0; i < size / 2; ++i, ++start, --end) {
-			int temp = *start;
-			*start = *end;
-			*end = temp;
+		Node *start = head, *end = tail;
+		for (size_t i = 0; i < size / 2; ++i, start = start->next, end = end->prev) {
+			int temp = start->data;
+			start->data = end->data;
+			end->data = temp;
 		}
 		return *this;
 	}

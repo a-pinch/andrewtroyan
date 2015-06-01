@@ -24,6 +24,7 @@ public:
 		Iterator() { current = nullptr; };
 		Iterator(Node *current) { this->current = current; };
 		Iterator& operator++();
+		Iterator& operator++(int);
 		Iterator& operator--();
 		Iterator& operator=(const int& data) { current->data = data; return *this; };
 		bool operator==(const Iterator& what) const { return current == what.current; };
