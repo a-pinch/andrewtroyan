@@ -1,8 +1,12 @@
-#include <string>
-#include "unordered_map.h"
+#include <iostream>
+#include "ordered_map.h"
+
+using std::cout;
+using std::endl;
 
 int main() {
-	unordered_map<string, float> people;
+	ordered_map<string, float> people;
+	people.initialize(3);
 	people["Anna"] = 1.7f;
 	people["Alex"] = 2.7f;
 	people["Boreau"] = 0.1f;
