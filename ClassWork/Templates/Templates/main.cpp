@@ -31,6 +31,10 @@ int main() {
 	b.pushBack(200);
 	b.printAll();
 
+	list<string> c;
+	c.pushFront(string("Hello!"));
+	c.printAll();
+
 	cin.get();
 	return 0;
 }
