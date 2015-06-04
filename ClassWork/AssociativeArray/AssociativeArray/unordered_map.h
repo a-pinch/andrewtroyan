@@ -2,12 +2,15 @@
 
 #include <iostream>
 #include <list>
+#include <exception>
+#include <stdexcept>
+#include "ordered_map.h"
 
 using namespace std;
 
 template <class T_key, class T_value>
 class unordered_map {
-private:
+public:
 	struct pair {
 		pair(T_key k, T_value v) : key(k), value(v) {};
 		T_key key;
@@ -15,8 +18,9 @@ private:
 	};
 
 	list<pair> pairs;
+	int amount, collisions;
 public:
-	unordered_map() {};
+	unordered_map(): amount(0), collisions(-1) {};
 	~unordered_map() {};
 
 	T_value& operator[](const T_key& key);
@@ -30,6 +34,8 @@ T_value& unordered_map<T_key, T_value>::operator[](const T_key& key) {
 			return it->value;
 	}
 	pairs.push_back(pair(key, T_value()));
+	++amount;
+	++collisions;
 	return pairs.back().value;
 }
 
