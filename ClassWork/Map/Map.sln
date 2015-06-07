@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Iterators", "Iterators\Iterators.vcxproj", "{E1F97D70-8111-4DC7-B742-8867BD1A8114}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Map", "Map\Map.vcxproj", "{BAA6F024-D641-4077-8036-6C49FC378CD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E1F97D70-8111-4DC7-B742-8867BD1A8114}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E1F97D70-8111-4DC7-B742-8867BD1A8114}.Debug|Win32.Build.0 = Debug|Win32
-		{E1F97D70-8111-4DC7-B742-8867BD1A8114}.Release|Win32.ActiveCfg = Release|Win32
-		{E1F97D70-8111-4DC7-B742-8867BD1A8114}.Release|Win32.Build.0 = Release|Win32
+		{BAA6F024-D641-4077-8036-6C49FC378CD5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BAA6F024-D641-4077-8036-6C49FC378CD5}.Debug|Win32.Build.0 = Debug|Win32
+		{BAA6F024-D641-4077-8036-6C49FC378CD5}.Release|Win32.ActiveCfg = Release|Win32
+		{BAA6F024-D641-4077-8036-6C49FC378CD5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

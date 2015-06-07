@@ -2,12 +2,12 @@
 
 using namespace std;
 
-template <class T> 
+template <class T>
 int digest(T key);
 
 int digest(int key) {
 	int code = 0;
-	for (; key; key /= 10) 
+	for (; key; key /= 10)
 		code += key % 10;
 	return code;
 }

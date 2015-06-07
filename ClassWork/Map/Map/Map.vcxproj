@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9E8482B2-9A4A-479C-B49A-80A2578348FC}</ProjectGuid>
+    <ProjectGuid>{BAA6F024-D641-4077-8036-6C49FC378CD5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>AssociativeArray</RootNamespace>
+    <RootNamespace>Map</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -76,12 +76,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="digest.h" />
     <ClInclude Include="ordered_map.h" />
     <ClInclude Include="unordered_map.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
