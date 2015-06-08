@@ -121,13 +121,18 @@ tree<T_key, T_value>& tree<T_key, T_value>::remove(const T_key& key) {
 		}
 	}
 
-	//if (temp->key == key) {
-	//	Node *temp_left = temp->left, *temp_right = temp->right;
-	//	delete temp;
-	//	*pointer = temp_left;
+	if (temp && temp->key == key) {
+		Node *temp_left = temp->left, *temp_right = temp->right;
+		delete temp;
+		*pointer = temp_left;
 
-	//	temp = temp_left->right;
-	//	while (temp)
-	//		temp = temp->right;
-	//}
+		temp = *pointer;
+		while (temp) {
+			pointer = &(temp->right);
+			temp = temp->right;
+		}
+		*pointer = temp_right;
+	}
+
+	return *this;
 }

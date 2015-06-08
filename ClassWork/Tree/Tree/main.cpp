@@ -22,7 +22,17 @@ int main() {
 	tree<string, string> people;
 	people["Anna"] = "anna";
 	people["Vadim"] = "vadim";
+	people["Anatoly"] = "anatoly";
+	people["Maxim"] = "maxim";
+	people["Andrew"] = "andrew";
+	people["Tatyana"] = "tatyana";
+	people["Irina"] = "irina";
 
+	people.show();
+
+	people.remove("Andrew");
+
+	cout << endl;
 	people.show();
 
 	cin.get();
