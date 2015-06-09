@@ -23,15 +23,19 @@ public:
 		List *host;
 		Node *current;
 	public:
-		Iterator() { current = nullptr; host = nullptr; };
-		Iterator(Node *current, List *host) { this->current = current; this->host = host; };
+		Iterator() : current(nullptr), host(nullptr) {};
+		Iterator(Node *current_, List *host_) : current(current_), host(host_) {};
 		Iterator& operator++();
 		Iterator& operator++(int);
 		Iterator& operator--();
-		Iterator& operator=(const Iterator& what) { current = what.current; return *this; };
+		Iterator& operator--(int);
 		bool operator==(const Iterator& what) const { return current == what.current; };
 		bool operator!=(const Iterator& what) const { return current != what.current; };
 		T& operator*() const;
+		Iterator& operator+=(const int& num);
+		Iterator operator+(const int& num);
+		Iterator& operator-=(const int& num);
+		Iterator operator-(const int& num);
 
 		friend class List;
 	};
@@ -53,12 +57,38 @@ public:
 	Iterator end() { return Iterator(nullptr, this); };
 	List& merge(const List& what);
 	void swap(List& what);
-	//void sort(size_t startIndex, size_t endIndex, bool(*function)(const T& a, const T& b));
+	void sort(size_t startIndex, size_t endIndex, bool(*function)(const T& a, const T& b));
 	List& reverse();
 	Iterator find(const T& data);
 	List& erase(Iterator& it);
 
 	List& operator=(const List& what);
 
-	//friend ostream& operator<<(ostream& out, const List& what);
+	template <class T>
+	friend ostream& operator<<(ostream& out, const List<T>& what);
 };
+
+template <class T>
+bool ascend(const T& a, const T& b) { //function for sorting (ascend list values)
+	return a < b;
+}
+
+template <class T>
+bool reduce(const T& a, const T& b) { //function for sorting (reduce list values)
+	return a > b;
+}
+
+template <class T>
+ostream& operator<<(ostream& out, const List<T>& what) {
+	List<T>::Node *temp = what.head;
+	out << '{';
+	while (temp != nullptr) {
+		if (temp->next != nullptr)
+			out << temp->data << ", ";
+		else
+			out << temp->data;
+		temp = temp->next;
+	}
+	out << "}";
+	return out;
+}

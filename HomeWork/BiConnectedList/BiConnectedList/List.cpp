@@ -1,6 +1,8 @@
 #include "List.h"
 
-//Iterator's methods
+#include <string>
+
+//Copy ctor
 
 template <class T>
 List<T>::List(const List<T>& orig) {
@@ -11,6 +13,8 @@ List<T>::List(const List<T>& orig) {
 	for (size_t i = 0; i < orig.size; ++i, temp = temp->next) 
 		pushBack(temp->data);
 }
+
+//Iterator's methods
 
 template <class T>
 typename List<T>::Iterator& List<T>::Iterator::operator++() {
@@ -34,10 +38,81 @@ typename List<T>::Iterator& List<T>::Iterator::operator--() {
 }
 
 template <class T>
+typename List<T>::Iterator& List<T>::Iterator::operator--(int) {
+	if (current->prev != nullptr)
+		current = current->prev;
+	return *this;
+}
+
+template <class T>
 T& List<T>::Iterator::operator*() const {
 	if (current != nullptr)
 		return current->data;
 	throw exception("In List::Iterator::operator*(): memory access denial.");
+}
+
+template <class T>
+typename List<T>::Iterator& List<T>::Iterator::operator+=(const int& num) {
+	if (num == 0)
+		return *this;
+
+	Node *temp = current;
+	int i = 0;
+	for (; temp != nullptr && i < num; ++i) {
+		temp = temp->next;
+	}
+	if (i == num) {
+		current = temp;
+		return *this;
+	}
+	throw invalid_argument("In List<T>::Iterator::operator+=(const size_t&): invalid value.");
+}
+
+template <class T>
+typename List<T>::Iterator List<T>::Iterator::operator+(const int& num) {
+	if (num == 0)
+		return Iterator(current, host);
+
+	Node *temp = current;
+	int i = 0;
+	for (; temp != nullptr && i < num; ++i) {
+		temp = temp->next;
+	}
+	if (i == num) 
+		return Iterator(temp, host);
+	throw invalid_argument("In List<T>::Iterator::operator+(const size_t&): invalid value.");
+}
+
+template <class T>
+typename List<T>::Iterator& List<T>::Iterator::operator-=(const int& num) {
+	if (num == 0)
+		return *this;
+
+	Node *temp = current;
+	int i = num;
+	for (; temp != nullptr && i > 0; --i) {
+		temp = temp->prev;
+	}
+	if (i == 0) {
+		current = temp;
+		return *this;
+	}
+	throw invalid_argument("In List<T>::Iterator::operator-=(const size_t&): invalid value.");
+}
+
+template <class T>
+typename List<T>::Iterator List<T>::Iterator::operator-(const int& num) {
+	if (num == 0)
+		return Iterator(current, host);
+
+	Node *temp = current;
+	int i = num;
+	for (; temp != nullptr && i > 0; --i) {
+		temp = temp->prev;
+	}
+	if (i == 0) 
+		return Iterator(temp, host);
+	throw invalid_argument("In List<T>::Iterator::operator-(const size_t&): invalid value.");
 }
 
 // List's methods
@@ -210,39 +285,39 @@ void List<T>::swap(List& what) {
 	what.size = tempSize;
 }
 
-//template <class T>
-//void List::sort(size_t startIndex, size_t endIndex, bool(*function)(const int& a, const int& b)) {
-//	if (startIndex < endIndex && startIndex < size && endIndex <size) {
-//		size_t i = startIndex;
-//		Iterator it1 = (*this)[startIndex], it2 = (*this)[endIndex];
-//		while (function(*it1, *it2)) {
-//			++it1;
-//			++i;
-//		}
-//		Iterator it3 = (*this)[i];
-//		for (size_t j = i; j < endIndex; ++j, ++it3) {
-//			if (function(*it3, *it2)) {
-//				int temp = *it3;
-//				*it3 = *it1;
-//				*it1 = temp;
-//				++i;
-//				++it1;
-//			}
-//		}
-//		int temp = *it1;
-//		*it1 = *it2;
-//		*it2 = temp;
-//		sort(startIndex, i - 1, function);
-//		sort(i + 1, endIndex, function);
-//	}
-//}
+template <class T>
+void List<T>::sort(size_t startIndex, size_t endIndex, bool(*function)(const T& a, const T& b)) {
+	if (startIndex < endIndex && endIndex <size) {
+		size_t i = startIndex;
+		Iterator it1 = (*this).begin() + (int)startIndex, it2 = (*this).begin() + (int)endIndex;
+		while (function(*it1, *it2)) {
+			++it1;
+			++i;
+		}
+		Iterator it3 = (*this).begin() + (int)i;
+		for (size_t j = i; j < endIndex; ++j, ++it3) {
+			if (function(*it3, *it2)) {
+				T temp = *it3;
+				*it3 = *it1;
+				*it1 = temp;
+				++i;
+				++it1;
+			}
+		}
+		T temp = *it1;
+		*it1 = *it2;
+		*it2 = temp;
+		sort(startIndex, i - 1, function);
+		sort(i + 1, endIndex, function);
+	}
+}
 
 template <class T>
 List<T>& List<T>::reverse() {
 	if (size > 0) {
 		Node *start = head, *end = tail;
 		for (size_t i = 0; i < size / 2; ++i, start = start->next, end = end->prev) {
-			int temp = start->data;
+			T temp = start->data;
 			start->data = end->data;
 			end->data = temp;
 		}
@@ -291,28 +366,5 @@ List<T>& List<T>::operator=(const List& what) {
 	return *this;
 }
 
-//Functions
-
-//ostream& operator<<(ostream& out, const List& what) {
-//	List::Node *temp = what.head;
-//	out << '{';
-//	while (temp != nullptr) {
-//		if (temp->next != nullptr)
-//			out << temp->data << ", ";
-//		else
-//			out << temp->data;
-//		temp = temp->next;
-//	}
-//	out << "}";
-//	return out;
-//}
-//
-//bool ascend(const int& a, const int& b) { //function for sorting (ascend list values)
-//	return a < b;
-//}
-//
-//bool reduce(const int& a, const int& b) { //function for sorting (reduce list values)
-//	return a > b;
-//}
-
 template List<int>;
+template List<string>;
