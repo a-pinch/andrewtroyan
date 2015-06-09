@@ -2,76 +2,85 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <exception>
+#include <stdexcept>
 
-Vector::iterator::iterator(double* current, double* begin, double* end) {
-	this->current = current;
-	this->begin = begin;
-	this->end = end;
-}
+using namespace std;
 
-double& Vector::iterator::operator*() {
+template <class T>
+T& Vector<T>::iterator::operator*() {
 	if (current >= begin && current < end)
 		return *current;
 	throw std::invalid_argument("In Vector::iterator::operator*(): invalid iterator.");
 }
 
-Vector::iterator& Vector::iterator::operator++() {
+template <class T>
+typename Vector<T>::iterator& Vector<T>::iterator::operator++() {
 	if (current < end)
 		++current;
 	return *this;
 }
 
-Vector::iterator& Vector::iterator::operator++(int) {
+template <class T>
+typename Vector<T>::iterator& Vector<T>::iterator::operator++(int) {
 	if (current < end)
 		++current;
 	return *this;
 }
 
-Vector::iterator& Vector::iterator::operator--() {
+template <class T>
+typename Vector<T>::iterator& Vector<T>::iterator::operator--() {
 	if (current > begin)
 		--current;
 	return *this;
 }
 
-Vector::iterator& Vector::iterator::operator--(int) {
+template <class T>
+typename Vector<T>::iterator& Vector<T>::iterator::operator--(int) {
 	if (current > begin)
 		--current;
 	return *this;
 }
 
-bool Vector::iterator::operator==(const iterator& what) {
+template <class T>
+bool Vector<T>::iterator::operator==(const iterator& what) {
 	return current == what.current;
 }
 
-bool Vector::iterator::operator!=(const iterator& what) {
+template <class T>
+bool Vector<T>::iterator::operator!=(const iterator& what) {
 	return current != what.current;
 }
 
-Vector::Vector() {
+template <class T>
+Vector<T>::Vector() {
 	array = nullptr;
 	amountOfNumbers = 0;
 	sizeOfMemory = 0;
 }
 
-Vector::Vector(int size) {
-	array = (double *)malloc(size * sizeof(double));
+template <class T>
+Vector<T>::Vector(size_t size) {
+	array = (T *)malloc(size * sizeof(T));
 	amountOfNumbers = 0;
 	sizeOfMemory = size;
 }
 
-Vector::Vector(std::initializer_list<double> list) {
+template <class T>
+Vector<T>::Vector(std::initializer_list<T> list) {
 	auto first = list.begin();
 	amountOfNumbers = list.size();
 	sizeOfMemory = amountOfNumbers + 4;
-	array = (double *)malloc(sizeOfMemory * sizeof(double));
+	array = (T *)malloc(sizeOfMemory * sizeof(T));
 	for (int i = 0; first != list.end(); ++i, ++first)
 		array[i] = *first;
 }
 
-Vector::Vector(const Vector& orig) {
+template <class T>
+Vector<T>::Vector(const Vector<T>& orig) {
 	if (orig.array) {
-		array = (double *)malloc(orig.sizeOfMemory * sizeof(double));
-		for (int i = 0; i < orig.amountOfNumbers; ++i)
+		array = (T *)malloc(orig.sizeOfMemory * sizeof(T));
+		for (size_t i = 0; i < orig.amountOfNumbers; ++i)
 			array[i] = orig.array[i];
 	}
 	else
@@ -80,26 +89,29 @@ Vector::Vector(const Vector& orig) {
 	sizeOfMemory = orig.sizeOfMemory;
 }
 
-Vector::~Vector() {
+template <class T>
+Vector<T>::~Vector() {
 	free(array);
 }
 
-Vector& Vector::pushFront(double num) {
+template <class T>
+Vector<T>& Vector<T>::pushFront(const T& num) {
 	if (amountOfNumbers + 1 >= sizeOfMemory) {
-		array = (double *)realloc(array, (sizeOfMemory + 4) * sizeof(double));
+		array = (T *)realloc(array, (sizeOfMemory + 4) * sizeof(T));
 		if (!array)
 			return *this;
 		sizeOfMemory += 4;
 	}
-	memmove(array + 1, array, amountOfNumbers * sizeof(double));
+	memmove(array + 1, array, amountOfNumbers * sizeof(T));
 	array[0] = num;
 	++amountOfNumbers;
 	return *this;
 }
 
-Vector& Vector::pushBack(double num) {
+template <class T>
+Vector<T>& Vector<T>::pushBack(const T& num) {
 	if (amountOfNumbers + 1 >= sizeOfMemory) {
-		array = (double *)realloc(array, (sizeOfMemory + 4) * sizeof(double));
+		array = (T *)realloc(array, (sizeOfMemory + 4) * sizeof(T));
 		if (!array)
 			return *this;
 		sizeOfMemory += 4;
@@ -109,54 +121,54 @@ Vector& Vector::pushBack(double num) {
 	return *this;
 }
 
-double Vector::popFront() {
+template <class T>
+void Vector<T>::popFront() {
 	if (array) {
-		double retVal = array[0];
-		memmove(array, array + 1, (amountOfNumbers - 1) * sizeof(double));
+		memmove(array, array + 1, (amountOfNumbers - 1) * sizeof(T));
 		--amountOfNumbers;
 		if (sizeOfMemory - amountOfNumbers > 4) {
-			array = (double *)realloc(array, (sizeOfMemory - 4) * sizeof(double));
+			array = (T *)realloc(array, (sizeOfMemory - 4) * sizeof(T));
 			sizeOfMemory -= 4;
 		}
-		return retVal;
 	}
-	std::cout << "Error." << std::endl;
-	exit(EXIT_FAILURE);
+	throw exception("In Vector<T>::popFront(): vector is empty.");
 }
 
-double Vector::popBack() {
+template <class T>
+void Vector<T>::popBack() {
 	if (array) {
-		double retVal = array[amountOfNumbers - 1];
 		--amountOfNumbers;
 		if (sizeOfMemory - amountOfNumbers > 4) {
-			array = (double *)realloc(array, (sizeOfMemory - 4) * sizeof(double));
+			array = (T *)realloc(array, (sizeOfMemory - 4) * sizeof(T));
 			sizeOfMemory -= 4;
 		}
-		return retVal;
 	}
-	std::cout << "Error." << std::endl;
-	exit(EXIT_FAILURE);
+	throw exception("In Vector<T>::popBack(): vector is empty.");
 }
 
-Vector& Vector::cat(const Vector& what) {
+template <class T>
+Vector<T>& Vector<T>::cat(const Vector<T>& what) {
 	sizeOfMemory = amountOfNumbers + what.amountOfNumbers + 4;
-	array = (double *)realloc(array, sizeOfMemory * sizeof(double));
-	for (int i = amountOfNumbers, j = 0; j < what.amountOfNumbers; ++i, ++j)
+	array = (T *)realloc(array, sizeOfMemory * sizeof(T));
+	for (size_t i = amountOfNumbers, j = 0; j < what.amountOfNumbers; ++i, ++j)
 		array[i] = what.array[j];
 	amountOfNumbers += what.amountOfNumbers;
 	return *this;
 }
 
-Vector::iterator Vector::begin() {
+template <class T>
+typename Vector<T>::iterator Vector<T>::begin() {
 	return iterator(array, array, array + amountOfNumbers);
 }
 
-Vector::iterator Vector::end() {
+template <class T>
+typename Vector<T>::iterator Vector<T>::end() {
 	return iterator(array + amountOfNumbers, array, array + amountOfNumbers);
 }
 
-Vector::iterator Vector::find(double value) {
-	double *ptr = array;
+template <class T>
+typename Vector<T>::iterator Vector<T>::find(T value) {
+	T *ptr = array;
 	for (; ptr != (array + amountOfNumbers); ++ptr) {
 		if (*ptr == value)
 			return iterator(ptr, array, array + amountOfNumbers);
@@ -164,28 +176,32 @@ Vector::iterator Vector::find(double value) {
 	return iterator(ptr, array, array + amountOfNumbers);
 }
 
-Vector& Vector::operator=(const Vector& what) {
-	array = (double *)realloc(array, what.sizeOfMemory * sizeof(double));
-	for (int i = 0; i < what.amountOfNumbers; ++i)
+template <class T>
+Vector<T>& Vector<T>::operator=(const Vector<T>& what) {
+	array = (T *)realloc(array, what.sizeOfMemory * sizeof(T));
+	for (size_t i = 0; i < what.amountOfNumbers; ++i)
 		array[i] = what.array[i];
 	sizeOfMemory = what.sizeOfMemory;
 	amountOfNumbers = what.amountOfNumbers;
 	return *this;
 }
 
-const double& Vector::operator[](size_t index) const {
+template <class T>
+T& Vector<T>::operator[](size_t index) const {
 	if (index >= 0 && amountOfNumbers > index)
 		return array[index];
-	exit(EXIT_FAILURE);
+	throw out_of_range("In Vector<T>::operator[](size_t): invalid index.");
 }
 
-std::ostream& operator<<(std::ostream& out, const Vector& vector) {
-	out << '{';
-	for (int i = 0; i < vector.amountOfNumbers; ++i) {
-		out << vector.array[i];
-		if (i != vector.amountOfNumbers - 1)
-			out << ", ";
-	}
-	out << '}';
-	return out;
-}
+//std::ostream& operator<<(std::ostream& out, const Vector& vector) {
+//	out << '{';
+//	for (int i = 0; i < vector.amountOfNumbers; ++i) {
+//		out << vector.array[i];
+//		if (i != vector.amountOfNumbers - 1)
+//			out << ", ";
+//	}
+//	out << '}';
+//	return out;
+//}
+
+template Vector<int>;

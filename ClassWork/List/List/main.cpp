@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
 	try {
-		List a;
+		List<int> a;
 		/*a.pushFront(1).pushFront(2553).pushFront(54);
 
 		a.pushBack(10).pushBack(16).popBack();
@@ -15,18 +15,18 @@ int main() {
 		List b = a;
 		b.printAll();*/
 
-		a.pushFront(1).pushFront(2553).pushFront(54);
-		a.pushBack(10).pushBack(16);
+		a.pushBack(1);
+		a.pushBack(2);
+		a.pushBack(3);
+		a.pushBack(4);
+		a.pushBack(5);
+		a.pushBack(6);
+		a.pushBack(7);
 
-		for (List::Iterator i = a.begin(); i != a.end(); ++i)
+		for (auto i = a.begin(); i != a.end(); ++i)
 			cout << *i << ' ';
 		cout << endl;
 
-		a.pushInIndex(13, 4);
-		a.printAll();
-
-		a.popFromIndex(0);
-		a.printAll();
 	}
 	catch (int e) {
 		if (e == 1)

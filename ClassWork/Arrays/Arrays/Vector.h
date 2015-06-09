@@ -5,16 +5,17 @@
 #include <exception>
 #include <stdexcept>
 
+template <class T>
 class Vector {
-	double* array;
-	int amountOfNumbers, sizeOfMemory;
+	T* array;
+	size_t amountOfNumbers, sizeOfMemory;
 public:
 	class iterator {
 	private:
-		double* current, *begin, *end;
+		T* current, *begin, *end;
 	public:
-		iterator(double* current, double* begin, double* end);
-		double& operator*();
+		iterator(T* current_, T* begin_, T* end_) : current(current_), begin(begin_), end(end_) {};
+		T& operator*();
 		iterator& operator++();
 		iterator& operator++(int);
 		iterator& operator--();
@@ -24,25 +25,25 @@ public:
 	};
 
 	Vector();
-	Vector(int size);
-	Vector(std::initializer_list<double> list);
+	Vector(size_t size);
+	Vector(std::initializer_list<T> list);
 	Vector(const Vector& orig);
 	~Vector();
 
-	Vector& pushFront(double num);
-	Vector& pushBack(double num);
-	double popFront();
-	double popBack();
+	Vector& pushFront(const T& num);
+	Vector& pushBack(const T& num);
+	void popFront();
+	void popBack();
 	Vector& cat(const Vector& what);
 
 	iterator begin();
 	iterator end();
-	iterator find(double value);
+	iterator find(T value);
 
 	Vector& operator=(const Vector& what);
-	const double& operator[](size_t index) const;
+	T& operator[](size_t index) const;
 	 
-	friend std::ostream& operator<<(std::ostream& out, const Vector& vector);
+	//friend std::ostream& operator<<(std::ostream& out, const Vector& vector);
 };
 
-std::ostream& operator<<(std::ostream& out, const Vector& vector);
+//std::ostream& operator<<(std::ostream& out, const Vector& vector);

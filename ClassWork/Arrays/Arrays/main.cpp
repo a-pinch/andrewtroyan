@@ -13,7 +13,7 @@ int main() {
 	double temp2 = a.popBack();
 	std::cout << a << std::endl << temp << std::endl << temp2 << std::endl;*/
 
-	Vector a{ 1, 2, 3 }, b{ 4, 5, 6 };
+	Vector<int> a{ 1, 2, 3 }, b{ 4, 5, 6 };
 	a.cat(b);
 	//std::cout << a << std::endl;
 	//double g = a[1];

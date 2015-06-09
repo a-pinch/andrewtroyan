@@ -1,9 +1,12 @@
 #pragma once
 
+#include <exception>
+
+template <class T>
 class List { //data structure
 private:
 	struct Node { //container
-		int data;
+		T data;
 		Node *next;
 	};
 
@@ -29,10 +32,19 @@ public:
 
 	Iterator begin() { return Iterator(first); };
 	Iterator end() { return Iterator(nullptr); };
+	Iterator find(const T& data) {
+		Node *temp = first;
+		while (temp) {
+			if (temp->data == data)
+				return Iterator(temp);
+			temp = temp->next;
+		}
+		return Iterator(nullptr);
+	};
 
-	List& pushFront(int data);
-	List& pushBack(int data);
-	List& pushInIndex(int data, size_t index);
+	List& pushFront(T data);
+	List& pushBack(T data);
+	List& pushInIndex(T data, size_t index);
 	List& popFront();
 	List& popBack();
 	List& popFromIndex(size_t index);
@@ -42,7 +54,7 @@ public:
 
 	void printAll();
 
-	int& operator[](size_t index);
+	T& operator[](size_t index);
 	List& operator=(const List& orig);
 };
 

@@ -7,7 +7,8 @@ using namespace std;
 
 //int List::junk; //reserve static memory for our static field (it doesn't belong to object, it belongs to class!)
 
-List::List(const List& orig) {
+template <class T>
+List<T>::List(const List& orig) {
 	first = nullptr;
 	Node* temp = orig.first;
 	for (size_t i = 0; i < orig.size; ++i, temp = temp->next)
@@ -15,12 +16,14 @@ List::List(const List& orig) {
 	size = orig.size;
 }
 
-List::~List() {
+template <class T>
+List<T>::~List() {
 	while (size > 0)
 		popFront();
 }
 
-List& List::pushFront(int data) {
+template <class T>
+List<T>& List<T>::pushFront(T data) {
 	Node *temp = new Node;
 	temp->data = data;
 	temp->next = first;
@@ -29,7 +32,8 @@ List& List::pushFront(int data) {
 	return *this;
 }
 
-List& List::pushBack(int data) {
+template <class T>
+List<T>& List<T>::pushBack(T data) {
 	if (first == nullptr)
 		pushFront(data);
 	else {
@@ -47,7 +51,8 @@ List& List::pushBack(int data) {
 	return *this;
 }
 
-List& List::pushInIndex(int data, size_t index) {
+template <class T>
+List<T>& List<T>::pushInIndex(T data, size_t index) {
 	if (index >= 0 && index < size) {
 		if (index == 0)
 			pushFront(data);
@@ -70,7 +75,8 @@ List& List::pushInIndex(int data, size_t index) {
 	return *this;
 }
 
-List& List::popFront() {
+template <class T>
+List<T>& List<T>::popFront() {
 	if (first != nullptr) {
 		Node *temp = first;
 		first = first->next;
@@ -81,7 +87,8 @@ List& List::popFront() {
 	throw 1;
 }
 
-List& List::popBack() {
+template <class T>
+List<T>& List<T>::popBack() {
 	if (first != nullptr) {
 		if (first->next == nullptr)
 			popFront();
@@ -98,7 +105,8 @@ List& List::popBack() {
 	throw 1;
 }
 
-List& List::popFromIndex(size_t index) {
+template <class T>
+List<T>& List<T>::popFromIndex(size_t index) {
 	if (index >= 0 && index < size) {
 		if (index == 0)
 			popFront();
@@ -121,7 +129,8 @@ List& List::popFromIndex(size_t index) {
 	throw 1;
 }
 
-void List::printAll() {
+template <class T>
+void List<T>::printAll() {
 	Node *temp = first;
 	cout << "{";
 	for (size_t i = 0; i < size; ++i, temp = temp->next) {
@@ -132,7 +141,8 @@ void List::printAll() {
 	cout << "}" << endl;
 }
 
-int& List::operator[](size_t index) {
+template <class T>
+T& List<T>::operator[](size_t index) {
 	if (index < size) {
 		Node *temp = first;
 		for (size_t i = 0; i < index; ++i)
@@ -142,7 +152,8 @@ int& List::operator[](size_t index) {
 	throw 2;
 }
 
-List& List::operator=(const List& orig) {
+template <class T>
+List<T>& List<T>::operator=(const List& orig) {
 	while (size > 0)
 		popFront();
 	Node* temp = orig.first;
@@ -151,3 +162,5 @@ List& List::operator=(const List& orig) {
 	size = orig.size;
 	return *this;
 }
+
+template List<int>;
