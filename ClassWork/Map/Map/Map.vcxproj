@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClInclude Include="digest.h" />
     <ClInclude Include="ordered_map.h" />
+    <ClInclude Include="pair.h" />
     <ClInclude Include="unordered_map.h" />
   </ItemGroup>
   <ItemGroup>

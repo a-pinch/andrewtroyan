@@ -32,10 +32,11 @@ public:
 		bool operator==(const Iterator& what) const { return current == what.current; };
 		bool operator!=(const Iterator& what) const { return current != what.current; };
 		T& operator*() const;
-		Iterator& operator+=(const int& num);
-		Iterator operator+(const int& num);
-		Iterator& operator-=(const int& num);
-		Iterator operator-(const int& num);
+		Iterator& operator+=(const size_t& num);
+		Iterator operator+(const size_t& num);
+		Iterator& operator-=(const size_t& num);
+		Iterator operator-(const size_t& num);
+		T& operator[](const int& num);
 
 		friend class List;
 	};

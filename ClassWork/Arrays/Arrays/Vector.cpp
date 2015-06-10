@@ -43,6 +43,43 @@ typename Vector<T>::iterator& Vector<T>::iterator::operator--(int) {
 }
 
 template <class T>
+typename Vector<T>::iterator& Vector<T>::iterator::operator+=(const size_t& num) {
+	if (current && current + num <= end) {
+		current += num;
+		return *this;
+	}
+	throw invalid_argument("In Vector<T>::iterator::operator+=(const size_t&): invalid iterator.");
+}
+
+template <class T>
+typename Vector<T>::iterator Vector<T>::iterator::operator+(const size_t& num) {
+	iterator temp = *this;
+	return temp += num;
+}
+
+template <class T>
+typename Vector<T>::iterator& Vector<T>::iterator::operator-=(const size_t& num) {
+	if (current && current - num >= begin) {
+		current -= num;
+		return *this;
+	}
+	throw invalid_argument("In Vector<T>::iterator::operator-=(const size_t&): invalid iterator.");
+}
+
+template <class T>
+typename Vector<T>::iterator Vector<T>::iterator::operator-(const size_t& num) {
+	iterator temp = *this;
+	return temp -= num;
+}
+
+template <class T>
+T& Vector<T>::iterator::operator[](const int& num) {
+	if (num < 0)
+		return *((*this) - (-num));
+	return *((*this) + num);
+}
+
+template <class T>
 bool Vector<T>::iterator::operator==(const iterator& what) {
 	return current == what.current;
 }
@@ -50,13 +87,6 @@ bool Vector<T>::iterator::operator==(const iterator& what) {
 template <class T>
 bool Vector<T>::iterator::operator!=(const iterator& what) {
 	return current != what.current;
-}
-
-template <class T>
-Vector<T>::Vector() {
-	array = nullptr;
-	amountOfNumbers = 0;
-	sizeOfMemory = 0;
 }
 
 template <class T>
@@ -87,11 +117,6 @@ Vector<T>::Vector(const Vector<T>& orig) {
 		array = nullptr;
 	amountOfNumbers = orig.amountOfNumbers;
 	sizeOfMemory = orig.sizeOfMemory;
-}
-
-template <class T>
-Vector<T>::~Vector() {
-	free(array);
 }
 
 template <class T>
@@ -157,6 +182,26 @@ Vector<T>& Vector<T>::cat(const Vector<T>& what) {
 }
 
 template <class T>
+Vector<T>& Vector<T>::erase(iterator& what) {
+	if (what.current != what.end && what.current != nullptr) {
+		if (what.current == what.begin)
+			popFront();
+		else if (what.current == what.end - 1)
+			popBack();
+		else {
+			memmove(what.current, what.current + 1, (what.end - what.current - 1) * sizeof(T));
+			--amountOfNumbers;
+			if (sizeOfMemory - amountOfNumbers > 4) {
+				array = (T *)realloc(array, (sizeOfMemory - 4) * sizeof(T));
+				sizeOfMemory -= 4;
+			}
+		}
+		return *this;
+	}
+	throw invalid_argument("In Vector<T>::erase(iterator&): invalid iterayot.");
+}
+
+template <class T>
 typename Vector<T>::iterator Vector<T>::begin() {
 	return iterator(array, array, array + amountOfNumbers);
 }
@@ -167,7 +212,7 @@ typename Vector<T>::iterator Vector<T>::end() {
 }
 
 template <class T>
-typename Vector<T>::iterator Vector<T>::find(T value) {
+typename Vector<T>::iterator Vector<T>::find(const T& value) {
 	T *ptr = array;
 	for (; ptr != (array + amountOfNumbers); ++ptr) {
 		if (*ptr == value)
@@ -193,15 +238,5 @@ T& Vector<T>::operator[](size_t index) const {
 	throw out_of_range("In Vector<T>::operator[](size_t): invalid index.");
 }
 
-//std::ostream& operator<<(std::ostream& out, const Vector& vector) {
-//	out << '{';
-//	for (int i = 0; i < vector.amountOfNumbers; ++i) {
-//		out << vector.array[i];
-//		if (i != vector.amountOfNumbers - 1)
-//			out << ", ";
-//	}
-//	out << '}';
-//	return out;
-//}
-
 template Vector<int>;
+template Vector<double>;

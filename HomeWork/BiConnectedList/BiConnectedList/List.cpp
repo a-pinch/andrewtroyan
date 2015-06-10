@@ -52,12 +52,12 @@ T& List<T>::Iterator::operator*() const {
 }
 
 template <class T>
-typename List<T>::Iterator& List<T>::Iterator::operator+=(const int& num) {
+typename List<T>::Iterator& List<T>::Iterator::operator+=(const size_t& num) {
 	if (num == 0)
 		return *this;
 
 	Node *temp = current;
-	int i = 0;
+	size_t i = 0;
 	for (; temp != nullptr && i < num; ++i) {
 		temp = temp->next;
 	}
@@ -69,12 +69,12 @@ typename List<T>::Iterator& List<T>::Iterator::operator+=(const int& num) {
 }
 
 template <class T>
-typename List<T>::Iterator List<T>::Iterator::operator+(const int& num) {
+typename List<T>::Iterator List<T>::Iterator::operator+(const size_t& num) {
 	if (num == 0)
 		return Iterator(current, host);
 
 	Node *temp = current;
-	int i = 0;
+	size_t i = 0;
 	for (; temp != nullptr && i < num; ++i) {
 		temp = temp->next;
 	}
@@ -84,12 +84,12 @@ typename List<T>::Iterator List<T>::Iterator::operator+(const int& num) {
 }
 
 template <class T>
-typename List<T>::Iterator& List<T>::Iterator::operator-=(const int& num) {
+typename List<T>::Iterator& List<T>::Iterator::operator-=(const size_t& num) {
 	if (num == 0)
 		return *this;
 
 	Node *temp = current;
-	int i = num;
+	size_t i = num;
 	for (; temp != nullptr && i > 0; --i) {
 		temp = temp->prev;
 	}
@@ -101,18 +101,25 @@ typename List<T>::Iterator& List<T>::Iterator::operator-=(const int& num) {
 }
 
 template <class T>
-typename List<T>::Iterator List<T>::Iterator::operator-(const int& num) {
+typename List<T>::Iterator List<T>::Iterator::operator-(const size_t& num) {
 	if (num == 0)
 		return Iterator(current, host);
 
 	Node *temp = current;
-	int i = num;
+	size_t i = num;
 	for (; temp != nullptr && i > 0; --i) {
 		temp = temp->prev;
 	}
 	if (i == 0) 
 		return Iterator(temp, host);
 	throw invalid_argument("In List<T>::Iterator::operator-(const size_t&): invalid value.");
+}
+
+template <class T>
+T& List<T>::Iterator::operator[](const int& num) {
+	if (num < 0)
+		return *(*this - (-num));
+	return *(*this + num);
 }
 
 // List's methods
@@ -339,21 +346,21 @@ typename List<T>::Iterator List<T>::find(const T& data) {
 
 template <class T>
 List<T>& List<T>::erase(Iterator& it) {
-	if (it.current->next == nullptr) 
-		tail = it.current->prev;
-	else 
-		it.current->next->prev = it.current->prev;
-
-	if (it.current->prev == nullptr) 
-		head = it.current->next;
-	else 
-		it.current->prev->next = it.current->next;
-
-	delete it.current;
-	it.current = nullptr;
-	--size;
-
-	return (*this);
+	if (it.current && it.host) {
+		if (it.current->prev == nullptr)
+			popFront();
+		else if (it.current->next == nullptr)
+			popBack();
+		else {
+			it.current->next->prev = it.current->prev;
+			it.current->prev->next = it.current->next;
+			delete it.current;
+			--size;
+		}
+		it.current = nullptr;
+		return (*this);
+	}
+	throw out_of_range("In List<T>::erase(Iterator&): invalid iterator.");
 }
 
 template <class T>

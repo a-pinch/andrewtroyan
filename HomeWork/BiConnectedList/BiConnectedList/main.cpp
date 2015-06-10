@@ -60,15 +60,21 @@ int main() {
 	//}
 	//cout << endl;
 
-	cout << people << endl;
+	//cout << people << endl;
 
-	people.sort(0, people.getSize() - 1, ascend);
+	//people.sort(0, people.getSize() - 1, ascend);
 
 	//for (auto it = people.begin(); it != people.end(); ++it) {
 	//	cout << *it << ' ';
 	//}
 	//cout << endl;
 
+	cout << people << endl;
+
+	auto it = people.begin();
+	it += 1;
+
+	people.erase(it);
 	cout << people << endl;
 
 	cin.get();
