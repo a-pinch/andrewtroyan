@@ -22,9 +22,13 @@ public:
 };
 
 class Mammal : public Animal {
+public:
+	virtual void voice() = 0;
 };
 
 class Bird : public Animal, public Flyer {
+public:
+	virtual void fly() = 0;
 };
 
 class Lupus : public Mammal {

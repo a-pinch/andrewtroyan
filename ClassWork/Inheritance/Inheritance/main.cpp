@@ -1,5 +1,6 @@
 #include "circular_queue.h"
 #include "animals.h"
+#include "armor.h"
 #include <string>
 
 int main() {
@@ -21,6 +22,14 @@ int main() {
 
 	for (int i = 0; i < 2; ++i)
 		fl[i]->fly();
+
+	Yo.voice();
+
+	armor first_armor;
+	virtual_armor second_armor;
+
+	first_armor.show_details_id();
+	second_armor.show_details_id();
 
 	cin.get();
 	return 0;

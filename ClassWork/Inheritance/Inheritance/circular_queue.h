@@ -10,7 +10,7 @@ public:
 	circular_queue() : List() {};
 	~circular_queue() {};
 
-	class iterator : public List<T>::Iterator { //list's iterator won't be inherited
+	class iterator : public List<T>::Iterator { //list's iterator won't be inherited (line 8)
 	public:
 		iterator() : List<T>::Iterator() {};
 		iterator(List<T>::Node *current, circular_queue *host) : List<T>::Iterator(current, host) {}; //(List<T>*) host
@@ -21,10 +21,10 @@ public:
 
 			current = current->next;
 
-			//if (!current) {
-			//	current = host->head;
-			//}
-			//return *this;
+			if (!current)
+				current = private_begin();
+			
+			return *this;
 		}
 
 		iterator& operator++(int) {

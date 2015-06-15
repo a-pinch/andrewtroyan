@@ -22,6 +22,12 @@ public:
 	protected:
 		List *host;
 		Node *current;
+
+		Node*  private_begin() {
+			if (host)
+				return host->head;
+			return nullptr;
+		}
 	public:
 		Iterator() : current(nullptr), host(nullptr) {};
 		Iterator(Node *current_, List *host_) : current(current_), host(host_) {};
