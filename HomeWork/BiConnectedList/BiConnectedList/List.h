@@ -9,7 +9,7 @@ using namespace std;
 
 template <class T>
 class List {
-private:
+protected:
 	struct Node {
 		T data;
 		Node *next, *prev;
@@ -19,12 +19,13 @@ private:
 	size_t size;
 public:
 	class Iterator { //instrument for list (like a pointer for standart arrays)
-	private:
+	protected:
 		List *host;
 		Node *current;
 	public:
 		Iterator() : current(nullptr), host(nullptr) {};
 		Iterator(Node *current_, List *host_) : current(current_), host(host_) {};
+
 		Iterator& operator++();
 		Iterator& operator++(int);
 		Iterator& operator--();
