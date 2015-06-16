@@ -5,6 +5,7 @@ void Stock::make_sell_bet(double rate, double amount) {
 	while (rate <= get_buy_rate()) {
 		//bet - итератор на самую выгодную сделку покупки
 		auto bet = buy_bets.rbegin();
+
 		//если в существующей за€вке больше денег чем в новой
 		if (amount < bet->second) {
 			//частично осуществл€ем существующую за€вку

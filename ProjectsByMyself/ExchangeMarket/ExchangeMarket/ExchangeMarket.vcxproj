@@ -77,10 +77,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Buddy.h" />
+    <ClInclude Include="Client.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stock.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Stock.cpp" />
