@@ -13,7 +13,7 @@ public:
 		if (sell_bets.begin() != sell_bets.end())
 			return sell_bets.begin()->first;
 		else
-			return 0.0;
+			return INT_MAX;
 	};
 	double get_buy_rate() {
 		if (buy_bets.rbegin() != buy_bets.rend())

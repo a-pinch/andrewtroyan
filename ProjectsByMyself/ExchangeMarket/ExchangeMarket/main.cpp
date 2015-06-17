@@ -5,11 +5,15 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include <Windows.h>
+#include <time.h>
 
 using namespace std;
 
 int main() {
 	Stock stock;
+
+	srand(time(nullptr));
 
 	stock.make_sell_bet(1.369, 100);
 	stock.make_sell_bet(1.37, 200);
@@ -23,6 +27,7 @@ int main() {
 	vector<Buddy*> buddies{ new Player(stock), new Client(stock) };
 	while (1) {
 		for (auto it = buddies.begin(); it != buddies.end(); ++it) {
+			Sleep(1000);
 			(*it)->act();
 		}
 		cout << "---" << endl << stock.get_buy_rate() << endl;
