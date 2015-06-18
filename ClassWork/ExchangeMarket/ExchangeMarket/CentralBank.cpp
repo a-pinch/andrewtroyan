@@ -3,19 +3,15 @@
 #include <cmath>
 
 void CentralBank::act() {
-	if (fabs((stock.get_sell_rate() - sell_rate) / stock.get_sell_rate()) > 0.05) {
-		if (stock.get_sell_rate() > sell_rate) 
-			sell_rate = stock.get_sell_rate() + 0.01;
-		else
-			sell_rate = stock.get_sell_rate() - 0.01;
-		stock.make_sell_bet(sell_rate, pow(10, 6));
+	volatility.push(sqrt(stock.get_sell_rate() * stock.get_buy_rate()));
+
+	if (volatility.size() > 5) {
+		volatility.pop();
+		double rate = volatility.back() / volatility.front();
+		if (rate > 1.05)
+			stock.make_sell_bet(stock.get_sell_rate(), pow(10, 6));
+		else if (rate < 0.95)
+			stock.make_buy_bet(stock.get_buy_rate(), pow(10, 6));
 	}
 
-	if (fabs((stock.get_buy_rate() - buy_rate) / stock.get_buy_rate()) > 0.05) {
-		if (stock.get_buy_rate() > buy_rate)
-			buy_rate = stock.get_buy_rate() + 0.01;
-		else
-			buy_rate = stock.get_buy_rate() - 0.01;
-		stock.make_buy_bet(buy_rate, pow(10, 6));
-	}
 }

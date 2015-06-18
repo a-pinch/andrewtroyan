@@ -22,24 +22,24 @@ int main() {
 
 	results << "Sell rate;Buy rate" << endl;
 
-	stock.make_sell_bet(1.369, 100);
-	stock.make_sell_bet(1.37, 200);
-	stock.make_sell_bet(1.375, 500);
+	stock.make_sell_bet(1.37, 20000);
+	stock.make_sell_bet(1.375, 50000);
+	stock.make_sell_bet(1.369, 10000);
 	stock.make_sell_bet(1.4, 10000000000);
 
-	stock.make_buy_bet(1.356, 100);
-	stock.make_buy_bet(1.35, 20000000000);
-	stock.make_buy_bet(1.36, 1000);
+	stock.make_buy_bet(1.356, 100000);
+	stock.make_buy_bet(1.35, 200000);
+	stock.make_buy_bet(1.3, 10000000000);
 
 	CentralBank bank(stock);
 
 	vector<Buddy*> buddies{ new Player(stock), new Player(stock), new Player(stock), new Client(stock), new Client(stock) };
-	for (int i = 0; i < 10000; ++i) {
+	for (int i = 1; i <= 10000; ++i) {
 		for (auto it = buddies.begin(); it != buddies.end(); ++it) {
 			(*it)->act();
 		}
 
-		if (i % 5)
+		if (i % 5 == 0)
 			bank.act();
 
 		if (i % 100 == 0) {

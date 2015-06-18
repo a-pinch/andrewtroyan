@@ -80,6 +80,7 @@
     <ClInclude Include="CentralBank.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Robot.h" />
     <ClInclude Include="Stock.h" />
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +88,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Robot.cpp" />
     <ClCompile Include="Stock.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

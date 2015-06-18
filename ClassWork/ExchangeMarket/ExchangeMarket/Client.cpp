@@ -12,7 +12,7 @@ void Client::act() {
 		power = 5.0;
 
 	if (temp % 2)
-		stock.buy(pow(10, rand() * power / RAND_MAX));
+		stock.buy(pow(10, rand() * power / (RAND_MAX - 1)));
 	else
-		stock.sell(pow(10, rand() * power / RAND_MAX));
+		stock.sell(pow(10, rand() * power / (RAND_MAX - 1)));
 }
