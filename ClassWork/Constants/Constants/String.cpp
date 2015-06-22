@@ -30,12 +30,14 @@ String::~String() {
 }
 
 String::String(const String& orig) {
+	std::cout << "copy ctor called" << std::endl;
 	s = (char *)malloc((strlen(orig.s) + 1) * sizeof(char));
 	strcpy(s, orig.s);
 	length = orig.length;
 }
 
-String::String(String&& temp) { //оператор перемещения
+String::String(String&& temp) { //move ctor
+	std::cout << "move ctor called" << std::endl;
 	s = temp.s;
 	length = temp.length;
 	temp.s = nullptr;
@@ -49,7 +51,7 @@ void String::operator=(const String& source) {
 }
 
 String String::operator+(const String& obj) const {
-	String result(s);
+	String result(*this);
 	result.add(obj.s);
 	return result;
 }

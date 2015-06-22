@@ -6,9 +6,9 @@ using namespace std;
 
 int main() {
 
-	String a = "Hello", b = " world!", c;
-	c = a + b;
-	c.print();
+	String a = "Hello", b = " world", c = "!", d;
+	d = a + b + c;
+	d.print();
 
 	getc(stdin);
 	return 0;
