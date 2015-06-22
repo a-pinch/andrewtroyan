@@ -25,17 +25,33 @@ String::String(char c, size_t n) {
 	length = n;
 }
 
+String::~String() {
+	free(s);
+}
+
 String::String(const String& orig) {
 	s = (char *)malloc((strlen(orig.s) + 1) * sizeof(char));
 	strcpy(s, orig.s);
 	length = orig.length;
 }
 
-void String::operator=(const String& source) { //оператор присваивания
+String::String(String&& temp) { //оператор перемещения
+	s = temp.s;
+	length = temp.length;
+	temp.s = nullptr;
+}
+
+void String::operator=(const String& source) { 
 	free(s);
 	length = source.length;
 	s = (char *)malloc((length + 1) * sizeof(char));
 	strcpy(s, source.s);
+}
+
+String String::operator+(const String& obj) const {
+	String result(s);
+	result.add(obj.s);
+	return result;
 }
 
 void String::print() const {
@@ -147,10 +163,6 @@ int String::deleteSpaces() {
 		s[length] = '\0';
 	}
 	return 0;
-}
-
-String::~String() {
-	free(s);
 }
 
 void print(String str) {
