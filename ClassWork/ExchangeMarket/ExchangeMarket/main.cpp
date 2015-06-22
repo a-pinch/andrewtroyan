@@ -3,6 +3,7 @@
 #include "Client.h"
 #include "Player.h"
 #include "CentralBank.h"
+#include "Robot.h"
 #include <cstdlib>
 #include <iostream>
 #include <vector>
@@ -32,8 +33,12 @@ int main() {
 	stock.make_buy_bet(1.3, 10000000000);
 
 	CentralBank bank(stock);
+	Robot bot(stock, 180000, 200000);
 
-	vector<Buddy*> buddies{ new Player(stock), new Player(stock), new Player(stock), new Client(stock), new Client(stock) };
+	vector<Buddy*> buddies{ new Player(stock), new Player(stock), new Player(stock), new Client(stock), new Client(stock), &bot };
+
+	cout << "Robot's euro: " << bot.show_euro() << endl << "Robot's dollars: " << bot.show_dollars() << endl;
+
 	for (int i = 1; i <= 10000; ++i) {
 		for (auto it = buddies.begin(); it != buddies.end(); ++it) {
 			(*it)->act();
@@ -48,6 +53,8 @@ int main() {
 			cout << stock.get_buy_rate() << endl << "---" << endl;
 		}
 	}
+
+	cout << "Robot's euro: " << bot.show_euro() << endl << "Robot's dollars: " << bot.show_dollars() << endl;
 
 	cin.get();
 	results.close();

@@ -68,3 +68,43 @@ void Stock::buy(double amount) {
 		sell_bets.erase(bet);
 	}
 }
+
+double Stock::required_amount_for_buying(double amount_to_buy) {
+	double required_amount = 0.0;
+
+	for (auto it = sell_bets.begin(); amount_to_buy > 0 && it != sell_bets.end(); ++it) {
+		if (amount_to_buy < it->second) {
+			required_amount += amount_to_buy * it->first;
+			amount_to_buy = 0;
+		}
+		else {
+			required_amount += it->second * it->first;
+			amount_to_buy -= it->second;
+		}
+	}
+
+	if (amount_to_buy != 0)
+		return INT_MAX;
+
+	return required_amount;
+}
+
+double Stock::amount_after_sell(double amount_to_sell) {
+	double amount_after_sell = 0.0;
+
+	for (auto it = buy_bets.rbegin(); amount_to_sell > 0 && it != buy_bets.rend(); ++it) {
+		if (amount_to_sell < it->second) {
+			amount_after_sell += amount_to_sell * it->first;
+			amount_to_sell = 0;
+		}
+		else {
+			amount_after_sell += it->second * it->first;
+			amount_to_sell -= it->second;
+		}
+	}
+
+	if (amount_to_sell != 0)
+		return 0.0;
+
+	return amount_after_sell;
+}

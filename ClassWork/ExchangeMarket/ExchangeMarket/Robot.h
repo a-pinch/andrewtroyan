@@ -2,18 +2,21 @@
 
 #include "Buddy.h"
 #include "Stock.h"
-#include <queue>
+#include <vector>
 
-using std::queue;
+using std::vector;
 
 class Robot : public Buddy {
 private:
-	double euro, dollars;
-	queue<double> volatility;
+	long double euro, dollars;
+	vector<double> volatility;
+	int degree;
 public:
-	Robot(Stock& stock, double e, double d) : Buddy(stock), euro(e), dollars(d) {};
+	Robot(Stock& stock, long double e, long double d) : Buddy(stock), euro(e), dollars(d), degree(1) {};
 	~Robot() {};
 
 	virtual void act();
+	const long double& show_euro() const { return euro; };
+	const long double& show_dollars() const { return dollars; };
 };
 

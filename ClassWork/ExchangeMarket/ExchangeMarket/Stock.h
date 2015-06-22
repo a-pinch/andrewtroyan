@@ -15,6 +15,7 @@ public:
 		else
 			return INT_MAX;
 	};
+
 	double get_buy_rate() {
 		if (buy_bets.rbegin() != buy_bets.rend())
 			return buy_bets.rbegin()->first;
@@ -27,5 +28,8 @@ public:
 
 	void buy(double amount);
 	void sell(double amount);
+
+	double required_amount_for_buying(double amount_to_buy);
+	double amount_after_sell(double amount_to_sell);
 };
 
