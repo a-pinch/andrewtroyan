@@ -10,7 +10,9 @@
 // Global Variables:
 
 double initAlpha = 0;
-std::vector<Line> trapeze{ Line(0, 0, 100, 0), Line (100, 0, 60, 30), Line(60, 30, 10, 30), Line(10, 30, 0, 0) };
+std::vector<Line> trapeze{ Line(0, 0, 100, 0), Line(100, 0, 60, 30), Line(60, 30, 10, 30), Line(10, 30, 0, 0) };
+std::vector<Line> square{ Line(100, 100, 100, 200), Line(100, 200, 200, 200), Line(200, 200, 200, 100), Line(200, 100, 100, 100) };
+std::vector<Line> triangle{ Line(300, 100, 100, 300), Line(100, 300, 500, 300), Line(500, 300, 300, 100) };
 
 HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
@@ -186,27 +188,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		qLineColor = RGB(255, 0, 0);
 		hLinePen = CreatePen(PS_SOLID, 7, qLineColor);
 		hPenOld = (HPEN)SelectObject(hdc, hLinePen);
-		{
-			int x = 300;
-			int y = 300;
-			int size = 200;
-			double alpha = initAlpha;
-						
-			MoveToEx(hdc, x + size* sin(alpha), y - size* cos(alpha), NULL);
+		//{
+		//	int x = 300;
+		//	int y = 300;
+		//	int size = 200;
+		//	double alpha = initAlpha;
+		//				
+		//	MoveToEx(hdc, x + size* sin(alpha), y - size* cos(alpha), NULL);
 
 
-			int rays = 17;
-			int skip = 9;
+		//	int rays = 17;
+		//	int skip = 9;
 
-			for (int i = 0; i <= rays*skip; i++) {
-				alpha += (360.0/rays*skip) / 180.0*3.1415;
-				LineTo(hdc, x + size* sin(alpha), y - size* cos(alpha));
+		//	for (int i = 0; i <= rays*skip; i++) {
+		//		alpha += (360.0/rays*skip) / 180.0*3.1415;
+		//		LineTo(hdc, x + size* sin(alpha), y - size* cos(alpha));
 
-			}
+		//	}
 
-		}
+		//}
 
-		for (auto l : trapeze) {
+		//for (auto l : trapeze) {
+		//	l.draw();
+		//}
+
+		for (auto l : triangle) {
 			l.draw();
 		}
 
@@ -220,7 +226,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		hEllipsePen = CreatePen(PS_SOLID, 3, qEllipseColor);
 		hPenOld = (HPEN)SelectObject(hdc, hEllipsePen);
 
-		Arc(hdc, 100, 100, 500, 250, 0, 0, 0, 0);
+		//Arc(hdc, 100, 100, 500, 250, 0, 0, 0, 0);
 
 		SelectObject(hdc, hPenOld);
 		DeleteObject(hEllipsePen);

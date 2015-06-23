@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+#include "../../../ClassWork/VectorOperations/VectorOperations/matrix.h"
 
 class Line {
 public:
