@@ -8,9 +8,12 @@ using std::endl;
 int main() {
 	matrix<int> a(3, 2, { 1, 2, 3, 4, 5, 6 }), b(1, 2, { 1, 2 });
 
-	b = std::move(a);
+	cout << a << endl << endl;
 
-	cout << b << endl;
+	a /= 2;
+
+	cout << a << endl;
+
 	cin.get();
 	
 	return 0;
