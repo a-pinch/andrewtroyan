@@ -29,7 +29,7 @@ public:
 		}
 	};
 	
-	//ctor and dtor
+	//ctors and dtor
 	matrix(size_t rows_, size_t cols_);
 	matrix(size_t rows_, size_t cols_, std::initializer_list<T> list);
 	matrix(const matrix& orig);
