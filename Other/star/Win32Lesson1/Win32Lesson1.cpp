@@ -4,15 +4,34 @@
 #include "stdafx.h"
 #include "Win32Lesson1.h"
 #include "Line.h"
+#include "pair_of_3d_vectors.h"
+#include "../../../ClassWork/VectorOperations/VectorOperations/matrix.h"
 
 #define MAX_LOADSTRING 100
 
 // Global Variables:
 
-double initAlpha = 0;
+//double initAlpha = 0;
 std::vector<Line> trapeze{ Line(0, 0, 100, 0), Line(100, 0, 60, 30), Line(60, 30, 10, 30), Line(10, 30, 0, 0) };
 std::vector<Line> square{ Line(100, 100, 100, 200), Line(100, 200, 200, 200), Line(200, 200, 200, 100), Line(200, 100, 100, 100) };
 std::vector<Line> triangle{ Line(300, 100, 100, 300), Line(100, 300, 500, 300), Line(500, 300, 300, 100) };
+
+std::vector<pair_3d> cube{ 
+	pair_3d({ 100, 400, 0 }, { 100, 100, 0 }),
+	pair_3d({ 100, 100, 0 }, { 400, 100, 0 }),
+	pair_3d({ 400, 100, 0 }, { 400, 400, 0 }),
+	pair_3d({ 400, 400, 0 }, { 100, 400, 0 }),
+	pair_3d({ 100, 400, 200 }, { 100, 100, 200 }),
+	pair_3d({ 100, 100, 200 }, { 400, 100, 200 }),
+	pair_3d({ 400, 100, 200 }, { 400, 400, 200 }),
+	pair_3d({ 400, 400, 200 }, { 100, 400, 200 }),
+	pair_3d({ 100, 400, 0 }, { 100, 400, 200 }),
+	pair_3d({ 100, 100, 0 }, { 100, 100, 200 }),
+	pair_3d({ 400, 100, 0 }, { 400, 100, 200 }),
+	pair_3d({ 400, 400, 0 }, { 400, 400, 200 })
+};
+
+matrix<double> mat(3, 3, { cos(30 * 0.17), 0, -sin(30 * 0.17), 0, 1, 0, sin(30 * 0.17), 0, cos(30 * 0.17) });
 
 HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
@@ -152,7 +171,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_TIMER :
-		initAlpha += 0.01; // скорость вращения радиан/такт
+		//initAlpha += 0.01; // скорость вращения радиан/такт
+
+		//for (auto it : cube)
+		//	it *= mat;
+
 		InvalidateRgn(hWnd, 0, 1);
 		RedrawWindow(hWnd, 0, 0, RDW_ERASE);
 		break;
@@ -178,6 +201,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		//--- 
 		Line::hdc = hdc;
+		pair_3d::hdc = hdc;
 		//---
 
 		HPEN hPenOld;
@@ -212,7 +236,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//	l.draw();
 		//}
 
-		for (auto l : triangle) {
+		//for (auto l : triangle) {
+		//	l.draw();
+		//}
+
+		for (auto l : cube) {
 			l.draw();
 		}
 
