@@ -11,18 +11,18 @@ private:
 	size_t rows, cols;
 	T* array;
 public:
-	class matrix_column {
+	class matrix_row {
 	private:
 		T* element;
 		size_t amount;
 	public:
-		matrix_column(T* pointer, size_t cols) : element(pointer), amount(cols) {};
-		~matrix_column() {};
+		matrix_row(T* pointer, size_t cols) : element(pointer), amount(cols) {};
+		~matrix_row() {};
 
 		T& operator[](size_t index) {
 			if (index < amount) 
 				return element[index];
-			throw std::out_of_range("In matrix<T>::matrix_column::operator[](size_t): invalid index.");
+			throw std::out_of_range("In matrix<T>::matrix_row::operator[](size_t): invalid index.");
 		}
 	};
 	
@@ -42,9 +42,9 @@ public:
 	matrix& operator-=(const matrix& obj);
 	matrix operator-(const matrix& obj);
 
-	matrix_column operator[](size_t index) {
+	matrix_row operator[](size_t index) {
 		if (index < rows) 
-			return matrix_column(array + (index * cols), cols);
+			return matrix_row(array + (index * cols), cols);
 		throw std::out_of_range("In matrix<T>::operator[](size_t): invalid index.");
 	}
 
