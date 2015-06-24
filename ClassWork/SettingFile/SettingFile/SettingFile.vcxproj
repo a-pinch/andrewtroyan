@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F61E04D7-95A3-45C0-A099-ECDC1B323ECC}</ProjectGuid>
+    <ProjectGuid>{40206ABD-B555-4722-886F-A9053F22E741}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>VectorOperations</RootNamespace>
+    <RootNamespace>SettingFile</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -76,11 +76,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="matrix.h" />
+    <ClInclude Include="setting_file.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="matrix.cpp" />
+    <ClCompile Include="setting_file.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

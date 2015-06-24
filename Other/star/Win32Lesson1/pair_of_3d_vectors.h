@@ -32,7 +32,7 @@ public:
 	void draw() {
 		matrix<double> mat(2, 3, { 1, 0, 0.7, 0, 1, 0.7 });
 		vector<double> temp_v1 = v1 * mat, temp_v2 = v2 * mat;
-		MoveToEx(hdc, temp_v1[0], temp_v1[1], NULL);
-		LineTo(hdc, temp_v2[0], temp_v2[1]);
+		MoveToEx(hdc, temp_v1[0] + 200, temp_v1[1] + 200, NULL);
+		LineTo(hdc, temp_v2[0] + 200, temp_v2[1] + 200);
 	}
 };

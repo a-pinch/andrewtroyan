@@ -5,6 +5,7 @@
 #include <iostream>
 #include <exception>
 #include <stdexcept>
+#include <cmath>
 
 using std::vector;
 
@@ -28,6 +29,14 @@ public:
 			throw std::out_of_range("In matrix<T>::matrix_row::operator[](size_t): invalid index.");
 		}
 	};
+
+	//static fields and methods (public)
+	static const matrix<double> unit_matrix;
+	static const matrix<double> zero_matrix;
+
+	static matrix<double> rotate_y(double alpha) {
+		return matrix<double>(3, 3, { cos(alpha), 0, -sin(alpha), 0, 1, 0, sin(alpha), 0, cos(alpha) });
+	}
 	
 	//ctors and dtor
 	matrix(size_t rows_, size_t cols_);
@@ -77,7 +86,6 @@ public:
 	template <class T>
 	friend vector<T>& operator*=(vector<T>& vec, const matrix<T>& mat);
 };
-
 
 //ctors and dtor
 

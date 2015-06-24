@@ -31,7 +31,7 @@ std::vector<pair_3d> cube{
 	pair_3d({ 400, 400, 0 }, { 400, 400, 200 })
 };
 
-matrix<double> mat(3, 3, { cos(30 * 0.17), 0, -sin(30 * 0.17), 0, 1, 0, sin(30 * 0.17), 0, cos(30 * 0.17) });
+matrix<double> rotate = matrix<double>::rotate_y(0.1);
 
 HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
@@ -240,6 +240,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//	l.draw();
 		//}
 
+		for (auto it = cube.begin(); it != cube.end(); ++it)
+			(*it) *= rotate;
+
 		for (auto l : cube) {
 			l.draw();
 		}
@@ -248,16 +251,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		DeleteObject(hLinePen);
 
 		// Draw a blue ellipse
-		HPEN hEllipsePen;
-		COLORREF qEllipseColor;
-		qEllipseColor = RGB(0, 0, 255);
-		hEllipsePen = CreatePen(PS_SOLID, 3, qEllipseColor);
-		hPenOld = (HPEN)SelectObject(hdc, hEllipsePen);
+		//HPEN hEllipsePen;
+		//COLORREF qEllipseColor;
+		//qEllipseColor = RGB(0, 0, 255);
+		//hEllipsePen = CreatePen(PS_SOLID, 3, qEllipseColor);
+		//hPenOld = (HPEN)SelectObject(hdc, hEllipsePen);
 
 		//Arc(hdc, 100, 100, 500, 250, 0, 0, 0, 0);
 
-		SelectObject(hdc, hPenOld);
-		DeleteObject(hEllipsePen);
+		//SelectObject(hdc, hPenOld);
+		//DeleteObject(hEllipsePen);
 
 		// TODO: Add any drawing code here...
 		EndPaint(hWnd, &ps);
