@@ -2,54 +2,34 @@
 
 #include <string>
 #include <sstream>
-#include <exception>
+#include <vector>
+#include "game.h"
+#include "drum.h"
 
 using std::string;
-using std::exception;
 using std::stringstream;
 
 class slot_machine {
 private:
-	unsigned int amount, bet, win;
-	enum state_ { ready_to_bet, ready_to_game, ready_result } state;
+	//fields
+	unsigned int storage, bet, win;
+	std::vector<drum> drums;
+
+	//methods
+	void get_bet(unsigned int money);
+	void start_game();
+	unsigned int return_win();
 public:
 	//ctor
-	slot_machine(unsigned int amount_) : amount(amount_), state(ready_to_bet) {};
+	slot_machine(unsigned int amount, unsigned int drum_lines) : storage(amount), bet(0), win(0), drums(3, drum(drum_lines)) {};
 
 	//methods
 	string to_string() {
 		stringstream ss;
-		ss << amount;
+		ss << storage;
 		return ss.str();
 	};
-	
-	void make_bet(unsigned int money) {
-		if (state == ready_to_bet) {
-			bet = money;
-			amount += money;
-			state = ready_to_game;
-			return;
-		}
-		throw exception("In slot_machine::bet(unsigned int): machine is not ready to bet.");
-	}
 
-	void start_game() {
-		if (state == ready_to_game) {
-			//drum's game
-			win = bet * rand() % 3;
-			state = ready_result;
-			return;
-		}
-		throw exception("In slot_machine::start_game(): machine is not ready to play.");
-	}
-
-	unsigned int get_money() {
-		if (state == ready_result) {
-			amount -= win;
-			state = ready_to_bet;
-			return win;
-		}
-		throw exception("In slot_machine::get_money(): machine is not ready to pay.");
-	}
+	friend class game;
 };
 

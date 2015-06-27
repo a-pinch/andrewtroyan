@@ -1,5 +1,6 @@
 #include "player.h"
 #include "slot_machine.h"
+#include "game.h"
 #include <iostream>
 
 using std::cin;
@@ -8,13 +9,9 @@ using std::endl;
 
 int main() {
 	player p(100);
-	slot_machine m(1000);
+	slot_machine m(10000, 6);
 
-	cout << "-----" << endl;
-	for (int i = 0; i < 10; ++i) {
-		p.play(m, 10);
-		cout << p.to_string() << endl << m.to_string() << endl << "-----" << endl;
-	}
+	game our_game(m, p);
 
 	cin.get();
 

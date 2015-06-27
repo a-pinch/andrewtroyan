@@ -1,43 +1,30 @@
 #pragma once
 
-#include "slot_machine.h"
 #include <string>
 #include <sstream>
-#include <exception>
-#include <iostream>
+#include "game.h"
 
-using std::cout;
-using std::endl;
 using std::string;
-using std::exception;
 using std::stringstream;
 
 class player {
 private:
-	unsigned int amount;
+	//fields
+	unsigned int storage;
+
+	unsigned int make_bet();
+	void take_win(unsigned int win);
 public:
 	//ctor
-	player(unsigned int amount_) : amount(amount_) {};
+	player(unsigned int amount) : storage(amount) {};
 
 	//methods
 	string to_string() {
 		stringstream ss;
-		ss << amount;
+		ss << storage;
 		return ss.str();
 	};
 
-	void play(slot_machine& automat, unsigned int bet) {
-		if (bet <= amount) {
-			try {
-				amount -= bet;
-				automat.make_bet(bet);
-				automat.start_game();
-				amount += automat.get_money();
-			}
-			catch (exception e) {
-				cout << e.what() << endl;
-			}
-		}
-	};
+	friend class game;
 };
 
