@@ -12,7 +12,7 @@ using std::endl;
 using std::exception;
 
 int main() {
-	srand(time(nullptr));
+	srand((unsigned int)time(nullptr));
 
 	player p(100);
 	slot_machine m(1000, 10);
