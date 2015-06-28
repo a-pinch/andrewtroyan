@@ -8,28 +8,33 @@
 
 using std::string;
 using std::stringstream;
+using std::vector;
 
 class slot_machine {
 private:
 	//fields
 	unsigned int storage, bet, win;
-	std::vector<drum> drums;
+	vector<drum*> drums;
 
-	//methods
+	//private methods
 	void get_bet(unsigned int money);
 	void start_game();
 	unsigned int return_win();
 public:
 	//ctor
-	slot_machine(unsigned int amount, unsigned int drum_lines) : storage(amount), bet(0), win(0), drums(3, drum(drum_lines)) {};
+	slot_machine(unsigned int amount, unsigned int drum_lines) : storage(amount), bet(0), win(0), drums(3) {
+		for (int i = 0; i < 3; ++i)
+			drums[i] = new drum(drum_lines);
+	}
 
-	//methods
+	//method
 	string to_string() {
 		stringstream ss;
 		ss << storage;
 		return ss.str();
 	};
 
+	//class-friend
 	friend class game;
 };
 

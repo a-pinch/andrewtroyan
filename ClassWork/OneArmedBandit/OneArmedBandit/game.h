@@ -2,6 +2,10 @@
 
 #include "slot_machine.h"
 #include "player.h"
+#include <iostream>
+
+class slot_machine;
+class player;
 
 class game {
 private:

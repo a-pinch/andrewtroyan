@@ -12,19 +12,21 @@ private:
 	//fields
 	unsigned int storage;
 
+	//private methods
 	unsigned int make_bet();
 	void take_win(unsigned int win);
 public:
 	//ctor
 	player(unsigned int amount) : storage(amount) {};
 
-	//methods
+	//method
 	string to_string() {
 		stringstream ss;
 		ss << storage;
 		return ss.str();
 	};
 
+	//class-friend
 	friend class game;
 };
 

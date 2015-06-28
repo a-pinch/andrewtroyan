@@ -1,26 +1,41 @@
 #include "player.h"
 
 #include <iostream>
+#include <exception>
+
+using std::cout;
+using std::cin;
+using std::endl;
+using std::exception;
 
 unsigned int player::make_bet() {
 	unsigned int bet;
 
-	std::cout << "Enter the bet: ";
-	std::cin >> bet;
+	if (!storage)
+		throw exception("The player has no money!");
 
-	while (bet > storage) {
-		std::cout << "Too big! Enter again: ";
-		std::cin >> bet;
+	cout << "Enter the bet: ";
+	cin >> bet;
+
+	while (bet > storage || !bet) {
+		if (bet > storage)
+			cout << "Too big! Enter again: ";
+		else
+			cout << "Wrong amount! Enter again: ";
+
+		cin >> bet;
 	}
+
+	storage -= bet;
 
 	return bet;
 }
 
 void player::take_win(unsigned int win) {
-	if (!win) {
-		std::cout << "Unfortunately, you lost!" << std::endl;
+	if (!win) 
+		cout << "Unfortunately, you lost!" << endl;
+	else {
+		cout << "You won $" << win << '!' << endl;
 		storage += win;
 	}
-	else
-		std::cout << "You won $" << win << '!' << std::endl;
 }
