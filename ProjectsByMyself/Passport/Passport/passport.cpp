@@ -1,19 +1,13 @@
 #include "passport.h"
 
-size_t passport::id = 0;
+size_t passport::global_id = 0;
 
 passport::passport() {
-	if (!id) {
+	if (!global_id) {
 		ifstream file("id.txt");
-		file >> id;
+		file >> global_id;
 		file.close();
 	}
 
-	client_id = ++id;
-}
-
-passport::~passport() {
-	ofstream file("id.txt");
-	file << id;
-	file.close();
+	client_id = ++global_id;
 }

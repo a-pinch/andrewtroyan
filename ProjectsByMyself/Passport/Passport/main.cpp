@@ -11,5 +11,10 @@ int main() {
 	cout << first_man.get_id() << endl << second_man.get_id() << endl;
 
 	cin.get();
+
+	ofstream file("id.txt");
+	file << passport::get_global_id();
+	file.close();
+
 	return 0;
 }
