@@ -12,9 +12,7 @@ int main() {
 
 	cin.get();
 
-	ofstream file("id.txt");
-	file << passport::get_global_id();
-	file.close();
+	passport::save_changes();
 
 	return 0;
 }

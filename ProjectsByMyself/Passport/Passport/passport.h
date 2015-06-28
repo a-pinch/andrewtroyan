@@ -18,5 +18,13 @@ public:
 	static size_t get_global_id() {
 		return global_id;
 	}
+
+	static void save_changes() {
+		if (global_id) {
+			ofstream file("id.txt");
+			file << global_id;
+			file.close();
+		}
+	}
 };
 
