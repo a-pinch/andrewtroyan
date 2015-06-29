@@ -5,4 +5,6 @@
 
 using std::vector;
 
+typedef size_t trait_num;
+
 const vector<trait> traits;
