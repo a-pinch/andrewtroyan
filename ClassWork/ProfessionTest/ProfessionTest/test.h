@@ -14,7 +14,7 @@ private:
 	vector<question>::iterator current_question;
 
 public:
-	//container of questions and answer
+	//container of questions and answers
 	static vector<question> questions;
 
 	//adds set of question to questions' container
