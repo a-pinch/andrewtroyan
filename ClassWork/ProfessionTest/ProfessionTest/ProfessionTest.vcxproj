@@ -77,12 +77,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="answer.h" />
+    <ClInclude Include="details.h" />
     <ClInclude Include="profession.h" />
     <ClInclude Include="question.h" />
     <ClInclude Include="ratee.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="trait.h" />
-    <ClInclude Include="traits.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="details.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="trait.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
