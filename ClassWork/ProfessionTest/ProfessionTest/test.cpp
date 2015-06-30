@@ -17,6 +17,20 @@ using std::vector;
 
 vector<question> test::questions;
 
+void add_questions() {
+	ifstream file("questions.csv");
+	if (file.is_open()) 
+		throw exception("File \"questions.csv\" is not found.");
+
+	string buffer;
+	while (!file.eof()) {
+		getline(file, buffer);
+		vector<string> values = parse_csv_line(buffer);
+		auto it = values.begin();
+		test::questions.push_back(question(*(++it)));
+	}
+}
+
 void add_answers() {
 	ifstream file("answers.csv");
 	if (!file.is_open())

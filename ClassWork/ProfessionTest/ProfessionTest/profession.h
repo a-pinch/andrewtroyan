@@ -11,8 +11,12 @@ using std::initializer_list;
 
 class profession {
 private:
-	string name;
+	//name of profession
+	const string& name;
+	//container of requirement traits for this profession
 	vector<trait_num> traits;
 
+public:
+	//ctor
 	profession(string name_, initializer_list<trait_num> list);
 };

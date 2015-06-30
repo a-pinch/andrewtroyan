@@ -12,7 +12,7 @@ using std::stringstream;
 
 int main() {
 	setlocale(0, "");
-	string test("0;Как дела?;2;+1;1;-1;");
+	string test("0;How are you?;2;+1;1;-1;");
 	
 	vector<string> test_vec = parse_csv_line(test);
 

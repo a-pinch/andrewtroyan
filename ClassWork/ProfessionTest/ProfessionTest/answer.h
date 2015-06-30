@@ -11,7 +11,9 @@ using std::vector;
 
 class answer {
 private:
+	//contains text of the answer
 	const string text;
+	//contains container of pairs (trait_num - it's index number of trait, int - trait's score)
 	map<trait_num, int> points;
 
 public:
@@ -33,6 +35,8 @@ public:
 	}
 
 	//methods
+
+	//pushes pair of values (trait_num, int) to map
 	void push(const point& point_) {
 		points[point_.num] = point_.score;
 	}
