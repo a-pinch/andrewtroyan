@@ -9,9 +9,11 @@ using std::vector;
 typedef size_t trait_num;
 
 class trait {
-public:
-	static vector<trait> traits;	
+private:
 	const string name;
+
+public:
+	static vector<trait> traits;
 
 	trait(const string& name_) : name(name_) {};
 };

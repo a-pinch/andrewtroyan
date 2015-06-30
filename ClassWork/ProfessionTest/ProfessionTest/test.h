@@ -7,13 +7,15 @@
 using std::vector;
 
 class test {
-public:
-	static vector<question> questions;
+private:
 	ratee r;
 	vector<question>::iterator current_question;
 
-	void ask();
-	void show_result();
+public:
+	static vector<question> questions;
 
 	static void add_answers();
+
+	void ask();
+	void show_result();
 };

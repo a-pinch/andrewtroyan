@@ -8,7 +8,7 @@ using std::string;
 using std::map;
 
 class ratee {
-public:
-	string name;
+private:
+	const string& name;
 	map<trait_num, int> results;
 };

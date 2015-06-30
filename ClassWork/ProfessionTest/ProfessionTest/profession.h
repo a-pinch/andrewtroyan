@@ -10,7 +10,7 @@ using std::vector;
 using std::initializer_list;
 
 class profession {
-public:
+private:
 	string name;
 	vector<trait_num> traits;
 
