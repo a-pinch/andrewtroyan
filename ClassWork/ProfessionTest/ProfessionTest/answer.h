@@ -1,6 +1,6 @@
 #pragma once
 
-#include "traits.h"
+#include "trait.h"
 #include <string>
 #include <map>
 
@@ -8,7 +8,7 @@ using std::string;
 using std::map;
 
 class answer {
-private:
+public:
 	string text;
 	map<trait_num, int> points;
 public:

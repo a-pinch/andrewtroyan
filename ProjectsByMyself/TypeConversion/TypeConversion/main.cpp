@@ -9,6 +9,12 @@ using std::endl;
 using std::vector;
 using std::bad_cast;
 
+class A {
+public:
+	int a;
+	A(int aa) : a(aa) {};
+};
+
 int main() {
 	Fraction test(3, 2);
 
@@ -32,7 +38,12 @@ int main() {
 	const int test_int = 7;
 	int& test_int_ref = const_cast<int &>(test_int);
 	test_int_ref = 15; //it doesn't work!!! don't even know if it's good or bad... :D
-	cout << test_int << endl;
+	cout << test_int_ref << endl;
+
+	const A test_a(15);
+	A& test_a_ref = const_cast<A &>(test_a);
+	test_a_ref.a = 7;
+	cout << test_a_ref.a << endl << test_a.a << endl;
 
 	//6. dynamic conversion (for pointers and references)
 	vector<Animal *> zoo{ new Donkey, new Bat };

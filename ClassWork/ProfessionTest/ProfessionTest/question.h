@@ -8,9 +8,7 @@ using std::string;
 using std::vector;
 
 class question {
-private: 
+public: 
 	string text;
 	vector<answer> answers;
-public:
-	//ctor
 };
