@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="details.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="professions.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="trait.cpp" />
   </ItemGroup>

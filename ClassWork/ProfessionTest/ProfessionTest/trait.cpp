@@ -14,7 +14,7 @@ using std::stringstream;
 vector<trait> trait::traits;
 
 void trait::add_traits() {
-	ifstream file("trait.csv");
+	ifstream file("traits.csv");
 	if (!file.is_open())
 		throw exception("File \"traits.csv\" is not found.");
 
