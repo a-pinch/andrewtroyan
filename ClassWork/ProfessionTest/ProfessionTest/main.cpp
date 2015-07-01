@@ -1,26 +1,22 @@
-#include "details.h"
-#include <vector>
+#include "trait.h"
+#include "answer.h"
+#include "profession.h"
+#include "question.h"
+#include "ratee.h"
+#include "test.h"
 #include <iostream>
-#include <locale>
-#include <sstream>
-#include <fstream>
 
-using std::vector;
 using std::cout;
 using std::endl;
 using std::cin;
-using std::stringstream;
-using std::ofstream;
 
 int main() {
-	//setlocale(0, "");
-	//string test("0;How are you?;2;+1;1;-1;");
-	//
-	//vector<string> test_vec = parse_csv_line(test);
+	//test::add_question();
+	//test::add_answers();
+	//trait::add_traits();
+	profession::add_professions();
 
-	//for (auto it = test_vec.begin(); it != test_vec.end(); ++it) {
-	//	cout << *it << endl;
-	//}
+	auto it = profession::professions.begin();
 
 	cin.get();
 	return 0;

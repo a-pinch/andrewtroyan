@@ -3,11 +3,10 @@
 #include "trait.h"
 #include <string>
 #include <vector>
-#include <initializer_list>
+#include <iostream>
 
 using std::string;
 using std::vector;
-using std::initializer_list;
 
 class profession {
 private:
