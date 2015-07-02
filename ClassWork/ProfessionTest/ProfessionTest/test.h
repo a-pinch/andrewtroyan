@@ -14,16 +14,13 @@ private:
 	vector<question>::iterator current_question;
 
 public:
-	//container of questions and answers
-	static vector<question> questions;
-
-	//adds set of question to questions' container
-	static void add_question();
-	//adds set of answers to questions' container
-	static void add_answers();
+	//ctor
+	test(const string& name) : r(name), current_question(question::questions.begin()) {};
 
 	//when we ask ratee
 	void ask();
 	//shows ratee's results of test
 	void show_result();
+
+	bool is_finished() { return current_question == question::questions.end(); };
 };

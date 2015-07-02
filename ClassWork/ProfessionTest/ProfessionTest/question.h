@@ -8,13 +8,18 @@ using std::string;
 using std::vector;
 
 class question {
-private: 
+public: 
 	//text of the question
 	const string text;
 	//container of possible answers to this question
 	vector<answer> answers;
 
-public:
+	//container of questions and answers
+	static vector<question> questions;
+
+	//adds set of question to questions' container
+	static void init();
+
 	//ctor
 	question(const string& text_) : text(text_) {};
 

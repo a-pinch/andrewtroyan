@@ -14,14 +14,14 @@ using std::stringstream;
 
 vector<profession> profession::professions;
 
-void profession::add_professions() {
+void profession::init() {
 	ifstream file("professions.csv");
 	if (!file.is_open())
 		throw exception("File \"professions.csv\" is not found.");
 
 	int current_index = 0, test_index;
-
 	string buffer;
+
 	while (!file.eof()) {
 		getline(file, buffer);
 

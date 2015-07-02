@@ -5,19 +5,25 @@
 #include "ratee.h"
 #include "test.h"
 #include <iostream>
+#include <conio.h>
 
 using std::cout;
 using std::endl;
 using std::cin;
 
 int main() {
-	//test::add_question();
-	//test::add_answers();
-	//trait::add_traits();
-	profession::add_professions();
+	question::init();
+	trait::init();
+	profession::init();
 
-	auto it = profession::professions.begin();
+	test first_test("Andrew");
 
-	cin.get();
+	while (!first_test.is_finished())
+		first_test.ask();
+
+	first_test.show_result();
+
+	_getch();
+
 	return 0;
 }

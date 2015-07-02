@@ -1,79 +1,72 @@
 #include "test.h"
+#include "question.h"
+#include "profession.h"
 #include "details.h"
-#include "answer.h"
-#include <fstream>
-#include <string>
 #include <iostream>
+#include <map>
+#include <utility>
 #include <sstream>
-#include <exception>
-#include <vector>
 
-using std::ifstream;
-using std::string;
-using std::getline;
+using std::cout;
+using std::cin;
+using std::endl;
+using std::map;
 using std::stringstream;
-using std::exception;
-using std::vector;
 
-vector<question> test::questions;
-
-void add_questions() {
-	ifstream file("questions.csv");
-	if (file.is_open()) 
-		throw exception("File \"questions.csv\" is not found.");
-
-	int current_index = 0, test_index;
-
-	string buffer;
-	while (!file.eof()) {
-		getline(file, buffer);
-
-		vector<string> values = parse_csv_line(buffer);
-		auto it = values.begin();
-
-		stringstream ss(*it);
-		ss >> test_index;
-		if (current_index != test_index) {
-			file.close();
-			throw exception("There's a mistake in \"traits.csv\".");
+void test::ask() {
+	if (current_question != question::questions.end()) {
+		//Shows question text and variants of answer
+		cout << current_question->text << endl;
+		int current_index = 1;
+		for (auto it = current_question->answers.begin(); it != current_question->answers.end(); ++it, ++current_index) {
+			cout << current_index << " " << it->text << endl;
 		}
 
-		test::questions.push_back(question(*(++it)));
-		++current_index;
-	}
+		//Takes user's answer
+		size_t user_answer;
+		cin >> user_answer;
+		while (user_answer == 0 || user_answer > current_question->answers.size()) {
+			cout << "Wrong answer! Enter again!" << endl;
+			cin >> user_answer;
+		}
 
-	file.close();
+		//Adds points
+		for (auto tr = current_question->answers[user_answer - 1].points.begin(); tr != current_question->answers[user_answer - 1].points.end(); ++tr) {
+			r.results[tr->first] += tr->second;
+		}
+
+		////Take multiple answer 
+		//string answer;
+		//size_t index;
+		//cin >> answer;
+		//vector<string> values = parse_line(answer);
+		//for (auto it = values.begin(); it != values.end(); ++it) {
+		//	stringstream ss(*it);
+		//	ss >> index;
+		//	if (index > 0 && index <= current_question->answers.size()) {
+		//		for (auto tr = current_question->answers[index - 1].points.begin(); tr != current_question->answers[index - 1].points.end(); ++tr) {
+		//			r.results[tr->first] += tr->second;
+		//		}
+		//	}
+		//}
+
+		++current_question;
+	}
 }
 
-void add_answers() {
-	ifstream file("answers.csv");
-	if (!file.is_open())
-		throw exception("File \"answers.csv\" is not found.");
-
-	string buffer, answer_text;
-	size_t question_index;
-	trait_num tr_num;
-	int tr_sc;
-
-	while (!file.eof()) {
-		getline(file, buffer);
-
-		vector<string> values = parse_csv_line(buffer);
-
-		auto it = values.begin();
-		stringstream ss(*(it++));
-		ss >> question_index;
-		answer_text = *(it++);
-
-		vector<answer::point> points;
-		while (it != values.end()) {
-			stringstream trait_number(*(it++)), trait_score(*(it++));
-			trait_number >> tr_num;
-			trait_score >> tr_sc;
-			points.push_back(answer::point(tr_num, tr_sc));
+void test::show_result() {
+	for (auto pr = profession::professions.begin(); pr != profession::professions.end(); ++pr) {
+		int prof_result = 0;
+		for (auto it = pr->traits.begin(); it != pr->traits.end(); ++it) {
+			prof_result += r.results[*it];
 		}
-		test::questions[question_index].push(answer(answer_text, points));
+		r.results_to_show.insert(std::pair<int, string>(prof_result, pr->name));
 	}
 
-	file.close();
+	size_t counter = 0;
+	for (auto it = r.results_to_show.rbegin(); it != r.results_to_show.rend() && counter < 5; ++it, ++counter) {
+		if (it->first) {
+			cout << it->second << " " << it->first << endl;
+		}
+	}
 }

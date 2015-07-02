@@ -13,7 +13,7 @@ using std::stringstream;
 
 vector<trait> trait::traits;
 
-void trait::add_traits() {
+void trait::init() {
 	ifstream file("traits.csv");
 	if (!file.is_open())
 		throw exception("File \"traits.csv\" is not found.");

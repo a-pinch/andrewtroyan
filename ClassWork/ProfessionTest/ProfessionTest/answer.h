@@ -10,13 +10,12 @@ using std::map;
 using std::vector;
 
 class answer {
-private:
+public:
 	//contains text of the answer
 	const string text;
 	//contains container of pairs (trait_num - it's index number of trait, int - trait's score)
 	map<trait_num, int> points;
 
-public:
 	//structure that contains trait_num and int fields (and have its own ctor)
 	struct point {
 		trait_num num;
