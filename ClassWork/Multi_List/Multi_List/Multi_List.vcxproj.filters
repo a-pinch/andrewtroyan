@@ -20,10 +20,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="select_sort.h">
+    <ClInclude Include="scalar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="toJSON.h">
+    <ClInclude Include="value.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="my_list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

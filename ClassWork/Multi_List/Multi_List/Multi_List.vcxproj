@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8E19F9A4-3A5A-4C77-9CF4-0533DE5FA682}</ProjectGuid>
+    <ProjectGuid>{82A4CB26-0CEA-4F9E-99CE-4F83EF669E12}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>STL_Iterators</RootNamespace>
+    <RootNamespace>Multi_List</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -79,8 +79,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="select_sort.h" />
-    <ClInclude Include="toJSON.h" />
+    <ClInclude Include="my_list.h" />
+    <ClInclude Include="scalar.h" />
+    <ClInclude Include="value.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

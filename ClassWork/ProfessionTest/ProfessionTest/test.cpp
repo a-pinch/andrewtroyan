@@ -32,7 +32,7 @@ void test::ask() {
 
 		//Adds points
 		for (auto tr = current_question->answers[user_answer - 1].points.begin(); tr != current_question->answers[user_answer - 1].points.end(); ++tr) {
-			r.results[tr->first] += tr->second;
+			const_cast<map<trait_num, int>&>(r.results)[tr->first] += tr->second;
 		}
 
 		////Take multiple answer 
@@ -58,7 +58,7 @@ void test::show_result() {
 	for (auto pr = profession::professions.begin(); pr != profession::professions.end(); ++pr) {
 		int prof_result = 0;
 		for (auto it = pr->traits.begin(); it != pr->traits.end(); ++it) {
-			prof_result += r.results[*it];
+			prof_result += const_cast<map<trait_num, int>&>(r.results)[*it];
 		}
 		r.results_to_show.insert(std::pair<int, string>(prof_result, pr->name));
 	}
