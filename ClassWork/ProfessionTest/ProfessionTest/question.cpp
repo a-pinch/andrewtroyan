@@ -17,7 +17,7 @@ using std::stringstream;
 using std::exception;
 using std::vector;
 
-vector<question> question::questions;
+const vector<question> question::questions;
 
 void question::init() {
 
@@ -43,7 +43,7 @@ void question::init() {
 			throw exception("There's a mistake in \"traits.csv\".");
 		}
 
-		question::questions.push_back(question(*(++it)));
+		const_cast<vector<question>&>(question::questions).push_back(question(*(++it)));
 		++current_index;
 	}
 
@@ -77,7 +77,7 @@ void question::init() {
 			trait_score >> tr_score;
 			points.push_back(answer::point(tr_num, tr_score));
 		}
-		question::questions[question_index].push(answer(answer_text, points));
+		const_cast<vector<question>&>(question::questions)[question_index].push(answer(answer_text, points));
 	}
 
 	a_file.close();

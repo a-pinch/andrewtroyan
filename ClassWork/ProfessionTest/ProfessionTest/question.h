@@ -12,10 +12,10 @@ public:
 	//text of the question
 	const string text;
 	//container of possible answers to this question
-	vector<answer> answers;
+	const vector<answer> answers;
 
 	//container of questions and answers
-	static vector<question> questions;
+	static const vector<question> questions;
 
 	//adds set of question to questions' container
 	static void init();
@@ -25,6 +25,6 @@ public:
 
 	//pushes another possible answer to container of answers
 	void push(const answer& obj) {
-		answers.push_back(obj);
+		const_cast<vector<answer>&>(answers).push_back(obj);
 	}
 };

@@ -12,7 +12,7 @@ using std::string;
 using std::getline;
 using std::stringstream;
 
-vector<profession> profession::professions;
+const vector<profession> profession::professions;
 
 void profession::init() {
 	ifstream file("professions.csv");
@@ -45,7 +45,7 @@ void profession::init() {
 			related_traits.push_back(tr_number);
 		}
 		
-		profession::professions.push_back(profession(profession_name, related_traits));
+		const_cast<vector<profession>&>(profession::professions).push_back(profession(profession_name, related_traits));
 		++current_index;
 	}
 

@@ -11,7 +11,7 @@ using std::string;
 using std::getline;
 using std::stringstream;
 
-vector<trait> trait::traits;
+const vector<trait> trait::traits;
 
 void trait::init() {
 	ifstream file("traits.csv");
@@ -34,7 +34,7 @@ void trait::init() {
 			throw exception("There's a mistake in \"traits.csv\".");
 		}
 
-		traits.push_back(trait(*(++it)));
+		const_cast<vector<trait>&>(traits).push_back(trait(*(++it)));
 		++current_index;
 	}
 

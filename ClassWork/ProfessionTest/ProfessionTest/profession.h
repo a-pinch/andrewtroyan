@@ -15,10 +15,10 @@ public:
 	//name of profession
 	const string name;
 	//container of requirement traits for this profession
-	vector<trait_num> traits;
+	const vector<trait_num> traits;
 
 	//container of all possible professions
-	static vector<profession> professions;
+	static const vector<profession> professions;
 	//adds set of professions to container
 	static void init();
 

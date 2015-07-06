@@ -14,7 +14,7 @@ public:
 	const string name;
 
 	//container of all possible traits
-	static vector<trait> traits;
+	static const vector<trait> traits;
 	//adds set of traits to container
 	static void init();
 

@@ -9,13 +9,13 @@ using std::vector;
 class test {
 private:
 	//ratee
-	ratee r;
+	const ratee r;
 	//iterator to current question
 	vector<question>::iterator current_question;
 
 public:
 	//ctor
-	test(const string& name) : r(name), current_question(question::questions.begin()) {};
+	test(const string& name) : r(name), current_question(const_cast<vector<question>&>(question::questions).begin()) {};
 
 	//when we ask ratee
 	void ask();
