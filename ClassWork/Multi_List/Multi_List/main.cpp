@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-	my_list test{ new scalar(1), new scalar(2), new my_list{ new scalar(1), new scalar(2) } };
+	my_list test{ new scalar(1), new scalar(2), new my_list{ new scalar(1), new my_list{ new scalar(100), new scalar(35) }, new scalar(2) } };
 
 	test.print();
 
