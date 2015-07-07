@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClInclude Include="Bolt.h" />
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="Robot.h" />
   </ItemGroup>
   <ItemGroup>
