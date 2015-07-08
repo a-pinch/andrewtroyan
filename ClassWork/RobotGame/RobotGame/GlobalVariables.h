@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Circle.h"
-#include <vector>
+#include <list>
 
-using std::vector;
+using std::list;
 
-static vector<Circle*> objectStorage;
+static list<Circle*> objectStorage;
 
-static const double FPS = 20;		  // frames per second
-static const double arenaXSize = 500; // pixels
-static const double arenaYSize = 500; // pixels
+const double FPS = 20;		  // frames per second
+const double arenaXSize = 500; // pixels
+const double arenaYSize = 500; // pixels
