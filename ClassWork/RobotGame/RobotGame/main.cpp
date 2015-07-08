@@ -4,5 +4,6 @@
 #include "GlobalVariables.h"
 
 int main() {
+
 	return 0;
 }
