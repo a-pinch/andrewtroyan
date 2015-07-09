@@ -3,9 +3,10 @@
 #include "GlobalVariables.h"
 #include <cmath>
 #include <cstdlib>
+#include <typeinfo>
 
-const double Robot::robot_speed = 20; 
-const double Robot::robot_radius = 20;
+const double Robot::robot_speed = 10; 
+const double Robot::robot_radius = 10;
 const int Robot::robot_energy = 1000;
 
 void Robot::makeDecision() {
@@ -13,10 +14,8 @@ void Robot::makeDecision() {
 	bool to_move_random = true;
 
 	for (auto it : objectStorage) {
-		Robot* it_is_robot = dynamic_cast<Robot*>(it);
-
 		// if this object is a robot
-		if (it_is_robot) {
+		if (typeid(it) == typeid(Robot*)) {
 			double destination = hypot(x - it->x, y - it->y);
 			if (destination < safeDestForRobots) {
 				//we're going to shoot
@@ -40,11 +39,15 @@ void Robot::makeDecision() {
 				shoot(it->x, it->y, energy_to_shoot * 2);
 
 				//move to another direction
-				double future_destination = hypot(x - (it->x + it->vx * 1 / FPS), y - (it->y + it->vy * 1 / FPS));
+				double future_destination = hypot(x - (it->x + it->vx * 1.0 / FPS), y - (it->y + it->vy * 1.0 / FPS));
 				if (future_destination < destination) {
 					//moving
-// ***					// moveToPoint();
-// ***					// move();
+					if (x - (it->x - x) > 0 && x - (it->x - x) < arenaXSize) {
+						moveToPoint(x -= (it->x - x), it->y);
+						move(1.0 / FPS);
+					}
+					else 
+						break;
 
 					//making to_move_random false (because we've moved already)
 					to_move_random = false;
@@ -55,7 +58,10 @@ void Robot::makeDecision() {
 		else {
 			double destination = hypot(x - it->x, y - it->y);
 			if (destination < safeDestForBolts) {
-// ***				//move to another destination
+				//move to another destination
+				moveToPoint(x -= (it->x - x), it->y);
+				move(1.0 / FPS);
+
 				//making to_move_random false (because we've moved already)
 				to_move_random = false;
 			}
@@ -68,6 +74,6 @@ void Robot::makeDecision() {
 		double random_x = rand() % (int)arenaXSize;
 		double random_y = rand() % (int)arenaYSize;
 		moveToPoint(random_x, random_y);
-		move(1 / FPS);
+		move(1.0 / FPS);
 	}
 }
