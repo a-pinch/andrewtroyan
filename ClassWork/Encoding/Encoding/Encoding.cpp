@@ -41,9 +41,11 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	sort(storage_of_strings.begin(), storage_of_strings.end(), [](name a, name b){ return a.first_name < b.first_name; });
 
-	wofstream output_file("names.txt");
-	for (auto it : storage_of_strings)
-		output_file << it.surname << ' ' << it.first_name << ' ' << it.second_name << endl;
+	wofstream output_file("test.txt", ios::binary);
+	output_file.imbue(locale(""));
+	for (auto it : storage_of_strings) {
+		output_file << wstring(it) << endl;
+	}
 	output_file.close();
 
 	cin.get();
