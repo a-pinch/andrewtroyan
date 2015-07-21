@@ -84,7 +84,7 @@ LRESULT CALLBACK TimerClicked(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lP
 			}
 		}
 		else if (VerticalMove < 0) {
-			if (winParams.bottom + 10 < 1080) {
+			if (winParams.bottom + 10 < GetSystemMetrics(SM_CYSCREEN)) {
 				winParams.top += 10;
 				winParams.bottom += 10;
 			}
@@ -96,7 +96,7 @@ LRESULT CALLBACK TimerClicked(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lP
 			}
 		}
 		else if (HorizontalMove > 0) {
-			if (winParams.right + 10 < 1920) {
+			if (winParams.right + 10 < GetSystemMetrics(SM_CXSCREEN)) {
 				winParams.left += 10;
 				winParams.right += 10;
 			}
@@ -134,7 +134,7 @@ LRESULT CALLBACK ToDestroy(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lPara
 LRESULT CALLBACK ToRunAway(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam) {
 	GetWindowRect(hWnd, &winParams);
 	int winWidht = winParams.right - winParams.left, winHeight = winParams.bottom - winParams.top;
-	int newTop = rand() % (1080 - winHeight), newLeft = rand() % (1920 - winWidht);
+	int newTop = rand() % (GetSystemMetrics(SM_CYSCREEN) - winHeight), newLeft = rand() % (GetSystemMetrics(SM_CXSCREEN) - winWidht);
 	MoveWindow(hWnd, newLeft, newTop, winWidht, winHeight, TRUE);
 	return 0;
 }
