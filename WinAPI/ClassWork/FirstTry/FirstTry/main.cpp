@@ -133,12 +133,9 @@ LRESULT CALLBACK ToDestroy(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lPara
 
 LRESULT CALLBACK ToRunAway(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam) {
 	GetWindowRect(hWnd, &winParams);
-	auto xMouse = GET_X_LPARAM(lParam), yMouse = GET_Y_LPARAM(lParam);
-	if ((xMouse >= winParams.left && xMouse <= winParams.right) || (yMouse >= winParams.top && yMouse <= winParams.bottom)) {
-		int winWidht = winParams.right - winParams.left, winHeight = winParams.bottom - winParams.top;
-		int newTop = rand() % (1080 - winHeight), newLeft = rand() % (1920 - winWidht);
-		MoveWindow(hWnd, newLeft, newTop, winWidht, winHeight, TRUE);
-	}
+	int winWidht = winParams.right - winParams.left, winHeight = winParams.bottom - winParams.top;
+	int newTop = rand() % (1080 - winHeight), newLeft = rand() % (1920 - winWidht);
+	MoveWindow(hWnd, newLeft, newTop, winWidht, winHeight, TRUE);
 	return 0;
 }
 
