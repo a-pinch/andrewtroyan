@@ -42,23 +42,20 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPTSTR lpszCmdLine, i
 	wstring stringBuffer;
 	int amountOfQuestions;
 
-	//while (!fileToRead.eof()) {
-	//	getline(fileToRead, stringBuffer);
+	while (!fileToRead.eof()) {
+		getline(fileToRead, stringBuffer);
 
-	//	amountOfQuestions = wcstol(stringBuffer.c_str(), NULL, 10);
-	//	questionBuffer.correctAnswer = wcstol(stringBuffer.substr(2, 1).c_str(), NULL, 10);
+		amountOfQuestions = wcstol(stringBuffer.c_str(), NULL, 10);
+		questionBuffer.correctAnswer = wcstol(stringBuffer.substr(2, 1).c_str(), NULL, 10);
 
-	//	getline(fileToRead, questionBuffer.text);
+		getline(fileToRead, questionBuffer.text);
 
-	//	for (int i = 0; i < amountOfQuestions; ++i) {
-	//		getline(fileToRead, stringBuffer);
-	//		questionBuffer.answers.push_back(stringBuffer);
-	//	}
+		for (int i = 0; i < amountOfQuestions; ++i) {
+			getline(fileToRead, stringBuffer);
+			questionBuffer.answers.push_back(stringBuffer);
+		}
 
-	//	questions.push_back(std::move(questionBuffer));
-	//}
-
-	while (getline(fileToRead, stringBuffer)) {
+		questions.push_back(std::move(questionBuffer));
 	}
 
 	fileToRead.close();
