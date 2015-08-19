@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BB86075A-48B9-4AD1-A404-5D43D09B9FBC}</ProjectGuid>
+    <ProjectGuid>{ACB55D0F-E8ED-4DEC-AF95-0F81CE0E130F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Millionaire</RootNamespace>
+    <RootNamespace>Grocery</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -77,10 +77,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="question_info.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="question_info.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
