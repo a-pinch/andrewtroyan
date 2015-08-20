@@ -85,6 +85,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpszCmd
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	int indexForNewButtons = 0;
+	vector<HWND>::iterator itButton;
 	static int buttonOffset, buttonHeight;
 	static HWND hButtonBuffer;
 	static wchar_t stringBuffer[256];
@@ -102,20 +103,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		mainWndWidth = mainWndRect.right - mainWndRect.left;
 
 		hQuestionArea = CreateWindow(L"STATIC", currentQuestion->textOfQuestion.c_str(), WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER | WS_EX_CLIENTEDGE, 
-			0, 0, mainWndWidth, mainWndHeight / 6, hWnd, NULL, hInst, NULL);
+			0, 0, mainWndWidth, mainWndHeight / 4, hWnd, NULL, hInst, NULL);
 
 		buttonOffset = 0;
-		buttonHeight = mainWndHeight * 2 / 3 / currentQuestion->answers.size();
+		buttonHeight = mainWndHeight / 2 / currentQuestion->answers.size();
 
 		for (auto it : currentQuestion->answers) {
-			hButtonBuffer = CreateWindow(L"BUTTON", it.c_str(), WS_CHILD | WS_VISIBLE | WS_BORDER | BS_DEFPUSHBUTTON, 0, mainWndHeight / 6 + buttonOffset, mainWndWidth,
+			hButtonBuffer = CreateWindow(L"BUTTON", it.c_str(), WS_CHILD | WS_VISIBLE | WS_BORDER | BS_DEFPUSHBUTTON, 0, mainWndHeight / 4 + buttonOffset, mainWndWidth,
 				buttonHeight, hWnd, (HMENU)indexForNewButtons++, hInst, NULL);
 			hButtonAnswers.push_back(hButtonBuffer);
 			buttonOffset += buttonHeight;
 		}
 
 		hBalanceArea = CreateWindow(L"STATIC", (balanceMessage + to_wstring(currentBalance)).c_str(), WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER | WS_EX_CLIENTEDGE,
-			0, mainWndHeight * 5 / 6, mainWndWidth, mainWndHeight / 6, hWnd, NULL, hInst, NULL);
+			0, mainWndHeight * 3 / 4, mainWndWidth, mainWndHeight / 4, hWnd, NULL, hInst, NULL);
 
 		break;
 
@@ -124,17 +125,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		mainWndHeight = mainWndRect.bottom - mainWndRect.top;
 		mainWndWidth = mainWndRect.right - mainWndRect.left;
 
-		MoveWindow(hQuestionArea, 0, 0, mainWndWidth, mainWndHeight / 6, FALSE);
+		MoveWindow(hQuestionArea, 0, 0, mainWndWidth, mainWndHeight / 4, FALSE);
 
 		buttonOffset = 0;
-		buttonHeight = mainWndHeight * 2 / 3 / currentQuestion->answers.size();
+		buttonHeight = mainWndHeight / 2 / currentQuestion->answers.size();
 
 		for (auto it : hButtonAnswers) {
-			MoveWindow(it, 0, mainWndHeight / 6 + buttonOffset, mainWndWidth, buttonHeight, FALSE);
+			MoveWindow(it, 0, mainWndHeight / 4 + buttonOffset, mainWndWidth, buttonHeight, FALSE);
 			buttonOffset += buttonHeight;
 		}
 
-		MoveWindow(hBalanceArea, 0, mainWndHeight * 5 / 6, mainWndWidth, mainWndHeight / 6, FALSE);
+		MoveWindow(hBalanceArea, 0, mainWndHeight * 3 / 4, mainWndWidth, mainWndHeight / 4, FALSE);
 		break;
 
 	case WM_COMMAND:
@@ -153,34 +154,40 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 
-	//case WM_NEXTPAGE:
-	//	if (currentQuestion + 1 == questions.end()) {
-	//		MessageBox(NULL, ((wstring)L"You won " + to_wstring(currentBalance)).c_str(), L"Congratulations!", MB_OK);
-	//	}
-	//	else {
-	//		++currentQuestion;
-	//		SetWindowText(hQuestionArea, currentQuestion->textOfQuestion.c_str());
+	case WM_NEXTPAGE:
+		if (currentQuestion + 1 == questions.end()) {
+			MessageBox(NULL, ((wstring)L"You won " + to_wstring(currentBalance)).c_str(), L"Congratulations!", MB_OK);
+			DestroyWindow(hMainWnd);
+		}
+		else {
+			++currentQuestion;
+			SetWindowText(hQuestionArea, currentQuestion->textOfQuestion.c_str());
 
-	//		if (hButtonAnswers.size() == currentQuestion->answers.size()) {
+			if (hButtonAnswers.size() == currentQuestion->answers.size()) {
+				itButton = hButtonAnswers.begin();
+				for (auto it : currentQuestion->answers) {
+					SetWindowText(*itButton, it.c_str());
+					++itButton;
+				}
+			}
+			else {
+				for (auto it : hButtonAnswers) {
+					DestroyWindow(it);
+				}
+				hButtonAnswers.clear();
 
-	//		}
-	//		else {
-	//			for (auto it : hButtonAnswers) {
-	//				DestroyWindow(it);
-	//			}
+				buttonOffset = 0;
+				buttonHeight = mainWndHeight / 2 / currentQuestion->answers.size();
 
-	//			buttonOffset = 0;
-	//			buttonHeight = mainWndHeight * 2 / 3 / currentQuestion->answers.size();
-
-	//			for (auto it : currentQuestion->answers) {
-	//				hButtonBuffer = CreateWindow(L"BUTTON", it.c_str(), WS_CHILD | WS_VISIBLE | WS_BORDER | BS_DEFPUSHBUTTON, 0, mainWndHeight / 6 + buttonOffset, mainWndWidth,
-	//					buttonHeight, hWnd, (HMENU)indexForNewButtons++, hInst, NULL);
-	//				hButtonAnswers.push_back(hButtonBuffer);
-	//				buttonOffset += buttonHeight;
-	//			}
-	//		}
-	//	}
-	//	break;
+				for (auto it : currentQuestion->answers) {
+					hButtonBuffer = CreateWindow(L"BUTTON", it.c_str(), WS_CHILD | WS_VISIBLE | WS_BORDER | BS_DEFPUSHBUTTON, 0, mainWndHeight / 4 + buttonOffset, mainWndWidth,
+						buttonHeight, hWnd, (HMENU)indexForNewButtons++, hInst, NULL);
+					hButtonAnswers.push_back(hButtonBuffer);
+					buttonOffset += buttonHeight;
+				}
+			}
+		}
+		break;
 
 	case WM_CLOSE:
 		DestroyWindow(hWnd);
