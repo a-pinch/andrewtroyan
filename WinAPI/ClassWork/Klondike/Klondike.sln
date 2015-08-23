@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Patience", "Patience\Patience.vcxproj", "{D86C179C-5799-45A7-A751-C707493CF6A5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Klondike", "Klondike\Klondike.vcxproj", "{6B7BBD7A-3DCC-4F84-B114-41A7BDF3BADB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D86C179C-5799-45A7-A751-C707493CF6A5}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D86C179C-5799-45A7-A751-C707493CF6A5}.Debug|Win32.Build.0 = Debug|Win32
-		{D86C179C-5799-45A7-A751-C707493CF6A5}.Release|Win32.ActiveCfg = Release|Win32
-		{D86C179C-5799-45A7-A751-C707493CF6A5}.Release|Win32.Build.0 = Release|Win32
+		{6B7BBD7A-3DCC-4F84-B114-41A7BDF3BADB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6B7BBD7A-3DCC-4F84-B114-41A7BDF3BADB}.Debug|Win32.Build.0 = Debug|Win32
+		{6B7BBD7A-3DCC-4F84-B114-41A7BDF3BADB}.Release|Win32.ActiveCfg = Release|Win32
+		{6B7BBD7A-3DCC-4F84-B114-41A7BDF3BADB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

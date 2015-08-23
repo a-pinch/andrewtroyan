@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D86C179C-5799-45A7-A751-C707493CF6A5}</ProjectGuid>
+    <ProjectGuid>{6B7BBD7A-3DCC-4F84-B114-41A7BDF3BADB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Patience</RootNamespace>
+    <RootNamespace>Klondike</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -76,6 +76,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="details.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="details.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
