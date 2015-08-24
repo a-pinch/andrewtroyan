@@ -31,7 +31,7 @@ static WNDPROC standardWndProcForStatics = NULL;
 
 static vector<HWND> cards;
 static vector<vector<HWND>> suitDecks = vector<vector<HWND>>(4);
-static vector<vector<HWND>> cardColums = vector<vector<HWND>>(7);
+static vector<vector<HWND>> cardColumns = vector<vector<HWND>>(7);
 
 static RECT mainWndClientRect = { 0 };
 static int mainWndWidth, mainWndHeight;
