@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <vector>
 
-//#define WM_ADDCARD 0x1000
+#define WM_ADDCARD 0x1000
 
 using namespace std;
 
@@ -38,6 +38,7 @@ static int mainWndWidth, mainWndHeight;
 static int offsetInWidth, offsetInHeight;
 static const int objectsHeight = 96, objectsWidth = 71;
 static vector<HWND>::iterator currentCardInDeck;
+static int indexOfCurrentCardInDeck;
 
 int LoadCardBitmaps(vector<HBITMAP>&);
 int DeleteCardBitmaps(vector<HBITMAP>&);
