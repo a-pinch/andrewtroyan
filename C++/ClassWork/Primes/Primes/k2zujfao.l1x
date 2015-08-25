@@ -14,7 +14,7 @@ static ofstream fileOneCore, fileTwoCores;
 const int N = 2;
 
 DWORD WINAPI countPrimesForOneCore(LPVOID lp) {
-	for (int candidate = 3; candidate < 10; candidate += 2) {
+	for (int candidate = 3; candidate < 1000000; candidate += 2) {
 		bool flag = true;
 		for (int divider = 3; divider * divider <= candidate; divider += 2) {
 			if (candidate % divider == 0) {
@@ -31,7 +31,7 @@ DWORD WINAPI countPrimesForOneCore(LPVOID lp) {
 DWORD WINAPI countPrimesForTwoCores(LPVOID lp) {
 	int threadIndex = (int)lp;
 
-	for (int candidate = 2 * threadIndex + 3; candidate < 10; candidate += N * 2) {
+	for (int candidate = 2 * threadIndex + 3; candidate < 1000000; candidate += N * 2) {
 		bool flag = true;
 		for (int divider = 3; divider * divider <= candidate; divider += 2) {
 			if (candidate % divider == 0) {
@@ -68,40 +68,7 @@ int main() {
 		threads[i] = CreateThread(NULL, 0, countPrimesForTwoCores, (LPVOID)i, 0, NULL);
 	}
 
-	//Sleep(10);
-
-	//int index1 = 0, index2 = 0;
-	//int result1, result2;
-
-	//while (index1 < threadStorages[0].size() && index2 < threadStorages[1].size()) {
-	//	result1 = threadStorages[0].front();
-	//	result2 = threadStorages[1].front();
-	//	
-	//	if (result1 < result2) {
-	//		fileTwoCores << result1 << endl;
-	//		threadStorages[0].pop_front();
-	//		index1 = 0;
-	//	}
-	//	else {
-	//		fileTwoCores << result2 << endl;
-	//		threadStorages[1].pop_front();
-	//		index2 = 0;
-	//	}
-	//}
-
-	//while (index1 < threadStorages[0].size()) {
-	//	fileTwoCores << threadStorages[0].front() << endl;
-	//	threadStorages[0].pop_front();
-	//	index1 = 0;
-	//}
-
-	//while (index2 < threadStorages[1].size()) {
-	//	fileTwoCores << threadStorages[1].front() << endl;
-	//	threadStorages[1].pop_front();
-	//	index2 = 0;
-	//}
-
-	WaitForMultipleObjects(N, threads, TRUE, INFINITE);
+	Sleep(10);
 
 	auto it1 = threadStorages[0].begin();
 	auto it2 = threadStorages[1].begin();
@@ -109,22 +76,27 @@ int main() {
 	while (it1 != threadStorages[0].end() && it2 != threadStorages[1].end()) {
 		if (*it1 < *it2) {
 			fileTwoCores << *it1 << endl;
-			++it1;
+			threadStorages[0].pop_front();
+			it1 = threadStorages[0].begin();
 		}
 		else {
 			fileTwoCores << *it2 << endl;
-			++it2;
+			threadStorages[1].pop_front();
+			it2 = threadStorages[1].begin();
 		}
 	}
 	while (it1 != threadStorages[0].end()) {
 		fileTwoCores << *it1 << endl;
-		++it1;
+		threadStorages[0].pop_front();
+		it1 = threadStorages[0].begin();
 	}
 	while (it2 != threadStorages[1].end()) {
 		fileTwoCores << *it2 << endl;
-		++it2;
+		threadStorages[1].pop_front();
+		it2 = threadStorages[1].begin();
 	}
 
+	WaitForMultipleObjects(N, threads, TRUE, INFINITE);
 	after = chrono::system_clock::now();
 
 	cout << "Result for two cores: " << chrono::duration_cast<chrono::milliseconds>(after - before).count() << " milliseconds." << endl;

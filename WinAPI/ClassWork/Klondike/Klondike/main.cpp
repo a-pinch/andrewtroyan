@@ -14,8 +14,8 @@ LRESULT CALLBACK WndProcForDeck(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK WndProcForCardsInDeck(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK WndProcForSuitDecks(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK WndProcForCardsInSuitsDecks(HWND, UINT, WPARAM, LPARAM);
-LRESULT CALLBACK WndProcForColumns(HWND, UINT, WPARAM, LPARAM);
-LRESULT CALLBACK WndProcForCardInColumns(HWND, UINT, WPARAM, LPARAM);
+//LRESULT CALLBACK WndProcForColumns(HWND, UINT, WPARAM, LPARAM);
+//LRESULT CALLBACK WndProcForCardInColumns(HWND, UINT, WPARAM, LPARAM);
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lCmdLine, int nCmdShow) {
 	unsigned seed = chrono::system_clock::now().time_since_epoch().count();
@@ -95,7 +95,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lCmdLin
 			tempWidthOffset + (offsetInWidth - objectsWidth) / 2, offsetInHeight + (offsetInHeight - objectsHeight) / 2, objectsWidth, 
 			objectsHeight, hMainWnd, (HMENU)i, hInstance, NULL);
 		tempWidthOffset += offsetInWidth;
-		SetWindowLong(hWndBuffer, GWL_WNDPROC, (LONG)WndProcForColumns);
+		//SetWindowLong(hWndBuffer, GWL_WNDPROC, (LONG)WndProcForColumns);
 		hCardColumns.push_back(hWndBuffer);
 	}
 
