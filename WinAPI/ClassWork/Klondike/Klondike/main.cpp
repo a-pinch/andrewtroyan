@@ -72,7 +72,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lCmdLin
 
 	BringWindowToTop(hDeck);
 
-	//shuffle(cards.begin(), cards.end(), default_random_engine(seed));
+	shuffle(cards.begin(), cards.end(), default_random_engine(seed));
 
 	currentCardInDeck = cards.begin();
 	indexOfCurrentCardInDeck = 0;
