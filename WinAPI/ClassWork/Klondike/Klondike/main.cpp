@@ -199,6 +199,41 @@ LRESULT CALLBACK WndProcForCardsInDeck(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 	int result;
 
 	switch (uMsg) {
+	case WM_LBUTTONDBLCLK:
+		for (int i = 0; i < 4; ++i) {
+			if (!suitDecks[i].size()) {
+				result = SendMessage(hSuitDecks[i], WM_ADDCARD, i, (LPARAM)hWnd);
+				if (!result) {
+					if (indexOfCurrentCardInDeck) {
+						cards.erase(currentCardInDeck - 1);
+						currentCardInDeck = cards.begin() + indexOfCurrentCardInDeck - 1;
+						--indexOfCurrentCardInDeck;
+					}
+					else {
+						cards.erase(currentCardInDeck + cards.size() - 1);
+						currentCardInDeck = cards.begin();
+					}
+					return 0;
+				}
+			}
+			else {
+				result = SendMessage(*(suitDecks[i].rbegin()), WM_ADDCARD, i, (LPARAM)hWnd);
+				if (!result) {
+					if (indexOfCurrentCardInDeck) {
+						cards.erase(currentCardInDeck - 1);
+						currentCardInDeck = cards.begin() + indexOfCurrentCardInDeck - 1;
+						--indexOfCurrentCardInDeck;
+					}
+					else {
+						cards.erase(currentCardInDeck + cards.size() - 1);
+						currentCardInDeck = cards.begin();
+					}
+					return 0;
+				}
+			}
+		}
+		break;
+
 	case WM_LBUTTONDOWN:
 		BringWindowToTop(hWnd);
 		isClicked = true;
@@ -523,16 +558,87 @@ LRESULT CALLBACK WndProcForCardsInColumns(HWND hWnd, UINT uMsg, WPARAM wParam, L
 	int indexOfCurrentCard, indexOfLastCardInColumn;
 	int suitOfCurrentCard, suitOfLastCardInColumn;
 	int result;
+	int offset;
 	HWND hCard;
 	RECT wndRect;
 	POINT pos;
 	HBITMAP cardFace;
+	bool to_select = false;
 
 	static POINT firstPos;
 	static bool isClicked;
 	static int indexOfCurrentColumnStatic; //used only in WM_LBUTTONDOWN
+	static bool isAllowedToMove;
+	static vector<HWND> selectedCards;
 
 	switch (uMsg) {
+	case WM_LBUTTONDBLCLK:
+		GetWindowRect(hWnd, &wndRect);
+		pos.x = wndRect.left;
+		pos.y = wndRect.top;
+		ScreenToClient(hMainWnd, &pos);
+
+		if (pos.x > 0 && pos.x + objectsWidth < offsetInWidth) {
+			indexOfCurrentColumn = 0;
+		}
+		else if (pos.x > offsetInWidth && pos.x + objectsWidth < 2 * offsetInWidth) {
+			indexOfCurrentColumn = 1;
+		}
+		else if (pos.x > 2 * offsetInWidth && pos.x + objectsWidth < 3 * offsetInWidth) {
+			indexOfCurrentColumn = 2;
+		}
+		else if (pos.x > 3 * offsetInWidth && pos.x + objectsWidth < 4 * offsetInWidth) {
+			indexOfCurrentColumn = 3;
+		}
+		else if (pos.x > 4 * offsetInWidth && pos.x + objectsWidth < 5 * offsetInWidth) {
+			indexOfCurrentColumn = 4;
+		}
+		else if (pos.x > 5 * offsetInWidth && pos.x + objectsWidth < 6 * offsetInWidth) {
+			indexOfCurrentColumn = 5;
+		}
+		else if (pos.x > 6 * offsetInWidth && pos.x + objectsWidth < 7 * offsetInWidth) {
+			indexOfCurrentColumn = 6;
+		}
+
+		if (hWnd == *(cardColumns[indexOfCurrentColumn].rbegin())) {
+			for (int i = 0; i < 4; ++i) {
+				if (!suitDecks[i].size()) {
+					result = SendMessage(hSuitDecks[i], WM_ADDCARD, i, (LPARAM)hWnd);
+					if (!result) {
+						cardColumns[indexOfCurrentColumn].erase(cardColumns[indexOfCurrentColumn].begin() + (cardColumns[indexOfCurrentColumn].size() - 1));
+
+						if (cardColumns[indexOfCurrentColumn].size()) {
+							cardFace = (HBITMAP)SendMessage(*(cardColumns[indexOfCurrentColumn].rbegin()), STM_GETIMAGE, WPARAM(IMAGE_BITMAP), 0);
+							if (cardFace == hCardBack) {
+								indexOfCurrentCard = GetWindowLong(*(cardColumns[indexOfCurrentColumn].rbegin()), GWL_ID);
+								SendMessage(*(cardColumns[indexOfCurrentColumn].rbegin()), STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)cardFaces[indexOfCurrentCard]);
+							}
+						}
+
+						return 0;
+					}
+				}
+				else {
+					result = SendMessage(*(suitDecks[i].rbegin()), WM_ADDCARD, i, (LPARAM)hWnd);
+					if (!result) {
+						cardColumns[indexOfCurrentColumnStatic].erase(cardColumns[indexOfCurrentColumnStatic].begin() + (cardColumns[indexOfCurrentColumnStatic].size() - 1));
+
+						if (cardColumns[indexOfCurrentColumnStatic].size()) {
+							cardFace = (HBITMAP)SendMessage(*(cardColumns[indexOfCurrentColumnStatic].rbegin()), STM_GETIMAGE, WPARAM(IMAGE_BITMAP), 0);
+							if (cardFace == hCardBack) {
+								indexOfCurrentCard = GetWindowLong(*(cardColumns[indexOfCurrentColumnStatic].rbegin()), GWL_ID);
+								SendMessage(*(cardColumns[indexOfCurrentColumnStatic].rbegin()), STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)cardFaces[indexOfCurrentCard]);
+							}
+						}
+
+						return 0;
+					}
+				}
+			}
+		}
+
+		break;
+
 	case WM_ADDCLOSEDCARD:
 		hCard = (HWND)lParam;
 		indexOfCurrentColumn = wParam;
@@ -607,8 +713,6 @@ LRESULT CALLBACK WndProcForCardsInColumns(HWND hWnd, UINT uMsg, WPARAM wParam, L
 		break;
 
 	case WM_LBUTTONDOWN:
-		BringWindowToTop(hWnd);
-
 		GetWindowRect(hWnd, &wndRect);
 		firstPos.x = wndRect.left;
 		firstPos.y = wndRect.top;
@@ -636,19 +740,46 @@ LRESULT CALLBACK WndProcForCardsInColumns(HWND hWnd, UINT uMsg, WPARAM wParam, L
 			indexOfCurrentColumnStatic = 6;
 		}
 
+		cardFace = (HBITMAP)SendMessage(hWnd, STM_GETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)0);
+		if (cardFace == hCardBack) {
+			isAllowedToMove = false;
+		}
+		else {
+			isAllowedToMove = true;
+
+			for (auto it : cardColumns[indexOfCurrentColumnStatic]) {
+				if (it == hWnd)
+					to_select = true;
+
+				if (to_select) {
+					selectedCards.push_back(it);
+				}
+			}
+		}
+
+		for (auto it : selectedCards) {
+			BringWindowToTop(it);
+		}
+
 		isClicked = true;
 		SetCapture(hWnd);
 		break;
 
 	case WM_MOUSEMOVE:
-		if (isClicked) {
+		if (isClicked && isAllowedToMove) {
 			pos.x = GET_X_LPARAM(lParam);
 			pos.y = GET_Y_LPARAM(lParam);
 
 			ClientToScreen(hWnd, &pos);
 			ScreenToClient(hMainWnd, &pos);
 
-			MoveWindow(hWnd, pos.x, pos.y, objectsWidth, objectsHeight, TRUE);
+			//MoveWindow(hWnd, pos.x, pos.y, objectsWidth, objectsHeight, TRUE);
+
+			offset = 0;
+			for (vector<HWND>::iterator it = selectedCards.begin(); it != selectedCards.end(); ++it) {
+				MoveWindow(*it, pos.x, pos.y + offset, objectsWidth, objectsHeight, TRUE);
+				offset += objectsHeight / 6;
+			}
 		}
 		break;
 
@@ -662,6 +793,16 @@ LRESULT CALLBACK WndProcForCardsInColumns(HWND hWnd, UINT uMsg, WPARAM wParam, L
 		ScreenToClient(hMainWnd, &pos);
 
 		if (offsetInHeight - pos.y >= objectsHeight / 2) {
+			if (selectedCards.size() > 1) {
+				offset = 0;
+				for (vector<HWND>::iterator it = selectedCards.begin(); it != selectedCards.end(); ++it) {
+					MoveWindow(*it, firstPos.x, firstPos.y + offset, objectsWidth, objectsHeight, TRUE);
+					offset += objectsHeight / 6;
+				}
+				selectedCards.clear();
+				return 0;
+			}
+
 			if (pos.x > 3 * offsetInWidth && pos.x + objectsWidth < 4 * offsetInWidth) {
 				indexOfCurrentSuit = 0;
 			}
@@ -675,8 +816,13 @@ LRESULT CALLBACK WndProcForCardsInColumns(HWND hWnd, UINT uMsg, WPARAM wParam, L
 				indexOfCurrentSuit = 3;
 			}
 			else {
-				MoveWindow(hWnd, firstPos.x, firstPos.y, objectsWidth, objectsHeight, TRUE);
-				break;
+				offset = 0;
+				for (vector<HWND>::iterator it = selectedCards.begin(); it != selectedCards.end(); ++it) {
+					MoveWindow(*it, firstPos.x, firstPos.y + offset, objectsWidth, objectsHeight, TRUE);
+					offset += objectsHeight / 6;
+				}
+				selectedCards.clear();
+				return 0;
 			}
 
 			if (!suitDecks[indexOfCurrentSuit].size()) {
@@ -700,6 +846,8 @@ LRESULT CALLBACK WndProcForCardsInColumns(HWND hWnd, UINT uMsg, WPARAM wParam, L
 				result = SendMessage(*(suitDecks[indexOfCurrentSuit].rbegin()), WM_ADDCARD, indexOfCurrentSuit, (LPARAM)hWnd);
 				if (result) {
 					MoveWindow(hWnd, firstPos.x, firstPos.y, objectsWidth, objectsHeight, TRUE);
+					selectedCards.clear();
+					return 0;
 				}
 				else {
 					cardColumns[indexOfCurrentColumnStatic].erase(cardColumns[indexOfCurrentColumnStatic].begin() + (cardColumns[indexOfCurrentColumnStatic].size() - 1));
@@ -737,18 +885,32 @@ LRESULT CALLBACK WndProcForCardsInColumns(HWND hWnd, UINT uMsg, WPARAM wParam, L
 				indexOfCurrentColumn = 6;
 			}
 			else {
-				MoveWindow(hWnd, firstPos.x, firstPos.y, objectsWidth, objectsHeight, TRUE);
-				break;
+				offset = 0;
+				for (vector<HWND>::iterator it = selectedCards.begin(); it != selectedCards.end(); ++it) {
+					MoveWindow(*it, firstPos.x, firstPos.y + offset, objectsWidth, objectsHeight, TRUE);
+					offset += objectsHeight / 6;
+				}
+				selectedCards.clear();
+				return 0;
 			}
 
 			if (!cardColumns[indexOfCurrentColumn].size()) {
 				result = SendMessage(hCardColumns[indexOfCurrentColumn], WM_ADDCARD, indexOfCurrentColumn, (LONG)hWnd);
 				if (result) {
-					MoveWindow(hWnd, firstPos.x, firstPos.y, objectsWidth, objectsHeight, TRUE);
+					offset = 0;
+					for (vector<HWND>::iterator it = selectedCards.begin(); it != selectedCards.end(); ++it) {
+						MoveWindow(*it, firstPos.x, firstPos.y + offset, objectsWidth, objectsHeight, TRUE);
+						offset += objectsHeight / 6;
+					}
 				}
 				else {
 					cardColumns[indexOfCurrentColumnStatic].erase(cardColumns[indexOfCurrentColumnStatic].begin() + (cardColumns[indexOfCurrentColumnStatic].size() - 1));
 				
+					for (auto it = selectedCards.begin() + 1; it != selectedCards.end(); ++it) {
+						SendMessage(hCardColumns[indexOfCurrentColumn], WM_ADDCARD, indexOfCurrentColumn, (LONG)*it);
+						cardColumns[indexOfCurrentColumnStatic].erase(cardColumns[indexOfCurrentColumnStatic].begin() + (cardColumns[indexOfCurrentColumnStatic].size() - 1));
+					}
+
 					if (cardColumns[indexOfCurrentColumnStatic].size()) {
 						cardFace = (HBITMAP)SendMessage(*(cardColumns[indexOfCurrentColumnStatic].rbegin()), STM_GETIMAGE, WPARAM(IMAGE_BITMAP), 0);
 						if (cardFace == hCardBack) {
@@ -761,11 +923,20 @@ LRESULT CALLBACK WndProcForCardsInColumns(HWND hWnd, UINT uMsg, WPARAM wParam, L
 			else {
 				result = SendMessage(*(cardColumns[indexOfCurrentColumn].rbegin()), WM_ADDCARD, indexOfCurrentColumn, (LONG)hWnd);
 				if (result) {
-					MoveWindow(hWnd, firstPos.x, firstPos.y, objectsWidth, objectsHeight, TRUE);
+					offset = 0;
+					for (vector<HWND>::iterator it = selectedCards.begin(); it != selectedCards.end(); ++it) {
+						MoveWindow(*it, firstPos.x, firstPos.y + offset, objectsWidth, objectsHeight, TRUE);
+						offset += objectsHeight / 6;
+					}
 				}
 				else {
 					cardColumns[indexOfCurrentColumnStatic].erase(cardColumns[indexOfCurrentColumnStatic].begin() + (cardColumns[indexOfCurrentColumnStatic].size() - 1));
 				
+					for (auto it = selectedCards.begin() + 1; it != selectedCards.end(); ++it) {
+						SendMessage(*(cardColumns[indexOfCurrentColumn].rbegin()), WM_ADDCARD, indexOfCurrentColumn, (LONG)*it);
+						cardColumns[indexOfCurrentColumnStatic].erase(cardColumns[indexOfCurrentColumnStatic].begin() + (cardColumns[indexOfCurrentColumnStatic].size() - 1));
+					}
+
 					if (cardColumns[indexOfCurrentColumnStatic].size()) {
 						cardFace = (HBITMAP)SendMessage(*(cardColumns[indexOfCurrentColumnStatic].rbegin()), STM_GETIMAGE, WPARAM(IMAGE_BITMAP), 0);
 						if (cardFace == hCardBack) {
@@ -776,6 +947,8 @@ LRESULT CALLBACK WndProcForCardsInColumns(HWND hWnd, UINT uMsg, WPARAM wParam, L
 				}
 			}
 		}
+
+		selectedCards.clear();
 
 		break;
 
