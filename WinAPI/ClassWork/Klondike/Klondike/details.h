@@ -4,6 +4,8 @@
 #include <vector>
 
 #define WM_ADDCARD 0x1000
+#define WM_ADDCLOSEDCARD 0x1001
+#define WM_ADDCARDFROMCOMPUTER 0x1002
 
 using namespace std;
 
@@ -14,12 +16,14 @@ using namespace std;
 
 static const wchar_t szClassName[] = L"KlodikeClass";
 
+static const COLORREF phone = RGB(5, 157, 9);
+
 static vector<HBITMAP> cardFaces;
 static const HBITMAP hCardBack = (HBITMAP)LoadImage(NULL, L"back.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 static const HBITMAP hEndOfDeck = (HBITMAP)LoadImage(NULL, L"end_of_deck.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 static const HBITMAP hNoMoreCards = (HBITMAP)LoadImage(NULL, L"no_more_cards.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-static const HBRUSH hGreenBrush = CreateSolidBrush(RGB(5, 157, 9));
-static const HBRUSH hCrossBrush = CreateHatchBrush(HS_BDIAGONAL, RGB(0, 0, 0));
+static const HBRUSH hGreenBrush = CreateSolidBrush(phone);
+static const HBRUSH hDiagonalBrush = CreateHatchBrush(HS_BDIAGONAL, RGB(0, 0, 0));
 
 static const HINSTANCE hInstance = (HINSTANCE)GetModuleHandle(NULL);
 

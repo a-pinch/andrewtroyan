@@ -20,10 +20,10 @@ int LoadCardBitmaps(vector<HBITMAP>& cardBitmaps) {
 			stringStorage = L"Diamonds\\";
 			break;
 		case 1:
-			stringStorage = L"Hearts\\";
+			stringStorage = L"Clubs\\";
 			break;
 		case 2:
-			stringStorage = L"Clubs\\";
+			stringStorage = L"Hearts\\";
 			break;
 		case 3:
 			stringStorage = L"Spades\\";
@@ -58,7 +58,7 @@ int DeleteOtherObjects() {
 	DeleteObject(hEndOfDeck);
 	DeleteObject(hNoMoreCards);
 	DeleteObject(hGreenBrush);
-	DeleteObject(hCrossBrush);
+	DeleteObject(hDiagonalBrush);
 
 	return 0;
 }
