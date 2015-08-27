@@ -10,8 +10,8 @@
 using namespace std;
 
 // 0-12 - Diamonds
-// 13-25 - Hearts
-// 26-38 - Clubs
+// 13-25 - Clubs
+// 26-38 - Hearts
 // 39-51 - Spades
 
 static const wchar_t szClassName[] = L"KlodikeClass";
