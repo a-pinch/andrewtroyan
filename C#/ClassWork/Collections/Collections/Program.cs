@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Collections
 {
@@ -10,13 +11,11 @@ namespace Collections
     {
         static void Main(string[] args)
         {
+            Clip[] clips = new Clip[3] { new Clip("1.avi", 2, 1),
+                new Clip("2.avi", 2, 1), new Clip("3.avi",  2, 1) };
 
-            AdNetwork.Clip[] clips = new AdNetwork.Clip[4] { new AdNetwork.Clip("1.avi", 120, 30), new AdNetwork.Clip("2.avi", 100, 45), 
-                new AdNetwork.Clip("3.avi", 180, 40), new AdNetwork.Clip("4.avi", 80, 15) };
-
-            AdNetwork test = new AdNetwork(clips, new int[5]{1, 2, 3, 4, 5});
-
-            test.StartWork();
+            AdNetwork ad_network = new AdNetwork(clips, new int[4] { 0, 1, 2, 3 });
+            ad_network.startWork();
         }
     }
 }

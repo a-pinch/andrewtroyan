@@ -3,87 +3,105 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.IO;
 
 namespace Collections
 {
     class AdNetwork
     {
-        // struct in class
-
-        public struct Clip
-        {
-            public readonly string name;
-            public readonly int paid_time; // in minutes
-            public readonly int length; // in seconds
-            public int left_time;
-
-            public Clip(string name_, int paid_time_, int length_)
-            {
-                name = name_;
-                paid_time = paid_time_;
-                length = length_;
-                left_time = paid_time * 60;
-            }
-        }
-
         // non-static fields
-
         private List<Clip> clips;
-        private int[] TVidentifiers;
+        private int[] tv_identifiers;
+        private List<Thread> tv_threads;
+
+        private object file_locker;
+        private object list_locker;
 
         // constructor
-
-        public AdNetwork(Clip[] clips_, int[] TVidentifiers_)
+        public AdNetwork(Clip[] clips_, int[] tv_identifiers_)
         {
             clips = new List<Clip>();
-
-            foreach(Clip clip in clips_)
+            foreach(var clip in clips_)
             {
                 clips.Add(clip);
             }
 
-            TVidentifiers = TVidentifiers_;
+            tv_identifiers = tv_identifiers_;
+            tv_threads = new List<Thread>();
+            file_locker = new object();
+            list_locker = new object();
         }
 
         // non-static methods
-
-        public void StartWork()
+        public void startWork()
         {
-            foreach(int tv in TVidentifiers) 
+            foreach (var tv in tv_identifiers)
             {
-                int hours = 6; 
-                double minutes = 0;
+                Thread thread = new Thread(tvWorking);
+                thread.Start(tv);
+                tv_threads.Add(thread);
+            }
 
-                //FileStream tv_file = new FileStream("TV\\" + tv + ".txt", FileMode.Append, FileAccess.Write);
-                FileStream tv_file = new FileStream("D:\\1.txt", FileMode.Append, FileAccess.Write);
-                StreamWriter tv_writer = new StreamWriter(tv_file);
+            foreach (var thread in tv_threads)
+            {
+                thread.Join();
+            }
 
-                foreach(Clip clip in clips)
+            foreach (var clip in clips)
+            {
+                clip.output.Close();
+                clip.file_stream.Close();
+            }
+        }
+
+        private void tvWorking(object tv_index)
+        {
+            int index = (int)tv_index;
+            string current_time;
+            FileStream tv_file = new FileStream("..\\..\\TVs\\" + index + ".txt", FileMode.Append, FileAccess.Write);
+            StreamWriter tv_flow = new StreamWriter(tv_file);
+            int to_exit = 0; // if this variable is equal to amount of clips then exit
+            bool to_continue = false;
+
+            while (true)
+            {
+                foreach (var clip in clips)
                 {
-                    if (clip.left_time >= clip.length)
+                    lock (list_locker)
                     {
-                        //FileStream clip_file = new FileStream("Clips\\" + clip.name + ".txt", FileMode.Append, FileAccess.Write);
-                        FileStream clip_file = new FileStream("D:\\2.txt", FileMode.Append, FileAccess.Write);
-                        StreamWriter clip_writer = new StreamWriter(clip_file);
-
-                        clip_writer.WriteLine(tv + " " + hours + ":" + (int)minutes + " ");
-                        tv_writer.WriteLine(clip.name + " " + hours + ":" + (int)minutes);
-
-                        minutes += clip.length / 10.0;
-                        if (minutes >= 60.0)
+                        if (clip.LeftTime >= clip.duration)
                         {
-                            ++hours;
-                            minutes = 0;
+                            clip.LeftTime -= clip.duration;
+                            to_continue = true;
+                        }
+                        else
+                            to_continue = false;
+                    }
+                    if (to_continue)
+                    {
+                        current_time = DateTime.Now.ToString();
+
+                        lock (file_locker)
+                        {
+                            clip.output.WriteLine(current_time + " " + index);
                         }
 
-                        clip_writer.Close();
-                        clip_file.Close();
+                        tv_flow.WriteLine(current_time + " " + clip.name);
+                        Thread.Sleep(TimeSpan.FromSeconds(clip.duration));
+                    }
+                    else
+                    {
+                        ++to_exit;
+
+                        if(to_exit == clips.Count)
+                        {
+                            tv_flow.Close();
+                            tv_file.Close();
+                            return;
+                        }
                     }
                 }
-
-                tv_writer.Close();
-                tv_file.Close();
             }
         }
     }
