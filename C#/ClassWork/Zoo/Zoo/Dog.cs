@@ -14,7 +14,7 @@ namespace Zoo
         // non-static method
         override public void Voice()
         {
-            Console.WriteLine("Cat {0} says meow!", name);
+            Console.WriteLine("Dog {0} says woof!", name);
         }
     }
 }
