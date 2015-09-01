@@ -12,9 +12,14 @@ namespace HashTable
         {
             HashTable test = new HashTable(100);
 
-            test["Andrew"] = "Troyan";
+            test["9:00"] = "Studying";
+            test["12:00"] = "Going home";
+            test["13:00"] = "Programming";
 
-            Console.WriteLine(test["Andrew"]);
+            test.remove("12:00");
+
+            test.printOut();
+            Console.WriteLine("Total amount of elements: " + test.Count);
             Console.ReadKey();
         }
     }
