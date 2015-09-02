@@ -9,14 +9,15 @@ namespace HashTable
     class HashTable <K, V>
     {
         // non-static fields
-        private Dictionary<int, Dictionary<K, V>> storage;
-        private int count;
+        private Dictionary<K, V>[] storage; 
+        private int sizeOfArray, count;
 
         // constructor
-        public HashTable()
+        public HashTable(int supposedAmountOfElements)
         {
-            storage = new Dictionary<int, Dictionary<K, V>>();
+            sizeOfArray = 3 * supposedAmountOfElements;
             count = 0;
+            storage = new Dictionary<K, V>[sizeOfArray];
         }
 
         // properties
@@ -25,15 +26,16 @@ namespace HashTable
             set
             {
                 int hashCode = key.GetHashCode();
+                int index = Math.Abs(hashCode) % sizeOfArray;
 
-                if (!storage.ContainsKey(hashCode))
-                    storage[hashCode] = new Dictionary<K, V>();
+                if (storage[index] == null)
+                    storage[index] = new Dictionary<K, V>();
 
-                if (storage[hashCode].ContainsKey(key))
-                    storage[hashCode][key] = value;
+                if (storage[index].ContainsKey(key))
+                    storage[index][key] = value;
                 else
                 {
-                    storage[hashCode].Add(key, value);
+                    storage[index].Add(key, value);
                     ++count;
                 }
             }
@@ -41,9 +43,10 @@ namespace HashTable
             get
             {
                 int hashCode = key.GetHashCode();
+                int index = Math.Abs(hashCode) % sizeOfArray;
 
-                if (storage.ContainsKey(hashCode) && storage[hashCode].ContainsKey(key))
-                    return storage[hashCode][key];
+                if (storage[index] != null && storage[index].ContainsKey(key))
+                    return storage[index][key];
                 throw new IndexOutOfRangeException("In HashTable, get: there's not the key in hash table!");
             }
         }
@@ -59,11 +62,14 @@ namespace HashTable
         // non-static method
         public void printOut()
         {
-            foreach(var dict_1 in storage)
+            foreach(var dict in storage)
             {
-                foreach(var dict_2 in dict_1.Value)
+                if (dict != null)
                 {
-                    Console.WriteLine(dict_2.Key + " -> " + dict_2.Value);
+                    foreach (var node in dict)
+                    {
+                        Console.WriteLine(node.Key + " -> " + node.Value);
+                    }
                 }
             }
         }
@@ -71,10 +77,11 @@ namespace HashTable
         public void remove(K key)
         {
             int hashCode = key.GetHashCode();
+            int index = Math.Abs(hashCode) % sizeOfArray;
 
-            if(storage.ContainsKey(hashCode) && storage[hashCode].ContainsKey(key))
+            if (storage[index] != null && storage[index].ContainsKey(key))
             {
-                storage[hashCode].Remove(key);
+                storage[index].Remove(key);
                 --count;
             }
             else
