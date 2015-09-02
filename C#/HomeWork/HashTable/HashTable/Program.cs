@@ -10,7 +10,7 @@ namespace HashTable
     {
         static void Main(string[] args)
         {
-            HashTable test = new HashTable(100);
+            HashTable<string, string> test = new HashTable<string, string>();
 
             test["9:00"] = "Studying";
             test["12:00"] = "Going home";

@@ -6,45 +6,45 @@ using System.Threading.Tasks;
 
 namespace HashTable
 {
-    class HashTable
+    class HashTable <K, V>
     {
         // non-static fields
-        private Dictionary<int, Dictionary<string, string>> storage;
+        private Dictionary<int, Dictionary<K, V>> storage;
         private int count;
 
         // constructor
-        public HashTable(int size)
+        public HashTable()
         {
-            storage = new Dictionary<int, Dictionary<string, string>>();
+            storage = new Dictionary<int, Dictionary<K, V>>();
             count = 0;
         }
 
         // properties
-        public string this[string index_string]
+        public V this[K key]
         {
             set
             {
-                int hashCode = index_string.GetHashCode();
+                int hashCode = key.GetHashCode();
 
                 if (!storage.ContainsKey(hashCode))
-                    storage[hashCode] = new Dictionary<string, string>();
+                    storage[hashCode] = new Dictionary<K, V>();
 
-                if (storage[hashCode].ContainsKey(index_string))
-                    storage[hashCode][index_string] = value;
+                if (storage[hashCode].ContainsKey(key))
+                    storage[hashCode][key] = value;
                 else
                 {
-                    storage[hashCode].Add(index_string, value);
+                    storage[hashCode].Add(key, value);
                     ++count;
                 }
             }
 
             get
             {
-                int hashCode = index_string.GetHashCode();
+                int hashCode = key.GetHashCode();
 
-                if (storage.ContainsKey(hashCode) && storage[hashCode].ContainsKey(index_string))
-                    return storage[hashCode][index_string];
-                throw new IndexOutOfRangeException("In get of property!");
+                if (storage.ContainsKey(hashCode) && storage[hashCode].ContainsKey(key))
+                    return storage[hashCode][key];
+                throw new IndexOutOfRangeException("In HashTable, get: there's not the key in hash table!");
             }
         }
 
@@ -68,7 +68,7 @@ namespace HashTable
             }
         }
 
-        public void remove(string key)
+        public void remove(K key)
         {
             int hashCode = key.GetHashCode();
 
@@ -77,6 +77,8 @@ namespace HashTable
                 storage[hashCode].Remove(key);
                 --count;
             }
+            else
+                throw new ArgumentNullException("In HashTable, remove: there's not the key in hash table!");
         }
     }
 }
