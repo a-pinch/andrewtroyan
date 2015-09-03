@@ -34,6 +34,18 @@ namespace HashTable
                 Console.WriteLine(pair.Key + " " + pair.Value);
             }
 
+            IEnumerator<KeyValuePair<string, string>> test_enum = first_hash_table.GetEnumerator();
+
+            test_enum.MoveNext();
+
+            var xxx = test_enum;
+
+
+            test_enum.MoveNext();
+
+            Console.WriteLine(test_enum.Current);
+            Console.WriteLine(xxx.Current);
+
             Console.ReadKey();
         }
     }
