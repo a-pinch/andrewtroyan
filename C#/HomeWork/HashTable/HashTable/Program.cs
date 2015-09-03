@@ -27,7 +27,12 @@ namespace HashTable
             second_hash_table[3] = "Three";
 
             second_hash_table.printOut();
-            Console.WriteLine("Total amount of second hash table's elements: " + second_hash_table.Count);
+            Console.WriteLine("Total amount of second hash table's elements: " + second_hash_table.Count + "\n");
+
+            foreach(var pair in first_hash_table)
+            {
+                Console.WriteLine(pair.Key + " " + pair.Value);
+            }
 
             Console.ReadKey();
         }

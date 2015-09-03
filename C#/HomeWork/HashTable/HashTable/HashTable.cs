@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace HashTable
 {
-    class HashTable <K, V>
+    class HashTable<K, V> : IEnumerable
     {
+        
         // non-static fields
         private Dictionary<K, V>[] storage; 
         private int sizeOfArray, count;
@@ -86,6 +88,27 @@ namespace HashTable
             }
             else
                 throw new ArgumentNullException("In HashTable, remove: there's not the key in hash table!");
+        }
+
+        // iteration operations
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<KeyValuePair<K, V>> GetEnumerator()
+        {
+            foreach(var dict in storage)
+            {
+                if (dict != null)
+                {
+                    foreach(var pair in dict)
+                    {
+                        yield return pair;
+                    }
+                }
+            }
         }
     }
 }
