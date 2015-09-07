@@ -16,7 +16,7 @@ namespace FileStreamSortings
         // non-static fields
 
         public readonly string path;
-        public List<StringPosInFile> positions;
+        private List<StringPosInFile> positions;
         private int[] sortedNames, sortedSurnames, sortedIDs;
         private byte[] buffer;
         bool namesSorted, surnamesSorted, IDsSorted;
@@ -62,7 +62,7 @@ namespace FileStreamSortings
                 }
             }
 
-            if (startOfString + 1 < file.Position)
+            if (startOfString < file.Position)
             {
                 positions.Add(new StringPosInFile(startOfString, (int)file.Length));
             }
@@ -71,7 +71,23 @@ namespace FileStreamSortings
         }
 
         // non-static methods
-        public List<string> getNames(string name)
+        public void ShowAll()
+        {
+            FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            byte[] buffer;
+
+            foreach (var str in positions)
+            {
+                file.Seek(str.begin, SeekOrigin.Begin);
+                buffer = new byte[str.end - str.begin];
+                file.Read(buffer, 0, buffer.Length);
+                Console.WriteLine(Encoding.UTF8.GetString(buffer));
+            }
+
+            file.Close();
+        }
+
+        public List<string> GetNames(string name)
         {
             if (namesSorted == false)
             {
@@ -82,12 +98,149 @@ namespace FileStreamSortings
                     sortedNames[i] = i;
                 }
 
-                Array.Sort(sortedNames, new NamesComparer(path, positions, ComparingValues.name));
+                Array.Sort(sortedNames, new ComparerForSorting(path, positions, ComparingValues.name));
+                namesSorted = true;
             }
 
-            // execute binary search
+            List<string> result = new List<string>();
+            int index = Array.BinarySearch(sortedNames, name, new ComparerForBinarySearch(path, positions, ComparingValues.name));
 
-            return new List<string>();
+            //if there's required name(s) in file, get them all
+            if (index >= 0)
+            {
+                Record recordBuffer;
+
+                while (index > 0)
+                {
+                    recordBuffer = new Record(path, positions[sortedNames[index - 1]]);
+                    if (recordBuffer.name != name)
+                    {
+                        break;
+                    }
+                    --index;
+                }
+
+                while (index < sortedNames.Length)
+                {
+                    recordBuffer = new Record(path, positions[sortedNames[index]]);
+
+                    if (recordBuffer.name != name)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        result.Add((string)recordBuffer);
+                        ++index;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public List<string> GetSurnames(string surname)
+        {
+            if (surnamesSorted == false)
+            {
+                sortedSurnames = new int[positions.Count];
+
+                for (int i = 0; i < sortedSurnames.Length; ++i)
+                {
+                    sortedSurnames[i] = i;
+                }
+
+                Array.Sort(sortedSurnames, new ComparerForSorting(path, positions, ComparingValues.surname));
+                surnamesSorted = true;
+            }
+
+            List<string> result = new List<string>();
+            int index = Array.BinarySearch(sortedSurnames, surname, new ComparerForBinarySearch(path, positions, ComparingValues.surname));
+
+            //if there's required name(s) in file, get them all
+            if (index >= 0)
+            {
+                Record recordBuffer;
+
+                while (index > 0)
+                {
+                    recordBuffer = new Record(path, positions[sortedSurnames[index - 1]]);
+                    if (recordBuffer.surname != surname)
+                    {
+                        break;
+                    }
+                    --index;
+                }
+
+                while (index < sortedSurnames.Length)
+                {
+                    recordBuffer = new Record(path, positions[sortedSurnames[index]]);
+
+                    if (recordBuffer.surname != surname)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        result.Add((string)recordBuffer);
+                        ++index;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public List<string> GetIDs(string id)
+        {
+            if (IDsSorted == false)
+            {
+                sortedIDs = new int[positions.Count];
+
+                for (int i = 0; i < sortedIDs.Length; ++i)
+                {
+                    sortedIDs[i] = i;
+                }
+
+                Array.Sort(sortedIDs, new ComparerForSorting(path, positions, ComparingValues.id));
+                IDsSorted = true;
+            }
+
+            List<string> result = new List<string>();
+            int index = Array.BinarySearch(sortedIDs, id, new ComparerForBinarySearch(path, positions, ComparingValues.id));
+
+            //if there's required name(s) in file, get them all
+            if (index >= 0)
+            {
+                Record recordBuffer;
+
+                while (index > 0)
+                {
+                    recordBuffer = new Record(path, positions[sortedIDs[index - 1]]);
+                    if (recordBuffer.id != id)
+                    {
+                        break;
+                    }
+                    --index;
+                }
+
+                while (index < sortedIDs.Length)
+                {
+                    recordBuffer = new Record(path, positions[sortedIDs[index]]);
+
+                    if (recordBuffer.id != id)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        result.Add((string)recordBuffer);
+                        ++index;
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

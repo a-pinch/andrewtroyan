@@ -38,5 +38,11 @@ namespace FileStreamSortings
             surname = split[1];
             id = split[2];
         }
+
+        // static methods
+        public static explicit operator string(Record record)
+        {
+            return record.name + " " + record.surname + " " + record.id;
+        }
     }
 }

@@ -13,15 +13,14 @@ namespace FileStreamSortings
         {
             try
             {
-                FileStreamBuilding test = new FileStreamBuilding("..\\..\\test1.txt");
+                FileStreamBuilding test = new FileStreamBuilding("..\\..\\test.txt");
+                test.ShowAll();
+                Console.WriteLine();
 
-                FileStream file = new FileStream("..\\..\\test1.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                foreach (var str in test.positions)
+                List<string> names = test.GetNames("Ирина");
+                foreach (var name in names)
                 {
-                    file.Seek(str.begin, SeekOrigin.Begin);
-                    byte[] buffer = new byte[str.end - str.begin];
-                    file.Read(buffer, 0, buffer.Length);
-                    Console.WriteLine(Encoding.UTF8.GetString(buffer));
+                    Console.WriteLine(name);
                 }
             }
             catch (Exception e)

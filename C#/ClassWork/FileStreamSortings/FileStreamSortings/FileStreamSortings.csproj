@@ -41,12 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comparer.cs" />
+    <Compile Include="Comparers.cs" />
     <Compile Include="FileStreamBuilding.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Record.cs" />
-    <Compile Include="StringPos.cs" />
+    <Compile Include="StringPosInFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
