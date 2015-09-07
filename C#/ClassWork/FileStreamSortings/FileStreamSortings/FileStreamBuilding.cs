@@ -75,6 +75,8 @@ namespace FileStreamSortings
         {
             if (namesSorted == false)
             {
+                sortedNames = new int[positions.Count];
+
                 for (int i = 0; i < sortedNames.Length; ++i)
                 {
                     sortedNames[i] = i;
