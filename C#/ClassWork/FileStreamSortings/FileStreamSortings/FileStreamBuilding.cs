@@ -98,7 +98,15 @@ namespace FileStreamSortings
                     sortedNames[i] = i;
                 }
 
-                Array.Sort(sortedNames, new ComparerForSorting(path, positions, ComparingValues.name));
+                Comparison<int> sortByName = delegate(int a, int b)
+                {
+                    Record person1 = new Record(path, positions[a]);
+                    Record person2 = new Record(path, positions[b]);
+                    return person1.name.CompareTo(person2.name);
+                };
+
+                //Array.Sort(sortedNames, new ComparerForSorting(path, positions, ComparingValues.name));
+                Array.Sort(sortedNames, sortByName);
                 namesSorted = true;
             }
 
@@ -150,7 +158,15 @@ namespace FileStreamSortings
                     sortedSurnames[i] = i;
                 }
 
-                Array.Sort(sortedSurnames, new ComparerForSorting(path, positions, ComparingValues.surname));
+                //Array.Sort(sortedSurnames, new ComparerForSorting(path, positions, ComparingValues.surname));
+
+                Array.Sort(sortedSurnames, (a, b) => 
+                {
+                    Record person1 = new Record(path, positions[a]);
+                    Record person2 = new Record(path, positions[b]);
+                    return person1.surname.CompareTo(person2.surname);
+                });
+
                 surnamesSorted = true;
             }
 
@@ -202,7 +218,14 @@ namespace FileStreamSortings
                     sortedIDs[i] = i;
                 }
 
-                Array.Sort(sortedIDs, new ComparerForSorting(path, positions, ComparingValues.id));
+                //Array.Sort(sortedIDs, new ComparerForSorting(path, positions, ComparingValues.id));
+                Array.Sort(sortedIDs, (a, b) =>
+                    {
+                        Record person1 = new Record(path, positions[a]);
+                        Record person2 = new Record(path, positions[a]);
+                        return person1.id.CompareTo(person2.id);
+                    });
+
                 IDsSorted = true;
             }
 
