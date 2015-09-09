@@ -7,6 +7,7 @@ using System.IO;
 
 namespace FileStreamSortings
 {
+    // provides storage of record from data bases (contains name, surname and id)
     class Record
     {
         // non-static fields
@@ -15,6 +16,7 @@ namespace FileStreamSortings
 
         // constructors
 
+        // takes string and splits it up
         public Record(string info)
         {
             string[] split = info.Split(new Char[] { ' ' });
@@ -24,6 +26,7 @@ namespace FileStreamSortings
             id = split[2];
         }
 
+        // takes file path and position of record in file from given path
         public Record(string filePath, StringPosInFile pos)
         {
             FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -40,6 +43,8 @@ namespace FileStreamSortings
         }
 
         // static methods
+
+        // converts record to string (explicitly)
         public static explicit operator string(Record record)
         {
             return record.name + " " + record.surname + " " + record.id;

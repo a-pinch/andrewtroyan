@@ -17,10 +17,10 @@ namespace FileStreamSortings
                 test.ShowAll();
                 Console.WriteLine();
 
-                List<string> names = test.GetNames("Ирина");
-                foreach (var name in names)
+                List<Record> records = test.GetRecordsByName("Ирина");
+                foreach (var record in records)
                 {
-                    Console.WriteLine(name);
+                    Console.WriteLine((string)record);
                 }
             }
             catch (Exception e)

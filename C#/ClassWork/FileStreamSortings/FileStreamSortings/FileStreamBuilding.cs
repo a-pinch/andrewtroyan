@@ -7,29 +7,30 @@ using System.IO;
 
 namespace FileStreamSortings
 {
+    // provides storage of data bases and methods that retrieve records from data base with given arguments (name, surname or id)
     class FileStreamBuilding
     {
         // static fields
 
-        private static readonly int BUF_SIZE = 0x2000;
+        private const int BUF_SIZE = 0x2000;
 
         // non-static fields
 
         public readonly string path;
         private List<StringPosInFile> positions;
         private int[] sortedNames, sortedSurnames, sortedIDs;
-        private byte[] buffer;
-        bool namesSorted, surnamesSorted, IDsSorted;
+        private bool isNamesSorted, isSurnamesSorted, isIDsSorted;
 
         // constructor
 
         public FileStreamBuilding(string path_)
-        {
-            path = path_;
+        {     
+            byte[] buffer;
 
+            path = path_;
             if (File.Exists(path) == false)
             {
-                throw new InvalidDataException("In FileStreamBuilding(): file doesn't exists.");
+                throw new InvalidDataException("In FileStreamBuilding(): file doesn't exist.");
             }
 
             positions = new List<StringPosInFile>();
@@ -42,6 +43,7 @@ namespace FileStreamSortings
             int currentFilePos;
             int readBytes;
 
+            // while end of file is not reached
             while (file.Position != file.Length)
             {
                 currentFilePos = (int)file.Position;
@@ -62,6 +64,7 @@ namespace FileStreamSortings
                 }
             }
 
+            // warning! last string in file with no '\r\n' remained!
             if (startOfString < file.Position)
             {
                 positions.Add(new StringPosInFile(startOfString, (int)file.Length));
@@ -71,6 +74,8 @@ namespace FileStreamSortings
         }
 
         // non-static methods
+
+        // print all data base item to console
         public void ShowAll()
         {
             FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -87,9 +92,10 @@ namespace FileStreamSortings
             file.Close();
         }
 
-        public List<string> GetNames(string name)
+        // get records with given first name
+        public List<Record> GetRecordsByName(string name)
         {
-            if (namesSorted == false)
+            if (isNamesSorted == false)
             {
                 sortedNames = new int[positions.Count];
 
@@ -105,15 +111,14 @@ namespace FileStreamSortings
                     return person1.name.CompareTo(person2.name);
                 };
 
-                //Array.Sort(sortedNames, new ComparerForSorting(path, positions, ComparingValues.name));
                 Array.Sort(sortedNames, sortByName);
-                namesSorted = true;
+                isNamesSorted = true;
             }
 
-            List<string> result = new List<string>();
+            List<Record> result = new List<Record>();
             int index = Array.BinarySearch(sortedNames, name, new ComparerForBinarySearch(path, positions, ComparingValues.name));
 
-            //if there's required name(s) in file, get them all
+            // if there's required name(s) in file, get them all
             if (index >= 0)
             {
                 Record recordBuffer;
@@ -138,7 +143,7 @@ namespace FileStreamSortings
                     }
                     else
                     {
-                        result.Add((string)recordBuffer);
+                        result.Add(recordBuffer);
                         ++index;
                     }
                 }
@@ -147,9 +152,10 @@ namespace FileStreamSortings
             return result;
         }
 
-        public List<string> GetSurnames(string surname)
+        // get records with given surname
+        public List<Record> GetRecordsBySurname(string surname)
         {
-            if (surnamesSorted == false)
+            if (isSurnamesSorted == false)
             {
                 sortedSurnames = new int[positions.Count];
 
@@ -158,8 +164,6 @@ namespace FileStreamSortings
                     sortedSurnames[i] = i;
                 }
 
-                //Array.Sort(sortedSurnames, new ComparerForSorting(path, positions, ComparingValues.surname));
-
                 Array.Sort(sortedSurnames, (a, b) => 
                 {
                     Record person1 = new Record(path, positions[a]);
@@ -167,13 +171,13 @@ namespace FileStreamSortings
                     return person1.surname.CompareTo(person2.surname);
                 });
 
-                surnamesSorted = true;
+                isSurnamesSorted = true;
             }
 
-            List<string> result = new List<string>();
+            List<Record> result = new List<Record>();
             int index = Array.BinarySearch(sortedSurnames, surname, new ComparerForBinarySearch(path, positions, ComparingValues.surname));
 
-            //if there's required name(s) in file, get them all
+            // if there's required name(s) in file, get them all
             if (index >= 0)
             {
                 Record recordBuffer;
@@ -198,7 +202,7 @@ namespace FileStreamSortings
                     }
                     else
                     {
-                        result.Add((string)recordBuffer);
+                        result.Add(recordBuffer);
                         ++index;
                     }
                 }
@@ -207,9 +211,10 @@ namespace FileStreamSortings
             return result;
         }
 
-        public List<string> GetIDs(string id)
+        // get record(s) with given id
+        public List<Record> GetRecordsByID(string id)
         {
-            if (IDsSorted == false)
+            if (isIDsSorted == false)
             {
                 sortedIDs = new int[positions.Count];
 
@@ -218,7 +223,6 @@ namespace FileStreamSortings
                     sortedIDs[i] = i;
                 }
 
-                //Array.Sort(sortedIDs, new ComparerForSorting(path, positions, ComparingValues.id));
                 Array.Sort(sortedIDs, (a, b) =>
                     {
                         Record person1 = new Record(path, positions[a]);
@@ -226,13 +230,13 @@ namespace FileStreamSortings
                         return person1.id.CompareTo(person2.id);
                     });
 
-                IDsSorted = true;
+                isIDsSorted = true;
             }
 
-            List<string> result = new List<string>();
+            List<Record> result = new List<Record>();
             int index = Array.BinarySearch(sortedIDs, id, new ComparerForBinarySearch(path, positions, ComparingValues.id));
 
-            //if there's required name(s) in file, get them all
+            // if there's required name(s) in file, get them all
             if (index >= 0)
             {
                 Record recordBuffer;
@@ -257,7 +261,7 @@ namespace FileStreamSortings
                     }
                     else
                     {
-                        result.Add((string)recordBuffer);
+                        result.Add(recordBuffer);
                         ++index;
                     }
                 }

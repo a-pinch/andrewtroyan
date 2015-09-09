@@ -14,42 +14,6 @@ namespace FileStreamSortings
         id
     }
 
-    class ComparerForSorting : IComparer<int>
-    {
-        // non-static fields 
-        string path;
-        List<StringPosInFile> strPositions;
-        ComparingValues value;
-
-        // constructor
-        public ComparerForSorting(string path_, List<StringPosInFile> strPositions_, ComparingValues value_)
-        {
-            path = path_;
-            strPositions = strPositions_;
-            value = value_;
-        }
-
-        // non-static methods
-        int IComparer<int>.Compare(int first, int second)
-        {
-            Record firstRecord = new Record(path, strPositions[first]);
-            Record secondRecord = new Record(path, strPositions[second]);
-
-            if (value == ComparingValues.name)
-            {
-                return firstRecord.name.CompareTo(secondRecord.name);
-            }
-            else if(value == ComparingValues.surname)
-            {
-                return firstRecord.surname.CompareTo(secondRecord.surname);
-            }
-            else
-            {
-                return firstRecord.id.CompareTo(secondRecord.id);
-            }
-        }
-    }
-
     class ComparerForBinarySearch : IComparer
     {
         // non-static fields 
