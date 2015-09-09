@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comparers.cs" />
+    <Compile Include="Delegates.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="FileStreamBuilding.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

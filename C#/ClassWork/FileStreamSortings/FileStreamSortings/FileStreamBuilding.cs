@@ -20,6 +20,7 @@ namespace FileStreamSortings
         private List<StringPosInFile> positions;
         private int[] sortedNames, sortedSurnames, sortedIDs;
         private bool isNamesSorted, isSurnamesSorted, isIDsSorted;
+        KeyGeneration GenerateKey;
 
         // constructor
 
@@ -71,9 +72,56 @@ namespace FileStreamSortings
             }
 
             file.Close();
+
+            SetDelegates();
         }
 
         // non-static methods
+
+        private void SetDelegates()
+        {
+            GenerateKey = delegate(ComparingValues valuesToCompare)
+            {
+                int[] valuesToSort;
+
+                valuesToSort = new int[positions.Count];
+
+                for (int i = 0; i < valuesToSort.Length; ++i)
+                {
+                    valuesToSort[i] = i;
+                }
+
+                Comparison<int> sortByValue = delegate(int a, int b)
+                {
+                    Record person1 = new Record(path, positions[a]);
+                    Record person2 = new Record(path, positions[b]);
+
+                    if (valuesToCompare == ComparingValues.name)
+                    {
+                        return person1.name.CompareTo(person2.name);
+                    }
+                    else if (valuesToCompare == ComparingValues.surname)
+                    {
+                        return person1.surname.CompareTo(person2.surname);
+                    }
+                    else
+                        return person1.id.CompareTo(person2.id);
+                };
+
+                Array.Sort(valuesToSort, sortByValue);
+
+                if (valuesToCompare == ComparingValues.name)
+                {
+                    sortedNames = valuesToSort;
+                }
+                else if (valuesToCompare == ComparingValues.surname)
+                {
+                    sortedSurnames = valuesToSort;
+                }
+                else
+                    sortedIDs = valuesToSort;
+            };
+        }
 
         // print all data base item to console
         public void ShowAll()
@@ -97,21 +145,7 @@ namespace FileStreamSortings
         {
             if (isNamesSorted == false)
             {
-                sortedNames = new int[positions.Count];
-
-                for (int i = 0; i < sortedNames.Length; ++i)
-                {
-                    sortedNames[i] = i;
-                }
-
-                Comparison<int> sortByName = delegate(int a, int b)
-                {
-                    Record person1 = new Record(path, positions[a]);
-                    Record person2 = new Record(path, positions[b]);
-                    return person1.name.CompareTo(person2.name);
-                };
-
-                Array.Sort(sortedNames, sortByName);
+                GenerateKey(ComparingValues.name);
                 isNamesSorted = true;
             }
 
@@ -157,20 +191,7 @@ namespace FileStreamSortings
         {
             if (isSurnamesSorted == false)
             {
-                sortedSurnames = new int[positions.Count];
-
-                for (int i = 0; i < sortedSurnames.Length; ++i)
-                {
-                    sortedSurnames[i] = i;
-                }
-
-                Array.Sort(sortedSurnames, (a, b) => 
-                {
-                    Record person1 = new Record(path, positions[a]);
-                    Record person2 = new Record(path, positions[b]);
-                    return person1.surname.CompareTo(person2.surname);
-                });
-
+                GenerateKey(ComparingValues.surname);
                 isSurnamesSorted = true;
             }
 
@@ -216,20 +237,7 @@ namespace FileStreamSortings
         {
             if (isIDsSorted == false)
             {
-                sortedIDs = new int[positions.Count];
-
-                for (int i = 0; i < sortedIDs.Length; ++i)
-                {
-                    sortedIDs[i] = i;
-                }
-
-                Array.Sort(sortedIDs, (a, b) =>
-                    {
-                        Record person1 = new Record(path, positions[a]);
-                        Record person2 = new Record(path, positions[a]);
-                        return person1.id.CompareTo(person2.id);
-                    });
-
+                GenerateKey(ComparingValues.id);
                 isIDsSorted = true;
             }
 

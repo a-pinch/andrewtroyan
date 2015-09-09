@@ -7,13 +7,7 @@ using System.Threading.Tasks;
 
 namespace FileStreamSortings
 {
-    enum ComparingValues
-    {
-        name,
-        surname, 
-        id
-    }
-
+    // provides logic for binary search
     class ComparerForBinarySearch : IComparer
     {
         // non-static fields 
