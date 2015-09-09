@@ -9,9 +9,9 @@ namespace Interfaces
     abstract class Animal
     {
         // non-static fields 
-        public readonly string name;
+        public readonly string name, classOfAnimal;
 
         // constructor
-        public Animal( string name_ ) { name = name_; }
+        public Animal( string name_, string classOfAnimal_ ) { name = name_; classOfAnimal = classOfAnimal_; }
     }
 }

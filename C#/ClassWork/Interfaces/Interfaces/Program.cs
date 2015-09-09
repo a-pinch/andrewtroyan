@@ -14,13 +14,14 @@ namespace Interfaces
 
             foreach(var an in animals)
             {
-                try{
-                    IFlyer flyer = (IFlyer)an;
+                if (an is IFlyer)
+                {
+                    IFlyer flyer = an as IFlyer;
                     flyer.fly();
                 }
-                catch (InvalidCastException e)
-                {
-                    Console.WriteLine(e.Message);
+                else
+                { 
+                    Console.WriteLine("The " + an.classOfAnimal + " " + an.name + " cannot fly!");
                 }
             }
 

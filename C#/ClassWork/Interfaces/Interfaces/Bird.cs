@@ -9,11 +9,11 @@ namespace Interfaces
     class Bird : Animal, IFlyer
     {
         // constructor
-        public Bird(string name) : base(name) { }
+        public Bird(string name) : base(name, "bird") { }
 
         public void fly()
         {
-            Console.WriteLine("The bird " + name + " is flying...");
+            Console.WriteLine("The " + classOfAnimal + " " + name + " is flying...");
         }
     }
 }

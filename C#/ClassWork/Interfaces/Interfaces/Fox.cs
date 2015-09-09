@@ -9,6 +9,6 @@ namespace Interfaces
     class Fox : Animal
     {
         // constructor
-        public Fox(string name) : base(name) { }
+        public Fox(string name) : base(name, "fox") { }
     }
 }
