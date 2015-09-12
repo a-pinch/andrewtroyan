@@ -13,13 +13,24 @@ namespace Bank
             Bank bank = new Bank("Bank", "Auditor");
             Contractor contractor;
             string name = "Contractor";
-            Random rand = new Random();
+            Random rand = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
 
-            for (int i = 0; i < 100; ++i )
+            // all customers will be new
+            for (int i = 0; i < 5000; ++i )
             {
                 contractor = new Contractor(name + i.ToString());
-                contractor.makeDeal(bank, rand.Next(0, 10000000));
+                contractor.makeDeal(bank, rand.Next(0, 2000000));
             }
+
+            // some of customers will be regular fair ones, some - unfair and some - new ones
+            for (int i = 0; i < 6000; ++i)
+            {
+                contractor = new Contractor(name + i.ToString());
+                contractor.makeDeal(bank, rand.Next(0, 2000000));
+            }
+
+            // compairing results 
+            bank.GetStatistics();
 
             Console.ReadKey();
         }

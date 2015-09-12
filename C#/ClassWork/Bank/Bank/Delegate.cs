@@ -6,5 +6,6 @@ using System.Threading.Tasks;
 
 namespace Bank
 {
+    // just a delegate that we can use for auditor's checking
     delegate bool AuditCheck(Deal deal);
 }
