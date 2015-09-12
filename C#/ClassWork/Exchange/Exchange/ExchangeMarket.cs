@@ -11,7 +11,7 @@ namespace Exchange
         // non-static fields
         Recorder recorder;
         Auditor auditor;
-        private event EventHandler<Deal> bid;
+        private EventHandler<Deal> bid;
 
         // constructor
         public ExchangeMarket()
