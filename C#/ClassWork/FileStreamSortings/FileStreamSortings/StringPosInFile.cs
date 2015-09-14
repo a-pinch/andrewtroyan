@@ -11,6 +11,9 @@ namespace FileStreamSortings
     {
         public readonly int begin, end;
 
-        public StringPosInFile(int begin_, int end_) { begin = begin_; end = end_; }
+        public StringPosInFile(int begin_, int end_) 
+        {
+            begin = begin_; end = end_; 
+        }
     }
 }

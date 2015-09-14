@@ -13,6 +13,7 @@ namespace FileStreamSortings
         // static fields
 
         private const int BUF_SIZE = 0x2000;
+        private const int COL_MAX_SIZE = 0x0040;
 
         // non-static fields
 
@@ -20,71 +21,96 @@ namespace FileStreamSortings
         private List<StringPosInFile> positions;
         private int[] sortedNames, sortedSurnames, sortedIDs;
         private bool isNamesSorted, isSurnamesSorted, isIDsSorted;
-        KeyGeneration GenerateKey;
+        private KeyGeneration GenerateKey;
+        private GetValues GetNames, GetSurnames, GetIDs;
 
         // constructor
 
         public FileStreamBuilding(string path_)
         {     
-            byte[] buffer;
-
-            path = path_;
-            if (File.Exists(path) == false)
-            {
-                throw new InvalidDataException("In FileStreamBuilding(): file doesn't exist.");
-            }
-
+            byte[] buffer = new byte[BUF_SIZE];
             positions = new List<StringPosInFile>();
-            buffer = new byte[BUF_SIZE];
+            path = path_;
 
-            FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            file.Seek(3, SeekOrigin.Begin); // passing by BOM
-
-            int startOfString = (int)file.Position, endOfString;
-            int currentFilePos;
-            int readBytes;
-
-            // while end of file is not reached
-            while (file.Position != file.Length)
+            using (FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                currentFilePos = (int)file.Position;
-                Array.Clear(buffer, 0, BUF_SIZE);
-                readBytes = file.Read(buffer, 0, BUF_SIZE);
+                file.Seek(3, SeekOrigin.Begin); // skipping BOM
 
-                for (int i = 0; i < readBytes; ++i)
+                int startOfString = (int)file.Position, endOfString = 0, currentFilePos = 0, readBytes = 0;
+
+                // while end of file is not reached
+                while (file.Position != file.Length)
                 {
-                    if (buffer[i] == 0x000d) // if it's '\r'
+                    currentFilePos = (int)file.Position;
+                    Array.Clear(buffer, 0, BUF_SIZE);
+                    readBytes = file.Read(buffer, 0, BUF_SIZE);
+
+                    for (int i = 0; i < readBytes; ++i)
                     {
-                        endOfString = currentFilePos + i;
-                        positions.Add(new StringPosInFile(startOfString, endOfString));
-                    }
-                    else if (buffer[i] == 0x000a) // if it's '\n'
-                    {
-                        startOfString = currentFilePos + i + 1;
+                        if (buffer[i] == 0x000d) // if it's '\r'
+                        {
+                            endOfString = currentFilePos + i;
+
+                            if (checkRecord(buffer, currentFilePos, startOfString, endOfString) == false)
+                            {
+                                throw new FormatInFileException("In FileStreamBuilding.FileStreamBulding(): format of record in file is wrong.", file);
+                            }
+
+                            positions.Add(new StringPosInFile(startOfString, endOfString));
+                        }
+                        else if (buffer[i] == 0x000a) // if it's '\n'
+                        {
+                            startOfString = currentFilePos + i + 1;
+                        }
                     }
                 }
-            }
 
-            // warning! last string in file with no '\r\n' remained!
-            if (startOfString < file.Position)
-            {
-                positions.Add(new StringPosInFile(startOfString, (int)file.Length));
-            }
+                // warning! last string in file with no '\r\n' remained!
+                if (startOfString < file.Position)
+                {
+                    if (checkRecord(buffer, currentFilePos, startOfString, (int)file.Length) == false)
+                    {
+                        throw new FormatInFileException("In FileStreamBuilding.FileStreamBulding(): format of record in file is wrong.", file);
+                    }
 
-            file.Close();
+                    positions.Add(new StringPosInFile(startOfString, (int)file.Length));
+                }
+            }
 
             SetDelegates();
         }
 
         // non-static methods
 
-        private void SetDelegates()
+        private bool checkRecord(byte[] sourceArray, int currentPosInFile, int absoluteStartIndex, int absoluteEndIndex)
+        {
+            byte[] destArray = new byte[absoluteEndIndex - absoluteStartIndex];
+            Array.Copy(sourceArray, absoluteStartIndex - currentPosInFile, destArray, 0, destArray.Length);
+
+            if (destArray.Length > COL_MAX_SIZE * 3)
+            {
+                return false;
+            }
+            else
+            {
+                string record = Encoding.UTF8.GetString(destArray);
+                string[] records = record.Split(new char[] { ' ' });
+                if (records.Length == 3 && records.Contains("") == false)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        private void SetGenerateKeyDelegate ()
         {
             GenerateKey = delegate(ComparingValues valuesToCompare)
             {
-                int[] valuesToSort;
-
-                valuesToSort = new int[positions.Count];
+                int[] valuesToSort = new int[positions.Count];
 
                 for (int i = 0; i < valuesToSort.Length; ++i)
                 {
@@ -123,21 +149,128 @@ namespace FileStreamSortings
             };
         }
 
+        private void SetGetNamesDelegate()
+        {
+            GetNames = delegate(ref List<Record> storage, string valueToCompare, int binarySearchIndex)
+            {
+                Record recordBuffer;
+
+                while (binarySearchIndex > 0)
+                {
+                    recordBuffer = new Record(path, positions[sortedNames[binarySearchIndex - 1]]);
+                    if (recordBuffer.name != valueToCompare)
+                    {
+                        break;
+                    }
+                    --binarySearchIndex;
+                }
+
+                while (binarySearchIndex < sortedNames.Length)
+                {
+                    recordBuffer = new Record(path, positions[sortedNames[binarySearchIndex]]);
+
+                    if (recordBuffer.name != valueToCompare)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        storage.Add(recordBuffer);
+                        ++binarySearchIndex;
+                    }
+                }
+            };
+        }
+
+        private void SetGetSurnamesDelegate()
+        {
+            GetSurnames = delegate(ref List<Record> storage, string valueToCompare, int binarySearchIndex)
+            {
+                Record recordBuffer;
+
+                while (binarySearchIndex > 0)
+                {
+                    recordBuffer = new Record(path, positions[sortedSurnames[binarySearchIndex - 1]]);
+                    if (recordBuffer.surname != valueToCompare)
+                    {
+                        break;
+                    }
+                    --binarySearchIndex;
+                }
+
+                while (binarySearchIndex < sortedSurnames.Length)
+                {
+                    recordBuffer = new Record(path, positions[sortedSurnames[binarySearchIndex]]);
+
+                    if (recordBuffer.surname != valueToCompare)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        storage.Add(recordBuffer);
+                        ++binarySearchIndex;
+                    }
+                }
+            };
+        }
+
+        private void SetGetIDsDelegate()
+        {
+            GetIDs = delegate(ref List<Record> storage, string valueToCompare, int binarySearchIndex)
+            {
+                Record recordBuffer;
+
+                while (binarySearchIndex > 0)
+                {
+                    recordBuffer = new Record(path, positions[sortedIDs[binarySearchIndex - 1]]);
+                    if (recordBuffer.id != valueToCompare)
+                    {
+                        break;
+                    }
+                    --binarySearchIndex;
+                }
+
+                while (binarySearchIndex < sortedIDs.Length)
+                {
+                    recordBuffer = new Record(path, positions[sortedIDs[binarySearchIndex]]);
+
+                    if (recordBuffer.id != valueToCompare)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        storage.Add(recordBuffer);
+                        ++binarySearchIndex;
+                    }
+                }
+            };
+        }
+
+        private void SetDelegates()
+        {
+            SetGenerateKeyDelegate();
+            SetGetNamesDelegate();
+            SetGetSurnamesDelegate();
+            SetGetIDsDelegate();
+        }
+
         // print all data base item to console
         public void ShowAll()
         {
-            FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             byte[] buffer;
 
-            foreach (var str in positions)
+            using (FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                file.Seek(str.begin, SeekOrigin.Begin);
-                buffer = new byte[str.end - str.begin];
-                file.Read(buffer, 0, buffer.Length);
-                Console.WriteLine(Encoding.UTF8.GetString(buffer));
+                foreach (var str in positions)
+                {
+                    file.Seek(str.begin, SeekOrigin.Begin);
+                    buffer = new byte[str.end - str.begin];
+                    file.Read(buffer, 0, buffer.Length);
+                    Console.WriteLine(Encoding.UTF8.GetString(buffer));
+                }
             }
-
-            file.Close();
         }
 
         // get records with given first name
@@ -155,32 +288,7 @@ namespace FileStreamSortings
             // if there's required name(s) in file, get them all
             if (index >= 0)
             {
-                Record recordBuffer;
-
-                while (index > 0)
-                {
-                    recordBuffer = new Record(path, positions[sortedNames[index - 1]]);
-                    if (recordBuffer.name != name)
-                    {
-                        break;
-                    }
-                    --index;
-                }
-
-                while (index < sortedNames.Length)
-                {
-                    recordBuffer = new Record(path, positions[sortedNames[index]]);
-
-                    if (recordBuffer.name != name)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        result.Add(recordBuffer);
-                        ++index;
-                    }
-                }
+                GetNames(ref result, name, index);
             }
 
             return result;
@@ -201,32 +309,7 @@ namespace FileStreamSortings
             // if there's required name(s) in file, get them all
             if (index >= 0)
             {
-                Record recordBuffer;
-
-                while (index > 0)
-                {
-                    recordBuffer = new Record(path, positions[sortedSurnames[index - 1]]);
-                    if (recordBuffer.surname != surname)
-                    {
-                        break;
-                    }
-                    --index;
-                }
-
-                while (index < sortedSurnames.Length)
-                {
-                    recordBuffer = new Record(path, positions[sortedSurnames[index]]);
-
-                    if (recordBuffer.surname != surname)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        result.Add(recordBuffer);
-                        ++index;
-                    }
-                }
+                GetSurnames(ref result, surname, index);
             }
 
             return result;
@@ -247,32 +330,7 @@ namespace FileStreamSortings
             // if there's required name(s) in file, get them all
             if (index >= 0)
             {
-                Record recordBuffer;
-
-                while (index > 0)
-                {
-                    recordBuffer = new Record(path, positions[sortedIDs[index - 1]]);
-                    if (recordBuffer.id != id)
-                    {
-                        break;
-                    }
-                    --index;
-                }
-
-                while (index < sortedIDs.Length)
-                {
-                    recordBuffer = new Record(path, positions[sortedIDs[index]]);
-
-                    if (recordBuffer.id != id)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        result.Add(recordBuffer);
-                        ++index;
-                    }
-                }
+                GetIDs(ref result, id, index);
             }
 
             return result;

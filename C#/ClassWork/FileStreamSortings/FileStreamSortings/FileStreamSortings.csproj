@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormatInFileException.cs" />
     <Compile Include="Comparers.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Enums.cs" />

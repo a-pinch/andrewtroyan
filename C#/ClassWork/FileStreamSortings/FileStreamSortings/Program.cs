@@ -13,7 +13,17 @@ namespace FileStreamSortings
         {
             try
             {
-                FileStreamBuilding test = new FileStreamBuilding("..\\..\\test.txt");
+                string path;
+                Console.WriteLine("Type path: ");
+                path = Console.ReadLine();
+
+                if (Path.GetExtension(path) != ".txt")
+                {
+                    throw new FormatException("In Program.Main(): invalid extension. The extension must be \".txt\"");
+                }
+
+                FileStreamBuilding test = new FileStreamBuilding(path);
+
                 test.ShowAll();
                 Console.WriteLine();
 
@@ -23,7 +33,12 @@ namespace FileStreamSortings
                     Console.WriteLine((string)record);
                 }
             }
-            catch (Exception e)
+            catch (FormatInFileException e)
+            {
+                Console.WriteLine(e.Message);
+                e.fileWithWrongRecord.Dispose();
+            }
+            catch (FormatException e)
             {
                 Console.WriteLine(e.Message);
             }

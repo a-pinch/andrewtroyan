@@ -26,6 +26,11 @@ namespace FileStreamSortings
         // non-static methods
         int IComparer.Compare(object first, object second)
         {
+            if (first is int == false || second is string == false)
+            {
+                throw new ArgumentException("In ComparerForBinarySearch.Compare(object, object): invalid argument(s)");
+            }
+
             int index = (int)first;
             string valueToCompare = (string)second;
 
