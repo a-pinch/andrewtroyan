@@ -8,12 +8,11 @@ namespace Transport
 {
     class Passenger
     {
-        public readonly string from, to;
+        // constructor 
 
-        public Passenger(string from_, string to_)
+        public Passenger(string stationName, uint time)
         {
-            from = from_;
-            to = to_;
+            Console.WriteLine("A passenger came to {0} station at {1}.", stationName, time);
         }
     }
 }
