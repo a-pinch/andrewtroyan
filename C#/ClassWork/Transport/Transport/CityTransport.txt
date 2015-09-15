@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Transport
+{
+    delegate void TransportEvent(uint time);
+
+    class Passenger 
+    {
+        public Passenger(uint time)
+        {
+            Console.WriteLine("A passenger comes at {0}",time);
+        }
+
+        public static void onNewPassenger(uint time)
+        {
+            new Passenger(time);
+            Program.eventQueue[time+30] = new TransportEvent(Passenger.onNewPassenger);
+        }
+    }
+
+    class Program
+    {
+        static public SortedDictionary<uint, TransportEvent> eventQueue = new SortedDictionary<uint,TransportEvent>();
+
+        static void Main(string[] args)
+        {
+            eventQueue[0] = new TransportEvent(Passenger.onNewPassenger);
+
+            uint time = 0;
+
+            while (time < 100)
+            {
+                var en = eventQueue.GetEnumerator();
+                en.MoveNext();
+                time = en.Current.Key;
+                var ev = en.Current.Value;
+                ev(time);
+                eventQueue.Remove(time);
+            }
+        }
+    }
+}
