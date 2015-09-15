@@ -8,19 +8,21 @@ namespace Transport
 {
     class Program
     {
-        public static EventQueue queue = new EventQueue(); 
+        public static EventQueue queue = new EventQueue();
+        public static Station[] stations = new Station[5] { new Station("Minsk", 2), new Station("Osipovichi", 15),
+            new Station("Bobruisk", 7), new Station("Zhlobin", 12), new Station("Gomel", 4)};
+        public static Train train = new Train();
 
         static void Main(string[] args)
         {
-            Station minsk = new Station("Minsk", 2);
-            Station osipovichi = new Station("Osipovichi", 15);
+            queue.Add(0, stations[0].AddPassengerOnArrival);
+            queue.Add(1, stations[1].AddPassengerOnArrival);
 
-            queue.Add(0, minsk.AddPassengerOnArrival);
-            queue.Add(1, osipovichi.AddPassengerOnArrival);
+            queue.Add(3, train.OnArrival);
 
             uint time = 0;
 
-            while (time < 100)
+            while (time < 250)
             {
                 if (queue.ContainsKey(time))
                 {

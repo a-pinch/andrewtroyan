@@ -10,7 +10,7 @@ namespace Transport
     {
         // non-static fields
 
-        string name;
+        public readonly string name;
         uint passengerArrivalPeriod;
         Queue<Passenger> passengers;
 
@@ -23,11 +23,11 @@ namespace Transport
             passengers = new Queue<Passenger>();
         }
 
-        // static methods
+        // non-static methods
 
         public void AddPassengerOnArrival(uint time)
         {
-            new Passenger(name, time);
+            passengers.Enqueue(new Passenger(name, time));
             Program.queue.Add(time + passengerArrivalPeriod, AddPassengerOnArrival);
         }
     }
