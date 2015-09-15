@@ -12,7 +12,7 @@ namespace Transport
     {
         // non-static fields
 
-        SortedDictionary<uint, List<TransportEvent>> queue;
+        private SortedDictionary<uint, List<TransportEvent>> queue;
 
         // constructor
 
@@ -33,11 +33,12 @@ namespace Transport
             queue[index].Add(transportEvent);
         } 
 
-        public void Remove(uint index, TransportEvent transportEvent)
+        public void Remove(uint index)
         {
-            if (queue.ContainsKey(index) == true && queue[index].Contains(transportEvent) == true)
+            if (queue.ContainsKey(index))
             {
-                queue[index].Remove(transportEvent);
+                queue[index].Clear();
+                queue.Remove(index);
             }
         }
 

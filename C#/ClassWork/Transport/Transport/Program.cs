@@ -17,11 +17,13 @@ namespace Transport
         {
             queue.Add(0, stations[0].AddPassengerOnArrival);
             queue.Add(1, stations[1].AddPassengerOnArrival);
+            queue.Add(0, stations[2].AddPassengerOnArrival);
+            queue.Add(1, stations[3].AddPassengerOnArrival);
 
             queue.Add(3, train.OnArrival);
 
             uint time = 0;
-
+            
             while (time < 250)
             {
                 if (queue.ContainsKey(time))
@@ -30,11 +32,13 @@ namespace Transport
                     {
                         transportEvent(time);
                     }
+
+                    queue.Remove(time);
                 }
 
                 ++time;
             }
-
+            
             Console.ReadKey();
         }
     }
