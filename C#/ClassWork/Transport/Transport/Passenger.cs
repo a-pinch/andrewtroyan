@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Transport
 {
@@ -17,6 +18,7 @@ namespace Transport
         public string name;
         public Train relatedTrain;
         public Station from, to;
+        public uint startOfWaiting, endOfWaiting;
 
         // constructor 
 
@@ -25,6 +27,7 @@ namespace Transport
             name = name_;
             from = station;
             relatedTrain = null;
+            startOfWaiting = time;
 
             Random rand = new Random();
             int indexOfCurrentStation = Array.FindIndex(Program.stations, (st) => st == station);
@@ -43,6 +46,13 @@ namespace Transport
 
         public void StepOn(Train train, uint time)
         {
+            endOfWaiting = time;
+
+            using (StreamWriter file = new StreamWriter(Program.fileNameForWaitings, true))
+            {
+                file.WriteLine(endOfWaiting - startOfWaiting);
+            }
+
             Console.WriteLine("{0} is stepping on the train {1} at {2}.", name, train.number, time);
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Transport
 {
@@ -11,7 +12,7 @@ namespace Transport
         // static fields
 
         public static readonly int MAX_CAPACITY = 300;
-        private static uint[] intervalsBetweenStations = new uint[] { 50, 30, 70, 40, 40};
+        private static uint[] intervalsBetweenStations = new uint[] { 50, 30, 70, 40 };
         public static int countingNumber = 0;
 
         // non-static fields
@@ -46,7 +47,14 @@ namespace Transport
             if (currentStation + 1 < Program.stations.Length)
             {
                 Program.stations[currentStation].TrainGoing(this, time);
-                Console.WriteLine("A train is going to {0} station from {1} station at {2}.", 
+
+                using (StreamWriter file = new StreamWriter(Program.fileNameForCapacity, true))
+                {
+                    file.WriteLine(currentAmount);
+                }
+
+
+                Console.WriteLine("A train {0} is going to {1} station from {2} station at {3}.", number,
                     Program.stations[currentStation + 1].name, Program.stations[currentStation].name, time);
 
                 Program.queue.Add(time + intervalsBetweenStations[currentStation], OnArrival);

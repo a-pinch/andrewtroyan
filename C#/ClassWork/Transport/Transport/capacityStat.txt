@@ -1,0 +1,8 @@
+Average waiting of passengers - 112, median - 170.
+-----
+Average waiting of passengers - 110, median - 167.
+-----
+Average waiting of passengers - 110, median - 104.
+-----
+Average waiting of passengers - 111, median - 151.
+-----
