@@ -1,0 +1,10 @@
+Average waiting index - 0, median waiting index - 0.
+-----
+Average waiting index - 101, median waiting index - 151.
+-----
+Average waiting index - 114, median waiting index - 183.
+-----
+Average waiting index - 114, median waiting index - 167.
+-----
+Average waiting index - 114, median waiting index - 151.
+-----

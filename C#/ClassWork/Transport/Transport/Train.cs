@@ -36,28 +36,28 @@ namespace Transport
 
         public void OnArrival(uint time)
         {
-            Console.WriteLine("A train {0} came to {1} station at {2}.", number, Program.stations[currentStation].name, time);
-            Program.stations[currentStation].TrainCame(this, time);
+            Console.WriteLine("A train {0} came to {1} station at {2}.", number, MainObjects.stations[currentStation].name, time);
+            MainObjects.stations[currentStation].TrainCame(this, time);
 
-            Program.queue.Add(time + 5, OnDeparture);
+            MainObjects.queue.Add(time + 5, OnDeparture);
         }
 
         public void OnDeparture(uint time)
         {
-            if (currentStation + 1 < Program.stations.Length)
+            if (currentStation + 1 < MainObjects.stations.Length)
             {
-                Program.stations[currentStation].TrainGoing(this, time);
+                MainObjects.stations[currentStation].TrainGoing(this, time);
 
-                using (StreamWriter file = new StreamWriter(Program.fileNameForCapacity, true))
+                using (StreamWriter file = new StreamWriter(MainObjects.fileNameForCapacity, true))
                 {
                     file.WriteLine(currentAmount);
                 }
 
 
                 Console.WriteLine("A train {0} is going to {1} station from {2} station at {3}.", number,
-                    Program.stations[currentStation + 1].name, Program.stations[currentStation].name, time);
+                    MainObjects.stations[currentStation + 1].name, MainObjects.stations[currentStation].name, time);
 
-                Program.queue.Add(time + intervalsBetweenStations[currentStation], OnArrival);
+                MainObjects.queue.Add(time + intervalsBetweenStations[currentStation], OnArrival);
                 ++currentStation;
             }
             else

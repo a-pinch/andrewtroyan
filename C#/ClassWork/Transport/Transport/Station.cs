@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace Transport
 {
+    // determines a station
+
     class Station
     {
         // non-static fields
 
         public readonly string name;
+        // in what amount of time the next passenger comes (in minutes)
         uint passengerArrivalPeriod;
+        // queue of passengers at the station
         Queue<Passenger> passengers;
 
         // constructor
@@ -25,15 +29,20 @@ namespace Transport
 
         // non-static methods
 
+        // when new passenger comes to the station
         public void AddPassengerOnArrival(uint time)
         {
-            if (this != Program.stations[Program.stations.Length - 1])
+            if (this != MainObjects.stations[MainObjects.stations.Length - 1])
             {
-                passengers.Enqueue(new Passenger("Passenger " + (Passenger.countingNumber++).ToString(), time, this));
-                Program.queue.Add(time + passengerArrivalPeriod, AddPassengerOnArrival);
+                string passengerName = "Passenger " + (Passenger.countingNumber++).ToString();
+                Passenger newPassenger = new Passenger(passengerName, time, this);
+                passengers.Enqueue(newPassenger);
+                MainObjects.queue.Add(time + passengerArrivalPeriod, AddPassengerOnArrival);
             }
         }
 
+        // when train comes certain amount of people steps out the train
+        // the station manages all of this
         public void TrainCame(Train train, uint time)
         {
             int passengersGone = 0;
@@ -54,7 +63,9 @@ namespace Transport
 
             train.currentAmount -= passengersGone;
         }
-        
+
+        // when train is going to the next station people need to catch the train
+        // the station manages all this work
         public void TrainGoing(Train train, uint time)
         {
             while (train.currentAmount < Train.MAX_CAPACITY && passengers.Count > 0)

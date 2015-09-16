@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Transport
 {
+    // delegate for events
+
     delegate void TransportEvent(uint time);
+
+    // provides storage for events (key - time, value - events at this time)
 
     class EventQueue
     {
@@ -22,7 +26,8 @@ namespace Transport
         }
 
         // non-static fields 
-
+        
+        // adds new event at certain time (marked as index)
         public void Add(uint index, TransportEvent transportEvent)
         {
             if (queue.ContainsKey(index) == false)
@@ -33,6 +38,7 @@ namespace Transport
             queue[index].Add(transportEvent);
         } 
 
+        // removes all events (if there are any of them) at given time
         public void Remove(uint index)
         {
             if (queue.ContainsKey(index))
@@ -42,12 +48,13 @@ namespace Transport
             }
         }
 
+        // determines if there are events at given time
         public bool ContainsKey(uint index_)
         {
             return queue.ContainsKey(index_);
         }
 
-        // properties
+        // indexer 
 
         public List<TransportEvent> this[uint index_]
         {

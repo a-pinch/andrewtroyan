@@ -7,9 +7,11 @@ using System.IO;
 
 namespace Transport
 {
+    // determines a passenger
+
     class Passenger
     {
-        // static fields
+        // static fields (used for names generating)
 
         public static int countingNumber = 0;
 
@@ -18,6 +20,7 @@ namespace Transport
         public string name;
         public Train relatedTrain;
         public Station from, to;
+        // startOfWaiting - when a passenger comes to the station, endOfWaitin - when he starts to go by train
         public uint startOfWaiting, endOfWaiting;
 
         // constructor 
@@ -29,26 +32,29 @@ namespace Transport
             relatedTrain = null;
             startOfWaiting = time;
 
+            // determines where the passenger is going
             Random rand = new Random();
-            int indexOfCurrentStation = Array.FindIndex(Program.stations, (st) => st == station);
-            int indexOfLastStation = Program.stations.Length - 1;
-            to = Program.stations[rand.Next(indexOfCurrentStation + 1, indexOfLastStation)];
+            int indexOfCurrentStation = Array.FindIndex(MainObjects.stations, (st) => st == station);
+            int indexOfLastStation = MainObjects.stations.Length - 1;
+            to = MainObjects.stations[rand.Next(indexOfCurrentStation + 1, indexOfLastStation)];
 
             Console.WriteLine("{0} came to {1} station at {2} (destination - {3}).", name, from.name, time, to.name);
         }
 
         // non-static methods
 
+        // when he steps out the train (he got to destination)
         public void StepOut(Train train, uint time)
         {
             Console.WriteLine("{0} is stepping out the train {1} at {2}.", name, train.number, time);
         }
 
+        // when the train comes
         public void StepOn(Train train, uint time)
         {
             endOfWaiting = time;
 
-            using (StreamWriter file = new StreamWriter(Program.fileNameForWaitings, true))
+            using (StreamWriter file = new StreamWriter(MainObjects.fileNameForWaitings, true))
             {
                 file.WriteLine(endOfWaiting - startOfWaiting);
             }

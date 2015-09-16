@@ -7,6 +7,8 @@ using System.IO;
 
 namespace Transport
 {
+    // provides statistics methods (evaluates average and median values)
+
     class Statistics
     {
         // non-static
@@ -28,29 +30,31 @@ namespace Transport
 
         // non-static methods
 
+        // gets all statistics (about occupancy and waiting indices)
         public void GetStatics()
         {
-            //using (StreamWriter fileTo = new StreamWriter(fileNameForCapacityStat, true))
-            //{
-            //    double averageRelated, medianRelated;
-            //    GetAverageCapacity(fileNameWithCapacities, maxCapacityOfTrain, out averageRelated, out medianRelated);
+            using (StreamWriter fileTo = new StreamWriter(fileNameForCapacityStat, true))
+            {
+                double averageRelated, medianRelated;
+                GetAverageCapacity(fileNameWithCapacities, maxCapacityOfTrain, out averageRelated, out medianRelated);
 
-            //    fileTo.WriteLine("Average amount of passengers related to max capacity - {0}, median amount of passengers related to max capacity - {1}.", averageRelated, medianRelated);
-            //    fileTo.WriteLine("-----");
-            //}
+                fileTo.WriteLine("Average occupancy - {0}, median occupancy - {1}.", averageRelated, medianRelated);
+                fileTo.WriteLine("-----");
+            }
 
-            //using (StreamReader temp = new StreamReader(fileNameWithCapacities, false)) { }
+            File.WriteAllText(fileNameWithCapacities, String.Empty);
+
 
             using (StreamWriter fileTo = new StreamWriter(fileNameForWaitStat, true))
             {
                 int average, median;
                 average = GetAverageWaiting(fileNameWithWaitings, out median);
 
-                fileTo.WriteLine("Average waiting of passengers - {0}, median - {1}.", average, median);
+                fileTo.WriteLine("Average waiting index - {0}, median waiting index - {1}.", average, median);
                 fileTo.WriteLine("-----");
             }
 
-            using (StreamReader temp = new StreamReader(fileNameWithWaitings, false)) { }
+            File.WriteAllText(fileNameWithWaitings, String.Empty);
         }
 
         // static methods
@@ -58,6 +62,7 @@ namespace Transport
         public static int GetAverageCapacity(string fileName, int max_amount, out double relatedToMax, out double median)
         {
             List<int> values = new List<int>();
+            int average_amount = 0;
             int total_amount = 0;
             int num_buffer;
             string string_buffer;
@@ -73,9 +78,18 @@ namespace Transport
                 }
             }
 
-            int average_amount = total_amount / values.Count;
-            relatedToMax = (double)average_amount / max_amount;
-            median = (double)values[values.Count / 2] / max_amount;
+            if (values.Count > 0)
+            {
+                average_amount = total_amount / values.Count;
+                relatedToMax = (double)average_amount / max_amount;
+                median = (double)values[values.Count / 2] / max_amount;
+                values.Clear();
+            }
+            else
+            {
+                relatedToMax = 0;
+                median = 0;
+            }
 
             return average_amount;
         }
@@ -83,6 +97,7 @@ namespace Transport
         public static int GetAverageWaiting(string fileName, out int median)
         {
             List<int> values = new List<int>();
+            int average_amount = 0;
             int total_amount = 0;
             int num_buffer;
             string string_buffer;
@@ -98,8 +113,16 @@ namespace Transport
                 }
             }
 
-            int average_amount = total_amount / values.Count;
-            median = values[values.Count / 2];
+            if (values.Count > 0)
+            {
+                average_amount = total_amount / values.Count;
+                median = values[values.Count / 2];
+                values.Clear();
+            }
+            else
+            {
+                median = 0;
+            }
 
             return average_amount;
         }

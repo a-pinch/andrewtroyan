@@ -1,0 +1,10 @@
+Average occupancy - 0, median occupancy - 0.
+-----
+Average occupancy - 0,103333333333333, median occupancy - 0,06.
+-----
+Average occupancy - 0,26, median occupancy - 0,0633333333333333.
+-----
+Average occupancy - 0,216666666666667, median occupancy - 0,0633333333333333.
+-----
+Average occupancy - 0,28, median occupancy - 0,383333333333333.
+-----
