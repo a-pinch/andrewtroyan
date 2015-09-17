@@ -16,7 +16,7 @@ namespace Transport
         // in what amount of time the next passenger comes (in minutes)
         uint passengerArrivalPeriod;
         // queue of passengers at the station
-        Queue<Passenger> passengers;
+        public Queue<Passenger> passengers;
 
         // constructor
 

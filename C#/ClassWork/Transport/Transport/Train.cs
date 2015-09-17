@@ -11,7 +11,7 @@ namespace Transport
     {
         // static fields
 
-        public static readonly int MAX_CAPACITY = 300;
+        public static readonly int MAX_CAPACITY = 200;
         private static uint[] intervalsBetweenStations = new uint[] { 50, 30, 70, 40 };
         public static int countingNumber = 0;
 

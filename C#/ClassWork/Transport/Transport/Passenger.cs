@@ -36,7 +36,7 @@ namespace Transport
             Random rand = new Random();
             int indexOfCurrentStation = Array.FindIndex(MainObjects.stations, (st) => st == station);
             int indexOfLastStation = MainObjects.stations.Length - 1;
-            to = MainObjects.stations[rand.Next(indexOfCurrentStation + 1, indexOfLastStation)];
+            to = MainObjects.stations[rand.Next(indexOfCurrentStation + 1, indexOfLastStation + 1)];
 
             Console.WriteLine("{0} came to {1} station at {2} (destination - {3}).", name, from.name, time, to.name);
         }
