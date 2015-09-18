@@ -7,6 +7,8 @@ using System.IO;
 
 namespace MedianSalary
 {
+    // calculates median salary with dispersion from given file
+
     class WorkingOnMedianSalary
     {
         // non-static fields

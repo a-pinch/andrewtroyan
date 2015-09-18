@@ -7,10 +7,14 @@ using System.Text.RegularExpressions;
 
 namespace HTTPrequest
 {
+    // - retrieves salary from html page and converts to BYR
+    // - checks if given page is last on website
+
     class HtmlWorkingOnSalary
     {
         // non-static fields
 
+        // for convertions
         private int indexFromUSDtoBYR, indexFromEURtoBYR;
 
         // properties
@@ -52,7 +56,7 @@ namespace HTTPrequest
         }
 
         // non-static methods
-
+        
         public int GetSalaryInBYR(string htmlString)
         {
             Regex matching = new Regex(@"<meta itemprop=""salaryCurrency"" content=""");
@@ -61,6 +65,7 @@ namespace HTTPrequest
             int endOfIndex = htmlString.IndexOf("\"");
             string indexString = htmlString.Substring(0, endOfIndex);
 
+            // retrieving salary
             matching = new Regex(@"[A-Z]+""><meta itemprop=""baseSalary"" content=""");
             htmlString = matching.Replace(htmlString, "");
 
@@ -70,6 +75,7 @@ namespace HTTPrequest
 
             int resultSum;
 
+            // converting to BYR
             switch (indexString)
             {
                 case "USD":
@@ -92,6 +98,8 @@ namespace HTTPrequest
 
         public static bool IsPageLast(string htmlString)
         {
+            // starting to look from right to left (second parameter in Regex constructor) because "last-page" tag is located at the end
+            // of a page
             Regex regex = new Regex(@"<span class=""b-pager__next-text"" data-qa=""pager-next-disabled"">", RegexOptions.RightToLeft);
 
             return regex.IsMatch(htmlString);
