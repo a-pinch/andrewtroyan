@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F125FF0F-CB6C-4CC0-B5D0-F971749EB81A}</ProjectGuid>
+    <ProjectGuid>{CDFFEA27-4B0E-49A7-8225-C5F08DB9357F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MedianSalary</RootNamespace>

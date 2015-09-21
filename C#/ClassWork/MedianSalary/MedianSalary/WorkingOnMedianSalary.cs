@@ -24,7 +24,7 @@ namespace MedianSalary
 
         // non-static fields
 
-        public int GetMedianSalary(out int dispersion)
+        public int GetMedianSalary()
         {
             List<int> salaries = new List<int>();
 
@@ -39,25 +39,18 @@ namespace MedianSalary
                 }
             }
 
-            if (salaries.Count == 0)
+            int size = salaries.Count;
+
+            if (size == 0)
             {
-                dispersion = 0;
                 return 0;
-            }
-            if (salaries.Count == 1)
-            {
-                dispersion = 0;
-                return salaries[0];
             }
             else
             {
-                int median = salaries[salaries.Count / 2];
-                int firstQuarter = salaries[salaries.Count / 4];
-                int lastQuarter = salaries[salaries.Count * 3 / 4];
-
-                dispersion = ((median - firstQuarter) + (lastQuarter - median)) / 2;
+                var orderedSalaries = salaries.OrderBy(salary => salary);
+                int median = orderedSalaries.ElementAt(size / 2);
                 return median;
-            } 
+            }
         }
     }
 }

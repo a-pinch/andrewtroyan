@@ -12,10 +12,9 @@ namespace FileTree
     {
         static void Main(string[] args)
         {
-            string path = @"D:\andrewtroyan\";
+            string path = @"D:\andrewtroyan\C#";
 
             FileWorking.ShowDirectories(path);
-            //FileWorking.FindAndReplace(path, "do", "test");
 
             Console.ReadKey();
         }

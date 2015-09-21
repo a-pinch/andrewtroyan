@@ -27,6 +27,7 @@ namespace HTTPrequest
             using (StreamWriter file = new StreamWriter("..\\..\\salaries.csv"))
             {
                 int currentPageIndex = 0;
+                int salary = 0;
                 bool isLastPage = false;
 
                 while (isLastPage == false)
@@ -38,7 +39,14 @@ namespace HTTPrequest
                     // retrieving salaries in BYR from all matched values and writing them to the file
                     foreach (Match matchedValue in matchedValuesWithSalaries)
                     {
-                        file.WriteLine(converter.GetSalaryInBYR(matchedValue.Value));
+                        salary = converter.GetSalaryInBYR(matchedValue.Value);
+
+                        // there's posibility that current salary is per a day or a week
+                        // so we write salaries per month only to the file
+                        if (salary >= 1000000)
+                        {
+                            file.WriteLine(converter.GetSalaryInBYR(matchedValue.Value));
+                        }
                     }
 
                     // checking if current page is last
