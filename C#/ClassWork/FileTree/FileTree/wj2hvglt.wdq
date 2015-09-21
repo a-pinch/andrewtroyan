@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace FileTree
+{
+    class FileWorking
+    {
+        public static void ShowDirectories(string startPath, int nestingLevel = 0)
+        {
+            if (Directory.Exists(startPath) == false)
+            {
+                throw new DirectoryNotFoundException("In FileWorking.ShowDirectory(string): the start path doesn't exist.");
+            }
+
+            var directories = from directory in Directory.EnumerateDirectories(startPath)
+                              select directory;
+
+            while (isLast = iterator.MoveNext())
+            {
+                ShowDirectory(iterator.Current, nestingLevel, isLast);
+                ShowDirectories(iterator.Current, nestingLevel + 1);
+            }
+        }
+
+        private static void ShowDirectory(string startPath, int nestingLevel, bool last = false)
+        {
+            string adding = "";
+            int indexOfLastSlash = startPath.LastIndexOf(@"\");
+            startPath = startPath.Substring(indexOfLastSlash + 1);
+
+            for (int i = 0; i < nestingLevel; ++i)
+            {
+                adding += "│    ";
+            }
+
+            adding += "├────";
+
+            Console.WriteLine(adding + startPath);
+        }
+    }
+}
