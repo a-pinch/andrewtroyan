@@ -12,7 +12,7 @@ namespace FileTree
     {
         static void Main(string[] args)
         {
-            string path = @"D:\andrewtroyan\C#";
+            string path = @"D:\andrewtroyan\C#\HomeWork";
 
             FileWorking.ShowDirectories(path);
 
