@@ -69,7 +69,9 @@ namespace FirstXMLWork
                     case "color":
                         color = child.ChildNodes[0].Value;
 
-                        if (child.Attributes["metallic"] != null && child.Attributes["metallic"].Value == "true")
+                        var attr = child.Attributes;
+
+                        if (attr.Count > 0 && attr["metallic"] != null && attr["metallic"].Value == "true")
                         {
                             color += ", metallic";
                         }
@@ -87,7 +89,7 @@ namespace FirstXMLWork
             }
         }
 
-        public Automobile(string manufactured_, string model_, string color_, int year_, int speed_, string hash_ = "", string image_ = "", Automobile inner_ = null)
+        public Automobile(string manufactured_, string model_, string color_, int year_, int speed_, string hash_ = null, string image_ = null, Automobile inner_ = null)
         {
             manufactured = manufactured_;
             model = model_;
@@ -104,9 +106,8 @@ namespace FirstXMLWork
         public void addToXMLAsChild(XmlDocument doc, XmlNode parent)
         {
             var car = doc.CreateElement("Car");
-            parent.AppendChild(car);
 
-            if (image != "")
+            if (image != null)
             {
                 car.SetAttribute("Image", image);
             }
@@ -131,7 +132,7 @@ namespace FirstXMLWork
             child.AppendChild(doc.CreateTextNode(speed.ToString()));
             car.AppendChild(child);
 
-            if (hash != null && hash != "")
+            if (hash != null)
             {
                 child = doc.CreateElement("Hash");
                 child.AppendChild(doc.CreateTextNode(hash));
@@ -144,6 +145,8 @@ namespace FirstXMLWork
                 inner.addToXMLAsChild(doc, child);
                 car.AppendChild(child);
             }
+            
+            parent.AppendChild(car);
         }
     }
 }
