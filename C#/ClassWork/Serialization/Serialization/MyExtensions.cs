@@ -46,7 +46,7 @@ namespace Serialization
         {
             if (Path.GetExtension(path) != ".dat" && Path.GetExtension(path) != ".bin")
             {
-                throw new InvalidDataException("In MyExtensions.SerializeToXml(this List<Schooler>, string): the extension must be \".dat\" or \".bin\".");
+                throw new InvalidDataException("In MyExtensions.SerializeBinary(this List<Schooler>, string): the extension must be \".dat\" or \".bin\".");
             }
 
             BinaryFormatter binarySerializer = new BinaryFormatter();
@@ -64,11 +64,11 @@ namespace Serialization
         {
             if (File.Exists(path) == false)
             {
-                throw new DirectoryNotFoundException("In MyExtensions.DeserializeFromXml(this List<Schooler>, string): the path doesn't exist.");
+                throw new DirectoryNotFoundException("In MyExtensions.DeserializeFromXml(string): the path doesn't exist.");
             }
             else if (Path.GetExtension(path) != ".xml")
             {
-                throw new InvalidDataException("In MyExtensions.DeserializeFromXml(this List<Schooler>, string): the extension must be \".xml\".");
+                throw new InvalidDataException("In MyExtensions.DeserializeFromXml(string): the extension must be \".xml\".");
             }
 
             XmlSerializer xmlDeserializer = new XmlSerializer(typeof(List<Schooler>));
@@ -87,11 +87,11 @@ namespace Serialization
         {
             if (File.Exists(path) == false)
             {
-                throw new DirectoryNotFoundException("In MyExtensions.SerializeToXml(this List<Schooler>, string): the path doesn't exist.");
+                throw new DirectoryNotFoundException("In MyExtensions.DeserializeBinary(string): the path doesn't exist.");
             }
             else if (Path.GetExtension(path) != ".dat" && Path.GetExtension(path) != ".bin")
             {
-                throw new InvalidDataException("In MyExtensions.SerializeToXml(this List<Schooler>, string): the extension must be \".dat\" or \".bin\".");
+                throw new InvalidDataException("In MyExtensions.DeserializeBinary(string): the extension must be \".dat\" or \".bin\".");
             }
 
             BinaryFormatter binaryDeserializer = new BinaryFormatter();
