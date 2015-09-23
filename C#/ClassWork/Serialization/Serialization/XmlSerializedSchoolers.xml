@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSchooler xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Schooler>
+    <_name>Irina</_name>
+    <_marks>
+      <int>9</int>
+      <int>10</int>
+      <int>8</int>
+      <int>9</int>
+    </_marks>
+    <_penCase>
+      <string>pen</string>
+      <string>pensil</string>
+    </_penCase>
+  </Schooler>
+  <Schooler>
+    <_name>Vadim</_name>
+    <_marks>
+      <int>10</int>
+      <int>10</int>
+      <int>10</int>
+      <int>10</int>
+    </_marks>
+    <_penCase>
+      <string>pensil</string>
+    </_penCase>
+  </Schooler>
+</ArrayOfSchooler>

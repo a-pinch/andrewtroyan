@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 
 namespace Serialization
 {
@@ -13,57 +10,29 @@ namespace Serialization
     {
         static void Main(string[] args)
         {
-            List<Schooler> schoolers = new List<Schooler>();
-            schoolers.Add(new Schooler("Irina", new int[] { 9, 10, 8, 9 }, new string[] { "pen", "pensil" }));
-            schoolers.Add(new Schooler("Vadim", new int[] { 10, 10, 10, 10 }, new string[] { "pensil" }));
-            int listSize = schoolers.Count;
+            List<Schooler> schoolersToSerialize = new List<Schooler>();
+            schoolersToSerialize.Add(new Schooler("Irina", new int[] { 9, 10, 8, 9 }, new string[] { "pen", "pensil" }));
+            schoolersToSerialize.Add(new Schooler("Vadim", new int[] { 10, 10, 10, 10 }, new string[] { "pensil" }));
 
-            Schooler deserializedSchooler;
+            List<Schooler> deserializedSchoolers = new List<Schooler>();
 
             #region XML serialization
 
-            string path = "..\\..\\XmlSerializedSchoolers\\schooler";
-            var xmlSerializator = new XmlSerializer(typeof(Schooler));
-
-            for (int i = 0; i < listSize; ++i)
-            {
-                using (var toXml = new StreamWriter(path + i + ".xml"))
-                {
-                    xmlSerializator.Serialize(toXml, schoolers[i]);
-                }
-            }
-
-            for (int i = 0; i < listSize; ++i)
-            {
-                using (var fromXml = new StreamReader(path + i + ".xml"))
-                {
-                    deserializedSchooler = (Schooler)xmlSerializator.Deserialize(fromXml);
-                }
-
-                Console.WriteLine("Name: {0}.\nMarks: {1}.\nPen case: {2}.\n", deserializedSchooler._name, String.Join(", ", deserializedSchooler._marks)
-                , String.Join(", ", deserializedSchooler._penCase));
-            }
+            string pathForXml = @"..\..\XmlSerializedSchoolers.xml";
+            schoolersToSerialize.SerializeToXml(pathForXml);
+            deserializedSchoolers = MyExtensions.DeserializeFromXml(pathForXml);
 
             #endregion
 
             #region Binary serialization
 
-            //BinaryFormatter binarySerializer = new BinaryFormatter();
+            //string pathForBin = @"..\..\BinSerializedSchoolers.dat";
+            //schoolersToSerialize.SerializeBinary(pathForBin);
+            //deserializedSchoolers = MyExtensions.DeserializeBinary(pathForBin);
 
-            //using (var toBIN = File.Create(@"..\..\testWithSchoolersXML.bin"))
-            //{
-            //    binarySerializer.Serialize(toBIN, schoolerIrina);
-            //}
+            #endregion
 
-            //using (var fromBIN = File.OpenRead(@"..\..\testWithSchoolersXML.bin"))
-            //{
-            //    deserializedSchooler = (Schooler)binarySerializer.Deserialize(fromBIN);
-            //}
-
-            //Console.WriteLine("Name: {0}.\nMarks: {1}.\nPen case: {2}.", deserializedSchooler._name, String.Join(", ", deserializedSchooler._marks)
-            //    , String.Join(", ", deserializedSchooler._penCase));
-
-            #endregion 
+            deserializedSchoolers.PrintOut();
 
             Console.ReadKey();
         }

@@ -30,5 +30,12 @@ namespace Serialization
             _marks = marks;
             _penCase = penCase;
         }
+
+        // non-static methods
+
+        public void PirntOut()
+        {
+            Console.WriteLine("Name: {0}.\nMarks: {1}.\nPen case: {2}.", _name, String.Join(", ", _marks), String.Join(", ", _penCase));
+        }
     }
 }
