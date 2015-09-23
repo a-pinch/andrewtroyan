@@ -13,45 +13,55 @@ namespace Serialization
     {
         static void Main(string[] args)
         {
-            Schooler schoolerIrina = new Schooler("Irina", new int[] { 9, 10, 8, 9 }, new string[] { "pen", "pensil" });
+            List<Schooler> schoolers = new List<Schooler>();
+            schoolers.Add(new Schooler("Irina", new int[] { 9, 10, 8, 9 }, new string[] { "pen", "pensil" }));
+            schoolers.Add(new Schooler("Vadim", new int[] { 10, 10, 10, 10 }, new string[] { "pensil" }));
+            int listSize = schoolers.Count;
+
             Schooler deserializedSchooler;
 
             #region XML serialization
 
-            //var xmlSerializator = new XmlSerializer(typeof(Schooler));
+            string path = "..\\..\\XmlSerializedSchoolers\\schooler";
+            var xmlSerializator = new XmlSerializer(typeof(Schooler));
 
-            //using (var toXml = new StreamWriter(@"..\..\testWithSchoolersXML.xml"))
-            //{
-            //    xmlSerializator.Serialize(toXml, schoolerIrina);
-            //}
+            for (int i = 0; i < listSize; ++i)
+            {
+                using (var toXml = new StreamWriter(path + i + ".xml"))
+                {
+                    xmlSerializator.Serialize(toXml, schoolers[i]);
+                }
+            }
 
-            //using (var fromXML = new StreamReader(@"..\..\testWithSchoolersXML.xml"))
-            //{
-            //    deserializedSchooler = (Schooler)xmlSerializator.Deserialize(fromXML);
-            //}
+            for (int i = 0; i < listSize; ++i)
+            {
+                using (var fromXml = new StreamReader(path + i + ".xml"))
+                {
+                    deserializedSchooler = (Schooler)xmlSerializator.Deserialize(fromXml);
+                }
 
-            //Console.WriteLine("Name: {0}.\nMarks: {1}.\nPen case: {2}.", deserializedSchooler._name, String.Join(", ", deserializedSchooler._marks)
-            //    , String.Join(", ", deserializedSchooler._penCase));
-
+                Console.WriteLine("Name: {0}.\nMarks: {1}.\nPen case: {2}.\n", deserializedSchooler._name, String.Join(", ", deserializedSchooler._marks)
+                , String.Join(", ", deserializedSchooler._penCase));
+            }
 
             #endregion
 
             #region Binary serialization
 
-            BinaryFormatter binarySerializer = new BinaryFormatter();
+            //BinaryFormatter binarySerializer = new BinaryFormatter();
 
-            using (var toBIN = File.Create(@"..\..\testWithSchoolersXML.bin"))
-            {
-                binarySerializer.Serialize(toBIN, schoolerIrina);
-            }
+            //using (var toBIN = File.Create(@"..\..\testWithSchoolersXML.bin"))
+            //{
+            //    binarySerializer.Serialize(toBIN, schoolerIrina);
+            //}
 
-            using (var fromBIN = File.OpenRead(@"..\..\testWithSchoolersXML.bin"))
-            {
-                deserializedSchooler = (Schooler)binarySerializer.Deserialize(fromBIN);
-            }
+            //using (var fromBIN = File.OpenRead(@"..\..\testWithSchoolersXML.bin"))
+            //{
+            //    deserializedSchooler = (Schooler)binarySerializer.Deserialize(fromBIN);
+            //}
 
-            Console.WriteLine("Name: {0}.\nMarks: {1}.\nPen case: {2}.", deserializedSchooler._name, String.Join(", ", deserializedSchooler._marks)
-                , String.Join(", ", deserializedSchooler._penCase));
+            //Console.WriteLine("Name: {0}.\nMarks: {1}.\nPen case: {2}.", deserializedSchooler._name, String.Join(", ", deserializedSchooler._marks)
+            //    , String.Join(", ", deserializedSchooler._penCase));
 
             #endregion 
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Schooler xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <_name>Vadim</_name>
+  <_marks>
+    <int>10</int>
+    <int>10</int>
+    <int>10</int>
+    <int>10</int>
+  </_marks>
+  <_penCase>
+    <string>pensil</string>
+  </_penCase>
+</Schooler>
