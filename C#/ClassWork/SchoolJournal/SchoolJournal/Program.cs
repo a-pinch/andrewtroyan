@@ -12,22 +12,65 @@ namespace SchoolJournal
     {
         static void Main(string[] args)
         {
-            Subject csharpSubject = new Subject("C#", new List<string>(){"Serialization", "Attributes"});
+            // all necessary variables
 
-            Teacher teacher = new Teacher("Maxim");
+            string path = "..\\..\\Serialized\\";
+            Subject subjectToSerialize, deserializedSubject;
+            List<Teacher> teachersToSerialize, deserializedTeachers;
+            List<Pupil> pupilsToSerialize, deserializedPupils;
+            StudyGroup groupToSerialize, deserializedGroup;
+            Lecture lectureToSerialize, deserializedLecture;
 
-            List<Pupil> pupils = new List<Pupil>() { new Pupil("Andrew"), new Pupil("Igor"), new Pupil("Kolya"), new Pupil("Ira"), new Pupil("Andrew")
+            #region Lecturing imitation
+
+            subjectToSerialize = new Subject("C#", new List<string>() { "Serialization", "Attributes" });
+
+            teachersToSerialize = new List<Teacher>() { new Teacher("Maxim"), new Teacher("Alexey") };
+
+            pupilsToSerialize = new List<Pupil>() { new Pupil("Andrew"), new Pupil("Igor"), new Pupil("Kolya"), new Pupil("Ira"), new Pupil("Andrew")
                 , new Pupil("Olya"), new Pupil("Arseniy"), new Pupil("Oleg") };
-            StudyGroup group = new StudyGroup("P11014", pupils);
 
-            Lecture lecture1 = new Lecture(csharpSubject, "Serialization", teacher, group);
-            teacher.GiveMark(lecture1, new Mark(10, group.listOfPupils[2], MarkGround.homework));
+            groupToSerialize = new StudyGroup("P11014", pupilsToSerialize);
 
-            //XmlSerializer subjectSerializer = new XmlSerializer(typeof(Lecture));
-            //using (var file = new StreamWriter("..\\..\\subject.xml"))
-            //{
-            //    subjectSerializer.Serialize(file, lecture1);
-            //}
+            lectureToSerialize = new Lecture(subjectToSerialize, "Serialization", teachersToSerialize[0], groupToSerialize);
+
+            teachersToSerialize[0].GiveMark(lectureToSerialize, new Mark(10, groupToSerialize.listOfPupils[2], teachersToSerialize[0], MarkGround.homework));
+            teachersToSerialize[0].GiveMark(lectureToSerialize, new Mark(8, groupToSerialize.listOfPupils[3], teachersToSerialize[0], MarkGround.board));
+
+            #endregion
+
+            #region Serialization
+
+            subjectToSerialize.Serialize(path + "subject.xml");
+            teachersToSerialize.Serialize(path + "teachers.xml");
+            pupilsToSerialize.Serialize(path + "pupils.xml");
+            groupToSerialize.Serialize(path + "group.xml");
+            lectureToSerialize.Serialize(path + "lecture.xml");
+
+            #endregion 
+
+            #region Deserialization and connections recovering
+
+            deserializedSubject = Deserialization.DeserializeSubject(path + "subject.xml");
+            deserializedTeachers = Deserialization.DeserializeTeachers(path + "teachers.xml");
+            deserializedPupils = Deserialization.DeserializePupils(path + "pupils.xml");
+            deserializedGroup = Deserialization.DeserializeStudyGroup(path + "group.xml");
+            deserializedLecture = Deserialization.DeserializeLecture(path + "lecture.xml");
+
+            deserializedGroup.Recover(deserializedPupils);
+            deserializedLecture.Recover(deserializedGroup, deserializedSubject, deserializedTeachers, deserializedPupils);
+
+            #endregion
+
+            // checking out
+
+            Console.WriteLine(teachersToSerialize[0].Equals(lectureToSerialize.teacher));
+            Console.WriteLine(groupToSerialize.listOfPupils[0].Equals(lectureToSerialize.studyGroup.listOfPupils[0]));
+
+            Console.WriteLine(deserializedTeachers[0].Equals(deserializedLecture.teacher));
+            Console.WriteLine(deserializedGroup.listOfPupils[0].Equals(deserializedLecture.studyGroup.listOfPupils[0]));
+
+            // As you can see in both cases references are equal. That means we saved reference connections.
 
             Console.ReadKey();
         }

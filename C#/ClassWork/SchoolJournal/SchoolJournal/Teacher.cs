@@ -10,40 +10,37 @@ namespace SchoolJournal
     [Serializable]
     public class Teacher : Human
     {
-        //// static fields
+        // static fields
 
-        //private static int commonId = 0;
+        private static int currentID = 0;
 
-        //// non-static fields
+        // non-static fields
 
-        //private int teacherId;
+        private int teacherID;
 
-        //// properties
+        // properties
+        
+        [XmlAttribute]
+        public int TeacherID
+        {
+            get { return teacherID; }
+            set
+            {
+                teacherID = value;
 
-        //[XmlAttribute]
-        //public int TeacherId
-        //{
-        //    get
-        //    {
-        //        return teacherId;
-        //    }
-        //    set
-        //    {
-        //        teacherId = value;
-
-        //        if (value >= teacherId)
-        //        {
-        //            commonId = value + 1;
-        //        }
-        //    }
-        //}
+                if (value >= currentID)
+                {
+                    currentID = value + 1;
+                }
+            }
+        }
 
         // constructors
 
         public Teacher()
         {
             name = default(string);
-            //teacherId = commonId++;
+            teacherID = currentID++;
         }
 
         public Teacher(string name_) : this()

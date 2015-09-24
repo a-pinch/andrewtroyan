@@ -1,0 +1,105 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Xml.Serialization;
+
+namespace SchoolJournal
+{
+    public static class Deserialization
+    {
+        // static methods for deserialization
+
+        public static List<Teacher> DeserializeTeachers(string path)
+        {
+            if (File.Exists(path) == false)
+            {
+                throw new FileNotFoundException("In Deserialization.DeserializeTeachers(string): file doesn't exist.");
+            }
+
+            List<Teacher> result;
+            XmlSerializer deserializer = new XmlSerializer(typeof(List<Teacher>));
+
+            using (var file = new StreamReader(path))
+            {
+                result = (List<Teacher>)deserializer.Deserialize(file);
+            }
+
+            return result;
+        }
+
+        public static List<Pupil> DeserializePupils(string path)
+        {
+            if (File.Exists(path) == false)
+            {
+                throw new FileNotFoundException("In Deserialization.DeserializePupils(string): file doesn't exist.");
+            }
+
+            List<Pupil> result;
+            XmlSerializer deserializer = new XmlSerializer(typeof(List<Pupil>));
+
+            using (var file = new StreamReader(path))
+            {
+                result = (List<Pupil>)deserializer.Deserialize(file);
+            }
+
+            return result;
+        }
+
+        public static StudyGroup DeserializeStudyGroup(string path)
+        {
+            if (File.Exists(path) == false)
+            {
+                throw new FileNotFoundException("In Deserialization.DeserializeStudyGroup(string): file doesn't exist.");
+            }
+
+            StudyGroup result;
+            XmlSerializer deserializer = new XmlSerializer(typeof(StudyGroup));
+
+            using (var file = new StreamReader(path))
+            {
+                result = (StudyGroup)deserializer.Deserialize(file);
+            }
+
+            return result;
+        }
+
+        public static Subject DeserializeSubject(string path)
+        {
+            if (File.Exists(path) == false)
+            {
+                throw new FileNotFoundException("In Deserialization.DeserializeSubject(string): file doesn't exist.");
+            }
+
+            Subject result;
+            XmlSerializer deserializer = new XmlSerializer(typeof(Subject));
+
+            using (var file = new StreamReader(path))
+            {
+                result = (Subject)deserializer.Deserialize(file);
+            }
+
+            return result;
+        }
+        
+        public static Lecture DeserializeLecture(string path)
+        {
+            if (File.Exists(path) == false)
+            {
+                throw new FileNotFoundException("In Deserialization.DeserializeLecture(string): file doesn't exist.");
+            }
+
+            Lecture result;
+            XmlSerializer deserializer = new XmlSerializer(typeof(Lecture));
+
+            using (var file = new StreamReader(path))
+            {
+                result = (Lecture)deserializer.Deserialize(file);
+            }
+
+            return result;
+        }
+    }
+}

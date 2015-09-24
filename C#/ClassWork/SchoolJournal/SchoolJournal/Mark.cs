@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SchoolJournal
 {
@@ -21,24 +22,31 @@ namespace SchoolJournal
         // non-static fields
 
         public int point;
-        public Pupil pupil;
-        public Teacher teacher;
         public MarkGround markGround;
+        [XmlIgnore] public Pupil pupil;
+        public int pupilID;
+        [XmlIgnore] public Teacher teacher;
+        public int teacherID;
 
         // constructors
 
         public Mark()
         {
             point = default(int);
-            pupil = default(Pupil);
-            teacher = default(Teacher);
             markGround = default(MarkGround);
+            pupil = default(Pupil);
+            pupilID = default(int);
+            teacher = default(Teacher);
+            teacherID = default(int);
         }
 
-        public Mark(int point_, Pupil pupil_, MarkGround markGround_)
+        public Mark(int point_, Pupil pupil_, Teacher teacher_, MarkGround markGround_)
         {
             point = point_;
             pupil = pupil_;
+            pupilID = pupil_.PupilID;
+            teacher = teacher_;
+            teacherID = teacher_.TeacherID;
             markGround = markGround_;
         }
     }

@@ -19,7 +19,7 @@ namespace SchoolJournal
         public Subject()
         {
             name = default(string);
-            topics = default(List<string>);
+            topics = new List<string>();
         }
 
         public Subject(string name_, List<string> topics_)

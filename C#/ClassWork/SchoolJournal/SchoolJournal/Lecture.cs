@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SchoolJournal
 {
@@ -11,10 +12,11 @@ namespace SchoolJournal
     {
         // non-static fields
 
-        public Subject subject;
+        [XmlIgnore] public Subject subject;
         public string subjectTopic;
-        public Teacher teacher;
-        public StudyGroup studyGroup;
+        [XmlIgnore] public Teacher teacher;
+        public int teacherID;
+        [XmlIgnore] public StudyGroup studyGroup;
         public List<Mark> marks;
 
         // contructors 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Lecture xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <subjectTopic>Serialization</subjectTopic>
+  <teacherID>0</teacherID>
+  <marks>
+    <Mark>
+      <point>10</point>
+      <markGround>homework</markGround>
+      <pupilID>2</pupilID>
+      <teacherID>0</teacherID>
+    </Mark>
+    <Mark>
+      <point>8</point>
+      <markGround>board</markGround>
+      <pupilID>3</pupilID>
+      <teacherID>0</teacherID>
+    </Mark>
+  </marks>
+</Lecture>
