@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 namespace SchoolJournal
 {
     [Serializable]
-    public class Pupil
+    public class Pupil : Human
     {
-        // non-static fields
-
-        public string name;
-
         // constructors
 
         public Pupil()

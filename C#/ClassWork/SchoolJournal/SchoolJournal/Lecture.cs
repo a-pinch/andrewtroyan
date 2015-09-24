@@ -30,11 +30,16 @@ namespace SchoolJournal
 
         public Lecture(Subject subject_, string subjectTopic_, Teacher teacher_, StudyGroup studyGroup_)
         {
+            if (subject_.topics.Contains(subjectTopic_) == false)
+            {
+                throw new InvalidOperationException("In Lecture.Lecture(Subject, string, Teacher, StudyGroup): there isn't given topic in subject's topics.");
+            }
+
             subject = subject_;
             subjectTopic = subjectTopic_;
             teacher = teacher_;
             studyGroup = studyGroup_;
-            marks = default(List<Mark>);
+            marks = new List<Mark>();
         }
     }
 }
