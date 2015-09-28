@@ -43,9 +43,10 @@ namespace SchoolJournal
             pupilID = currentID++;
         }
 
-        public Pupil(string name_) : this()
+        public Pupil(string name_, string surname_) : this()
         {
-            name = name_; 
+            name = name_;
+            surname = surname_;
         }
     }
 }

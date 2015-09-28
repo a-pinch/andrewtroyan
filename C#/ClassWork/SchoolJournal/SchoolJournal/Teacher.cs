@@ -43,9 +43,10 @@ namespace SchoolJournal
             teacherID = currentID++;
         }
 
-        public Teacher(string name_) : this()
+        public Teacher(string name_, string surname_) : this()
         {
             name = name_;
+            surname = surname_;
         }
 
         // non-static methods

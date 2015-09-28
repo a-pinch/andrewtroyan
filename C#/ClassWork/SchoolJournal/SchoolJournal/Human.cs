@@ -11,6 +11,6 @@ namespace SchoolJournal
     {
         // non-static fields
 
-        public string name;
+        public string name, surname;
     }
 }

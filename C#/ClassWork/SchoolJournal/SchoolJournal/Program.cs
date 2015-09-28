@@ -25,10 +25,10 @@ namespace SchoolJournal
 
             subjectsToSerialize = new List<Subject>() { new Subject("C#", new List<string>() { "Serialization", "Attributes" }) };
 
-            teachersToSerialize = new List<Teacher>() { new Teacher("Maxim"), new Teacher("Alexey") };
+            teachersToSerialize = new List<Teacher>() { new Teacher("Maxim", "Belov"), new Teacher("Alexey", "Stankevich") };
 
-            pupilsToSerialize = new List<Pupil>() { new Pupil("Andrew"), new Pupil("Igor"), new Pupil("Kolya"), new Pupil("Ira"), new Pupil("Andrew")
-                , new Pupil("Olya"), new Pupil("Arseniy"), new Pupil("Oleg") };
+            pupilsToSerialize = new List<Pupil>() { new Pupil("Andrew", "Troyan"), new Pupil("Igor", "Saroko"), new Pupil("Kolya", "Morschinin"),
+                new Pupil("Ira", "Lesina"), new Pupil("Andrew", "Pinchuk"), new Pupil("Olya", "Pirozhnik"), new Pupil("Arseniy", "Vinogradov"), new Pupil("Oleg", "Grebenko") };
 
             groupsToSerialize = new List<StudyGroup>() { new StudyGroup("P11014", pupilsToSerialize) };
 
