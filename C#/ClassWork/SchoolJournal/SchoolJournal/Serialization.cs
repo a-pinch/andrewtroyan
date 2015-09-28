@@ -32,23 +32,23 @@ namespace SchoolJournal
             }
         }
 
-        public static void Serialize(this StudyGroup group, string path)
+        public static void Serialize(this List<StudyGroup> groups, string path)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(StudyGroup));
+            XmlSerializer serializer = new XmlSerializer(typeof(List<StudyGroup>));
 
             using (var file = new StreamWriter(path))
             {
-                serializer.Serialize(file, group);
+                serializer.Serialize(file, groups);
             }
         }
 
-        public static void Serialize(this Subject subject, string path)
+        public static void Serialize(this List<Subject> subjects, string path)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Subject));
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Subject>));
 
             using (var file = new StreamWriter(path))
             {
-                serializer.Serialize(file, subject);
+                serializer.Serialize(file, subjects);
             }
         }
 

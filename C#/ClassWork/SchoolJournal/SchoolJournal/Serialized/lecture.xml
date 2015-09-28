@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Lecture xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <subjectID>0</subjectID>
   <subjectTopic>Serialization</subjectTopic>
   <teacherID>0</teacherID>
+  <groupID>0</groupID>
   <marks>
     <Mark>
       <point>10</point>

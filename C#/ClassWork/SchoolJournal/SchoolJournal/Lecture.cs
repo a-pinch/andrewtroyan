@@ -13,10 +13,12 @@ namespace SchoolJournal
         // non-static fields
 
         [XmlIgnore] public Subject subject;
+        public int subjectID;
         public string subjectTopic;
         [XmlIgnore] public Teacher teacher;
         public int teacherID;
         [XmlIgnore] public StudyGroup studyGroup;
+        public int groupID;
         public List<Mark> marks;
 
         // contructors 
@@ -40,7 +42,9 @@ namespace SchoolJournal
             subject = subject_;
             subjectTopic = subjectTopic_;
             teacher = teacher_;
+            teacherID = teacher_.TeacherID;
             studyGroup = studyGroup_;
+            groupID = studyGroup_.GroupID;
             marks = new List<Mark>();
         }
     }

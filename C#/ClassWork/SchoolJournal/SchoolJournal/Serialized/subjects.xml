@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSubject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Subject SubjectID="0">
+    <name>C#</name>
+    <topics>
+      <string>Serialization</string>
+      <string>Attributes</string>
+    </topics>
+  </Subject>
+</ArrayOfSubject>

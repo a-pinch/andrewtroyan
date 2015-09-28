@@ -10,12 +10,34 @@ namespace SchoolJournal
     [Serializable]
     public class StudyGroup
     {
+        // static fields
+
+        private static int currentID = 0;
+
         // non-static fields
 
         public string name;
         [XmlIgnore]
         public List<Pupil> listOfPupils;
         public List<int> pupilIDs;
+        private int groupID;
+
+        // properties
+
+        [XmlAttribute]
+        public int GroupID
+        {
+            get { return groupID; }
+            set
+            {
+                groupID = value;
+
+                if (value >= currentID)
+                {
+                    currentID = value + 1;
+                }
+            }
+        }
 
         // constructors
 
@@ -24,6 +46,7 @@ namespace SchoolJournal
             name = default(string);
             listOfPupils = new List<Pupil>();
             pupilIDs = new List<int>();
+            groupID = currentID++;
         }
 
         public StudyGroup(string name_, List<Pupil> listOfPupils_) : this()

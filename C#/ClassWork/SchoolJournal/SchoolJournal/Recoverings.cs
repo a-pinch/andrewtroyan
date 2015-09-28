@@ -10,21 +10,24 @@ namespace SchoolJournal
     {
         // extension methods for recovering
 
-        public static void Recover(this StudyGroup studyGroup, List<Pupil> pupils)
+        public static void Recover(this List<StudyGroup> studyGroups, List<Pupil> pupils)
         {
-            var appropriatePupils = from id in studyGroup.pupilIDs
-                                    join pupil in pupils
-                                    on id
-                                    equals pupil.PupilID
-                                    select pupil;
-
-            foreach (Pupil pupil in appropriatePupils)
+            foreach (StudyGroup studyGroup in studyGroups)
             {
-                studyGroup.listOfPupils.Add(pupil);
-            }                       
+                var appropriatePupils = from id in studyGroup.pupilIDs
+                                        join pupil in pupils
+                                        on id
+                                        equals pupil.PupilID
+                                        select pupil;
+
+                foreach (Pupil pupil in appropriatePupils)
+                {
+                    studyGroup.listOfPupils.Add(pupil);
+                }
+            }
         }
 
-        public static void Recover(this Lecture lecture, StudyGroup group, Subject subject, List<Teacher> teachers, List<Pupil> pupils)
+        public static void Recover(this Lecture lecture, List<StudyGroup> groups, List<Subject> subjects, List<Teacher> teachers, List<Pupil> pupils)
         {
             // recovering teacher
 
@@ -32,11 +35,25 @@ namespace SchoolJournal
 
             // recovering group
 
-            lecture.studyGroup = group;
+            foreach (StudyGroup group in groups)
+            {
+                if (lecture.groupID == group.GroupID)
+                {
+                    lecture.studyGroup = group;
+                    break;
+                }
+            }
 
             // recovering subject
 
-            lecture.subject = subject;
+            foreach (Subject subject in subjects)
+            {
+                if (lecture.subjectID == subject.SubjectID)
+                {
+                    lecture.subject = subject;
+                    break;
+                }
+            }
 
             // recovering marks
 

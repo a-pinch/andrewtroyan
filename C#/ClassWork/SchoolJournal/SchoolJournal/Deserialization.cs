@@ -48,37 +48,37 @@ namespace SchoolJournal
             return result;
         }
 
-        public static StudyGroup DeserializeStudyGroup(string path)
+        public static List<StudyGroup> DeserializeStudyGroups(string path)
         {
             if (File.Exists(path) == false)
             {
                 throw new FileNotFoundException("In Deserialization.DeserializeStudyGroup(string): file doesn't exist.");
             }
 
-            StudyGroup result;
-            XmlSerializer deserializer = new XmlSerializer(typeof(StudyGroup));
+            List<StudyGroup> result;
+            XmlSerializer deserializer = new XmlSerializer(typeof(List<StudyGroup>));
 
             using (var file = new StreamReader(path))
             {
-                result = (StudyGroup)deserializer.Deserialize(file);
+                result = (List<StudyGroup>)deserializer.Deserialize(file);
             }
 
             return result;
         }
 
-        public static Subject DeserializeSubject(string path)
+        public static List<Subject> DeserializeSubjects(string path)
         {
             if (File.Exists(path) == false)
             {
                 throw new FileNotFoundException("In Deserialization.DeserializeSubject(string): file doesn't exist.");
             }
 
-            Subject result;
-            XmlSerializer deserializer = new XmlSerializer(typeof(Subject));
+            List<Subject> result;
+            XmlSerializer deserializer = new XmlSerializer(typeof(List<Subject>));
 
             using (var file = new StreamReader(path))
             {
-                result = (Subject)deserializer.Deserialize(file);
+                result = (List<Subject>)deserializer.Deserialize(file);
             }
 
             return result;

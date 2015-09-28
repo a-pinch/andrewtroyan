@@ -15,60 +15,60 @@ namespace SchoolJournal
             // all necessary variables
 
             string path = "..\\..\\Serialized\\";
-            Subject subjectToSerialize, deserializedSubject;
+            List<Subject> subjectsToSerialize, deserializedSubjects;
             List<Teacher> teachersToSerialize, deserializedTeachers;
             List<Pupil> pupilsToSerialize, deserializedPupils;
-            StudyGroup groupToSerialize, deserializedGroup;
+            List<StudyGroup> groupsToSerialize, deserializedGroups;
             Lecture lectureToSerialize, deserializedLecture;
 
             #region Lecturing imitation
 
-            subjectToSerialize = new Subject("C#", new List<string>() { "Serialization", "Attributes" });
+            subjectsToSerialize = new List<Subject>() { new Subject("C#", new List<string>() { "Serialization", "Attributes" }) };
 
             teachersToSerialize = new List<Teacher>() { new Teacher("Maxim"), new Teacher("Alexey") };
 
             pupilsToSerialize = new List<Pupil>() { new Pupil("Andrew"), new Pupil("Igor"), new Pupil("Kolya"), new Pupil("Ira"), new Pupil("Andrew")
                 , new Pupil("Olya"), new Pupil("Arseniy"), new Pupil("Oleg") };
 
-            groupToSerialize = new StudyGroup("P11014", pupilsToSerialize);
+            groupsToSerialize = new List<StudyGroup>() { new StudyGroup("P11014", pupilsToSerialize) };
 
-            lectureToSerialize = new Lecture(subjectToSerialize, "Serialization", teachersToSerialize[0], groupToSerialize);
+            lectureToSerialize = new Lecture(subjectsToSerialize[0], "Serialization", teachersToSerialize[0], groupsToSerialize[0]);
 
-            teachersToSerialize[0].GiveMark(lectureToSerialize, new Mark(10, groupToSerialize.listOfPupils[2], teachersToSerialize[0], MarkGround.homework));
-            teachersToSerialize[0].GiveMark(lectureToSerialize, new Mark(8, groupToSerialize.listOfPupils[3], teachersToSerialize[0], MarkGround.board));
+            teachersToSerialize[0].GiveMark(lectureToSerialize, new Mark(10, groupsToSerialize[0].listOfPupils[2], teachersToSerialize[0], MarkGround.homework));
+            teachersToSerialize[0].GiveMark(lectureToSerialize, new Mark(8, groupsToSerialize[0].listOfPupils[3], teachersToSerialize[0], MarkGround.board));
 
             #endregion
 
             #region Serialization
 
-            subjectToSerialize.Serialize(path + "subject.xml");
+            subjectsToSerialize.Serialize(path + "subjects.xml");
             teachersToSerialize.Serialize(path + "teachers.xml");
             pupilsToSerialize.Serialize(path + "pupils.xml");
-            groupToSerialize.Serialize(path + "group.xml");
+            groupsToSerialize.Serialize(path + "groups.xml");
             lectureToSerialize.Serialize(path + "lecture.xml");
 
             #endregion 
 
             #region Deserialization and connections recovering
 
-            deserializedSubject = Deserialization.DeserializeSubject(path + "subject.xml");
+            deserializedSubjects = Deserialization.DeserializeSubjects(path + "subjects.xml");
             deserializedTeachers = Deserialization.DeserializeTeachers(path + "teachers.xml");
             deserializedPupils = Deserialization.DeserializePupils(path + "pupils.xml");
-            deserializedGroup = Deserialization.DeserializeStudyGroup(path + "group.xml");
+            deserializedGroups = Deserialization.DeserializeStudyGroups(path + "groups.xml");
             deserializedLecture = Deserialization.DeserializeLecture(path + "lecture.xml");
 
-            deserializedGroup.Recover(deserializedPupils);
-            deserializedLecture.Recover(deserializedGroup, deserializedSubject, deserializedTeachers, deserializedPupils);
+            deserializedGroups.Recover(deserializedPupils);
+            deserializedLecture.Recover(deserializedGroups, deserializedSubjects, deserializedTeachers, deserializedPupils);
 
             #endregion
 
             // checking out
 
             Console.WriteLine(teachersToSerialize[0].Equals(lectureToSerialize.teacher));
-            Console.WriteLine(groupToSerialize.listOfPupils[0].Equals(lectureToSerialize.studyGroup.listOfPupils[0]));
+            Console.WriteLine(groupsToSerialize[0].listOfPupils[0].Equals(lectureToSerialize.studyGroup.listOfPupils[0]));
 
             Console.WriteLine(deserializedTeachers[0].Equals(deserializedLecture.teacher));
-            Console.WriteLine(deserializedGroup.listOfPupils[0].Equals(deserializedLecture.studyGroup.listOfPupils[0]));
+            Console.WriteLine(deserializedGroups[0].listOfPupils[0].Equals(deserializedLecture.studyGroup.listOfPupils[0]));
 
             // As you can see in both cases references are equal. That means we saved reference connections.
 
