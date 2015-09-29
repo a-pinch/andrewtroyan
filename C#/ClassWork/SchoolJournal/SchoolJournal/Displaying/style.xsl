@@ -3,8 +3,12 @@
 <!-- To see result open "entry.xml" in this directory via IE browser. -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	<xsl:output method="html"/>
+  <xsl:output method="html" encoding="utf-8" doctype-system="about:legacy-compat"/>
+
+	
 	<xsl:template match="/list">
+	<xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;</xsl:text>
+	<html>
 	<body bgcolor="#E7E7DB">
 		<xsl:variable name="lecture" select="document(lecture/@location)/Lecture"/>
 		<xsl:variable name="pupils" select="document(pupils/@location)/ArrayOfPupil"/>
@@ -40,5 +44,6 @@
 			</xsl:for-each>
 		</table>
 	</body>
+	</html>
 	</xsl:template>
 </xsl:stylesheet>

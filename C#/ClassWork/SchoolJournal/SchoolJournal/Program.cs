@@ -35,7 +35,7 @@ namespace SchoolJournal
             lectureToSerialize = new Lecture(subjectsToSerialize[0], "Serialization", teachersToSerialize[0], groupsToSerialize[0]);
 
             teachersToSerialize[0].GiveMark(lectureToSerialize, new Mark(10, groupsToSerialize[0].listOfPupils[2], teachersToSerialize[0], MarkGround.homework));
-            teachersToSerialize[0].GiveMark(lectureToSerialize, new Mark(8, groupsToSerialize[0].listOfPupils[3], teachersToSerialize[0], MarkGround.board));
+            teachersToSerialize[0].GiveMark(lectureToSerialize, new Mark(10, groupsToSerialize[0].listOfPupils[3], teachersToSerialize[0], MarkGround.board));
 
             #endregion
 

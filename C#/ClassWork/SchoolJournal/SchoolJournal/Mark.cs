@@ -42,6 +42,11 @@ namespace SchoolJournal
 
         public Mark(int point_, Pupil pupil_, Teacher teacher_, MarkGround markGround_)
         {
+            if (point_ < 1 || point_ > 10)
+            {
+                throw new ArgumentOutOfRangeException("In Mark.Mark(int, Pupil, Teacher, MarkGround): the point is out of range.");
+            }
+
             point = point_;
             pupil = pupil_;
             pupilID = pupil_.PupilID;

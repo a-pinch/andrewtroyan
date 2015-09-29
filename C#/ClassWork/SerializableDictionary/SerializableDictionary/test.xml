@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MySortedDictionaryOfStringListOfInt32>
+  <node>
+    <key>
+      <string>Christmas</string>
+    </key>
+    <value>
+      <ArrayOfInt xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <int>7</int>
+        <int>1</int>
+      </ArrayOfInt>
+    </value>
+  </node>
+  <node>
+    <key>
+      <string>New Year</string>
+    </key>
+    <value>
+      <ArrayOfInt xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <int>31</int>
+        <int>12</int>
+      </ArrayOfInt>
+    </value>
+  </node>
+</MySortedDictionaryOfStringListOfInt32>
