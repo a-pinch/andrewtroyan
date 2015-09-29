@@ -12,9 +12,10 @@ namespace SchoolJournal
     {
         // non-static fields
 
+        public DateTime date;
         [XmlIgnore] public Subject subject;
         public int subjectID;
-        public string subjectTopic;
+        public List<string> subjectTopics;
         [XmlIgnore] public Teacher teacher;
         public int teacherID;
         [XmlIgnore] public StudyGroup studyGroup;
@@ -25,22 +26,24 @@ namespace SchoolJournal
 
         public Lecture()
         {
+            date = default(DateTime);
             subject = default(Subject);
-            subjectTopic = default(string);
+            subjectTopics = default(List<string>);
             teacher = default(Teacher);
             studyGroup = default(StudyGroup);
             marks = default(List<Mark>);
         }
 
-        public Lecture(Subject subject_, string subjectTopic_, Teacher teacher_, StudyGroup studyGroup_)
+        public Lecture(DateTime date_, Subject subject_, List<string> subjectTopics_, Teacher teacher_, StudyGroup studyGroup_)
         {
-            if (subject_.topics.Contains(subjectTopic_) == false)
+            if (subject_.topics.Intersect(subjectTopics_).Count() != subjectTopics_.Count)
             {
-                throw new InvalidOperationException("In Lecture.Lecture(Subject, string, Teacher, StudyGroup): there isn't given topic in subject's topics.");
+                throw new InvalidOperationException("In Lecture.Lecture(Subject, List<string>, Teacher, StudyGroup): the subject contains not all of the given topics.");
             }
 
+            date = date_;
             subject = subject_;
-            subjectTopic = subjectTopic_;
+            subjectTopics = subjectTopics_;
             teacher = teacher_;
             teacherID = teacher_.TeacherID;
             studyGroup = studyGroup_;

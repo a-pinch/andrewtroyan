@@ -15,7 +15,7 @@ namespace ConvertToHTML
         {
             XPathDocument myXPathDoc = new XPathDocument("..\\..\\..\\..\\SchoolJournal\\SchoolJournal\\Displaying\\entry.xml");
             XslTransform myXslTrans = new XslTransform();
-            myXslTrans.Load("..\\..\\..\\..\\SchoolJournal\\SchoolJournal\\Displaying\\style.xsl");
+            myXslTrans.Load("..\\..\\..\\..\\SchoolJournal\\SchoolJournal\\Displaying\\style1.xsl");
             XmlTextWriter myWriter = new XmlTextWriter("..\\..\\result.html", null);
             myXslTrans.Transform(myXPathDoc, null, myWriter);
         }

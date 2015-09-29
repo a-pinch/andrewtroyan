@@ -52,13 +52,13 @@ namespace SchoolJournal
             }
         }
 
-        public static void Serialize(this Lecture lecture, string path)
+        public static void Serialize(this List<Lecture> lectures, string path)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Lecture));
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Lecture>));
 
             using (var file = new StreamWriter(path))
             {
-                serializer.Serialize(file, lecture);
+                serializer.Serialize(file, lectures);
             }
         }
     }

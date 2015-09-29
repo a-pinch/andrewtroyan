@@ -84,19 +84,19 @@ namespace SchoolJournal
             return result;
         }
         
-        public static Lecture DeserializeLecture(string path)
+        public static List<Lecture> DeserializeLecture(string path)
         {
             if (File.Exists(path) == false)
             {
                 throw new FileNotFoundException("In Deserialization.DeserializeLecture(string): file doesn't exist.");
             }
 
-            Lecture result;
-            XmlSerializer deserializer = new XmlSerializer(typeof(Lecture));
+            List<Lecture> result;
+            XmlSerializer deserializer = new XmlSerializer(typeof(List<Lecture>));
 
             using (var file = new StreamReader(path))
             {
-                result = (Lecture)deserializer.Deserialize(file);
+                result = (List<Lecture>)deserializer.Deserialize(file);
             }
 
             return result;

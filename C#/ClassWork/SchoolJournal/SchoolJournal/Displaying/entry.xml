@@ -2,10 +2,10 @@
 
 <!-- If you want to see result, you should run IE browser. -->
 
-<?xml-stylesheet type="text/xsl" href=".\style.xsl"?>
+<?xml-stylesheet type="text/xsl" href=".\style1.xsl"?>
 
 <list>
-	<lecture location="..\Serialized\lecture.xml"/>
+	<lectures location="..\Serialized\lectures.xml"/>
 	<subjects location="..\Serialized\subjects.xml"/>
 	<teachers location="..\Serialized\teachers.xml"/>
 	<pupils location="..\Serialized\pupils.xml"/>
