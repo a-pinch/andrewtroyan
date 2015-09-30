@@ -25,11 +25,11 @@ namespace Trees
             layers = new List<Triangle>();
 
             int widthOfTrunk = amountOfLayers * amountOfLayers;
-            int heightOfTrunk = widthOfTrunk / 2;
+            int heightOfTrunk = widthOfTrunk * 2 / 3;
             trunk = new Rectangle(posX + width / 2 - widthOfTrunk / 2, posY + height - heightOfTrunk, widthOfTrunk, heightOfTrunk);
 
-            int heightForTriangle = (height - heightOfTrunk) / amountOfLayers;
-            
+            int heightForTriangle = (height - heightOfTrunk) / amountOfLayers + 1;
+
             int[] firstPoint = new int[2] { width / 2 + posX, posY };
             int[] secondPoint = new int[2] { width + posX, posY + heightForTriangle };
             int[] thirdPoint = new int[2] { posX, posY + heightForTriangle };
