@@ -18,6 +18,8 @@ namespace Trees
         public int width;
         [XmlElement(ElementName = "tree")]
         public List<Tree> trees;
+        [XmlElement(ElementName = "snowFlake")]
+        public List<SnowFlake> snowFlakes;
 
         // constructors
 
@@ -28,6 +30,7 @@ namespace Trees
             height = height_;
             width = width_;
             trees = new List<Tree>();
+            snowFlakes = new List<SnowFlake>();
         }
 
         // non-static fields
@@ -45,6 +48,17 @@ namespace Trees
                 posY = rand.Next(height - maxHightOfTree);
 
                 trees.Add(new Tree(posX, posY, maxWidthOfTree, maxHightOfTree, rand.Next(3, 6)));
+            }
+        }
+
+        public void GenerateSnow()
+        {
+            Random rand = new Random();
+            int amountOfSnow = rand.Next(500, 1000);
+
+            for (int i = 0; i < amountOfSnow; ++i)
+            {
+                snowFlakes.Add(new SnowFlake(rand.Next(width), rand.Next(height), rand.Next(10, 20)));
             }
         }
     }

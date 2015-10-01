@@ -17,6 +17,7 @@ namespace Trees
         {
             Wood test = new Wood(2000, 3000);
             test.GenerateWood();
+            test.GenerateSnow();
 
             XmlSerializer serializer = new XmlSerializer(typeof(Wood));
             using (var file = new StreamWriter("..\\..\\test.xml"))

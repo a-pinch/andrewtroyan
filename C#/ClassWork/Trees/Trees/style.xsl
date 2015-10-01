@@ -4,6 +4,8 @@
 	<xsl:template match="/">
 		<html>
 			<head>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+				<script src="code.js"></script>
 				<title>Freaky wood</title>
 			</head>
 			<body>
@@ -13,6 +15,9 @@
 						<xsl:for-each select="layer">
 							<polygon points="{firstPointX},{firstPointY} {secondPointX},{secondPointY} {thirdPointX},{thirdPointY}" style="fill:green;stroke:black;stroke-width:1"/>
 						</xsl:for-each>
+					</xsl:for-each>
+					<xsl:for-each select="Wood/snowFlake">
+						<circle id="{@id}" cx="{@cx}" cy="{@cy}" r="{@r}" style="fill:#7DDEFF"></circle>
 					</xsl:for-each>
 				</svg>
 			</body>
