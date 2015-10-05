@@ -33,31 +33,15 @@ namespace ExtensionMethods
             return result;
         }
 
-        public static string ToJSON<TKey, TValue>(this IDictionary<TKey, TValue> storage)
-        {
-            string result = "{ ";
-            var iterator = storage.GetEnumerator();
-
-            if (iterator.MoveNext())
-            {
-                result += "\"" + iterator.Current.Key + "\" : \"" + iterator.Current.Value + "\"";
-
-                while (iterator.MoveNext())
-                {
-                    result += ", \"" + iterator.Current.Key + "\" : \"" + iterator.Current.Value + "\"";
-                }
-            }
-
-            result += " }";
-
-            return result;
-        }
-
         public static string ToJSON<T>(this T obj)
         {
             if (obj is int || obj is string || obj is float || obj is double)
             {
                 return obj.ToString();
+            }
+            else if (obj is IDictionary)
+            {
+                return DictionaryToJSON((IDictionary)obj);
             }
             else if (obj is IEnumerable)
             {
@@ -67,6 +51,26 @@ namespace ExtensionMethods
             {
                 return CommonToJSON(obj);
             }
+        }
+
+        private static string DictionaryToJSON(IDictionary storage)
+        {
+            string result = "{ ";
+            var iterator = storage.GetEnumerator();
+
+            if (iterator.MoveNext())
+            {
+                result += "\"" + iterator.Key + "\" : \"" + iterator.Value + "\"";
+
+                while (iterator.MoveNext())
+                {
+                    result += ", \"" + iterator.Key + "\" : \"" + iterator.Value + "\"";
+                }
+            }
+
+            result += " }";
+
+            return result;
         }
 
         private static string EnumerableToJSON(IEnumerable storage)
@@ -98,12 +102,12 @@ namespace ExtensionMethods
 
               if (fields.Length != 0)
               {
-                  result += "\"" + fields[0].Name + "\" : \"" + fields[0].GetValue(obj) + "\"";
+                  result += "\"" + fields[0].Name + "\" : \"" + fields[0].GetValue(obj).ToJSON() + "\"";
                   firstValue = false;
 
                   for (int i = 1; i < fields.Length; ++i)
                   {
-                      result += ", \"" + fields[0].Name + "\" : \"" + fields[0].GetValue(obj) + "\"";
+                      result += ", \"" + fields[i].Name + "\" : \"" + fields[i].GetValue(obj).ToJSON() + "\"";
                   }
               }
 
@@ -111,15 +115,17 @@ namespace ExtensionMethods
 
               if (properties.Length != 0)
               {
+                  bool fromStart = true;
+
                   if (firstValue)
                   {
-                      result += "\"" + properties[0].Name + "\" : \"" + properties[0].GetValue(obj) + "\"";
-                      firstValue = false;
+                      result += "\"" + properties[0].Name + "\" : \"" + properties[0].GetValue(obj).ToJSON() + "\"";
+                      fromStart = false;
                   }
 
-                  for (int i = firstValue ? 0 : 1; i < fields.Length; ++i)
+                  for (int i = fromStart ? 0 : 1; i < properties.Length; ++i)
                   {
-                      result += ", \"" + properties[0].Name + "\" : \"" + properties[0].GetValue(obj) + "\"";
+                      result += ", \"" + properties[i].Name + "\" : \"" + properties[i].GetValue(obj).ToJSON() + "\"";
                   }
               }
 

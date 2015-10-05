@@ -21,10 +21,10 @@ $(document).ready(function()
 			var x = parseInt($(t).attr("cx"));
 			var y = parseInt($(t).attr("cy"));
 			x = (x + getRandomInt(-10, 10)) % 3000 ;
-			y = (y + 5) % 2000;
+			y = (y + getRandomInt(5, 10)) % 2000;
 			$(t).attr("cx", x);
 			$(t).attr("cy", y);
 			
 		}
-	},50);
+	}, 50);
 });

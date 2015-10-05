@@ -26,7 +26,7 @@ namespace ExtensionMethods
             dict.Add(5, "five");
             Console.WriteLine(dict.ToJSON());
 
-            TestClass test = new TestClass("Andrew", 13);
+            TestClass test = new TestClass("Andrew", new int[] { 1, 2, 3 }, 13);
             Console.WriteLine(test.ToJSON());
 
             Console.ReadKey();
