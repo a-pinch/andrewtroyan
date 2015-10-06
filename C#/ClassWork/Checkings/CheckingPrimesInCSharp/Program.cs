@@ -17,7 +17,7 @@ namespace Checkings
 
             using (var file = new StreamWriter("..\\..\\result.txt"))
             {
-                file.WriteLine(after.Subtract(before).TotalSeconds);
+                file.WriteLine(after.Subtract(before).TotalMilliseconds);
             }
         }
     }

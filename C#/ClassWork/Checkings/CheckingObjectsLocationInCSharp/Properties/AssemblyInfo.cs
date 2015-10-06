@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Checkings")]
+[assembly: AssemblyTitle("CheckingObjectsLocationInCSharp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Checkings")]
+[assembly: AssemblyProduct("CheckingObjectsLocationInCSharp")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("120f863f-b08c-462e-84c9-e122a3ac290b")]
+[assembly: Guid("c2262d7d-e01b-4298-999d-8c047b31e257")]
 
 // Version information for an assembly consists of the following four values:
 //
