@@ -23,7 +23,7 @@ namespace Checkings
 
                     while (count < amount)
                     {
-                        if (CheckForPrimality(currentNumber))
+                        if (CheckForPrimarity(currentNumber))
                         {
                             file.WriteLine(currentNumber);
                             ++count;
@@ -35,7 +35,7 @@ namespace Checkings
             }
         }
 
-        public static bool CheckForPrimality(int number)
+        public static bool CheckForPrimarity(int number)
         {
             for (int i = 2; i * i <= number; i++)
             {

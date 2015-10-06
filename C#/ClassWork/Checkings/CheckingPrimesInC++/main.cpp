@@ -5,7 +5,7 @@
 using namespace std;
 using namespace std::chrono;
 
-inline bool CheckForPrimality(int number)
+inline bool CheckForPrimarity(int number)
 {
 	for (int i = 2; i * i <= number; i++)
 	{
@@ -31,7 +31,7 @@ void GeneratePrimes(unsigned int amount, string path)
 
 		while (count < amount)
 		{
-			if (CheckForPrimality(currentNumber))
+			if (CheckForPrimarity(currentNumber))
 			{
 				file << currentNumber << '\n';
 				++count;
