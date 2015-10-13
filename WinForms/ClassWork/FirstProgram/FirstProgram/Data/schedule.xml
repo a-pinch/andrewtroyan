@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<scheduleDay>
+		<lesson>
+			<date>2015-10-13</date>
+			<time>09:00</time>
+			<teacher>0</teacher>
+			<group>0</group>
+			<subject>0</subject>
+			<topics>
+				<topic>Serialization</topic>
+			</topics>
+		</lesson>
+		<lesson>
+			<date>2015-10-13</date>
+			<time>10:30</time>
+			<teacher>0</teacher>
+			<group>0</group>
+			<subject>0</subject>
+			<topics>
+				<topic>Attributes</topic>
+			</topics>
+		</lesson>
+	</schedueDay>
+</root>

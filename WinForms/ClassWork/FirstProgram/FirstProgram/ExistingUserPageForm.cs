@@ -61,5 +61,10 @@ namespace FirstProgram
                 this.Close();
             }
         }
+
+        private void buttonWatchGivenLessons_Click(object sender, EventArgs e)
+        {
+            new WatchGivenLessonsForm(xmlDocument, relativeTeacher).ShowDialog();
+        }
     }
 }

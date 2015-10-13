@@ -13,5 +13,6 @@ namespace FirstProgram
         public static string lessonsLocation = "..\\..\\Data\\lessons.xml";
         public static string pupilsLocation = "..\\..\\Data\\pupils.xml";
         public static string groupsLocation = "..\\..\\Data\\groups.xml";
+        public static string scheduleLocation = "..\\..\\Data\\schedule.xml";
     }
 }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfSubject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Subject SubjectID="0">
+<root>
+  <subject id="0">
     <name>C#</name>
     <topics>
-      <string>Serialization</string>
-      <string>Attributes</string>
-      <string>XML</string>
-      <string>XSLT</string>
+      <topic>Serialization</topic>
+      <topic>Attributes</topic>
+      <topic>XML</topic>
+      <topic>XSLT</topic>
     </topics>
-  </Subject>
-</ArrayOfSubject>
+  </subject>
+</root>

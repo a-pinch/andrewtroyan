@@ -63,6 +63,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GivenLessonInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GivenLessonInfo.Designer.cs">
+      <DependentUpon>GivenLessonInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Group.cs" />
     <Compile Include="Human.cs" />
     <Compile Include="Lesson.cs" />
@@ -78,6 +84,12 @@
     <Compile Include="Pupil.cs" />
     <Compile Include="Subject.cs" />
     <Compile Include="Teacher.cs" />
+    <Compile Include="WatchGivenLessonsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WatchGivenLessonsForm.Designer.cs">
+      <DependentUpon>WatchGivenLessonsForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ChangePasswordForm.resx">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -86,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GivenLessonInfo.resx">
+      <DependentUpon>GivenLessonInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewUserForm.resx">
       <DependentUpon>NewUserForm.cs</DependentUpon>
@@ -99,6 +114,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="WatchGivenLessonsForm.resx">
+      <DependentUpon>WatchGivenLessonsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

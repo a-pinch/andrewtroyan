@@ -1,9 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <teacher id="0">
-    <password>-1152142086</password>
-    <login>max</login>
-    <surname>Belov</surname>
     <name>Maxim</name>
+    <surname>Belov</surname>
+    <login>max</login>
+    <password>-1152142086</password>
+  </teacher>
+  <teacher id="1">
+    <name>Andrew</name>
+    <surname>Troyan</surname>
+    <login>user</login>
+    <password>-1152142086</password>
   </teacher>
 </root>

@@ -40,8 +40,6 @@ namespace FirstProgram
                 }
                 else
                 {
-                    // change logic
-
                     var newTeacher = new Teacher(textBoxForName.Text, textBoxForSurname.Text, 
                         textBoxForLogin.Text, textBoxForPassword.Text.GetHashCode().ToString());
                     newTeacher.AddNewTeacher();

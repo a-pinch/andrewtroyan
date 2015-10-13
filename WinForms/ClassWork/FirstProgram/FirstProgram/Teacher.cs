@@ -58,11 +58,11 @@ namespace FirstProgram
             loginNode.InnerText = login;
             XmlElement passwordNode = xmlDocument.CreateElement("password");
             passwordNode.InnerText = password;
-            newTeacherNode.PrependChild(nameNode);
-            newTeacherNode.PrependChild(surnameNode);
-            newTeacherNode.PrependChild(loginNode);
-            newTeacherNode.PrependChild(passwordNode);
-            root.PrependChild(newTeacherNode);
+            newTeacherNode.AppendChild(nameNode);
+            newTeacherNode.AppendChild(surnameNode);
+            newTeacherNode.AppendChild(loginNode);
+            newTeacherNode.AppendChild(passwordNode);
+            root.AppendChild(newTeacherNode);
             xmlDocument.Save(Data.teachersLocation);
         }
 

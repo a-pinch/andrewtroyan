@@ -55,6 +55,7 @@
             this.buttonWatchGivenLessons.TabIndex = 0;
             this.buttonWatchGivenLessons.Text = "Watch given lessons";
             this.buttonWatchGivenLessons.UseVisualStyleBackColor = true;
+            this.buttonWatchGivenLessons.Click += new System.EventHandler(this.buttonWatchGivenLessons_Click);
             // 
             // buttonStartNewLesson
             // 
