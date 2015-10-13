@@ -18,21 +18,21 @@ namespace FirstProgram
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonRegister_Click(object sender, EventArgs e)
         {
-            if (this.textBox1.Text.Any() == false || this.textBox2.Text.Any() == false ||
-                this.textBox3.Text.Any() == false)
+            if (this.textBoxForLogin.Text.Any() == false || this.textBoxForName.Text.Any() == false ||
+                this.textBoxForSurname.Text.Any() == false || this.textBoxForPassword.Text.Any() == false)
             {
                 MessageBox.Show("You didn't fill all fields!", "Error", MessageBoxButtons.OK);
             }
             else
             {
                 XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.Load("..\\..\\users.xml");
+                xmlDocument.Load(Data.teachersLocation);
                 XmlNode root = xmlDocument.SelectSingleNode("root");
 
-                var existing = root.SelectSingleNode("teacher[login='" + this.textBox1.Text + "' and password='" 
-                    + this.textBox3.Text.GetHashCode() + "']");
+                var existing = root.SelectSingleNode("teacher[login='" + this.textBoxForLogin.Text + "' and password='" 
+                    + this.textBoxForPassword.Text.GetHashCode() + "']");
 
                 if (existing != null)
                 {
@@ -40,18 +40,11 @@ namespace FirstProgram
                 }
                 else
                 {
-                    XmlElement teacher = xmlDocument.CreateElement("teacher");
-                    XmlElement login = xmlDocument.CreateElement("login");
-                    login.InnerText = this.textBox1.Text;
-                    XmlElement fullName = xmlDocument.CreateElement("fullName");
-                    fullName.InnerText = this.textBox2.Text;
-                    XmlElement password = xmlDocument.CreateElement("password");
-                    password.InnerText = this.textBox3.Text.GetHashCode().ToString();
-                    teacher.AppendChild(login);
-                    teacher.AppendChild(fullName);
-                    teacher.AppendChild(password);
-                    root.AppendChild(teacher);
-                    xmlDocument.Save("..\\..\\users.xml");
+                    // change logic
+
+                    var newTeacher = new Teacher(textBoxForName.Text, textBoxForSurname.Text, 
+                        textBoxForLogin.Text, textBoxForPassword.Text.GetHashCode().ToString());
+                    newTeacher.AddNewTeacher();
                     MessageBox.Show("This user has been successfully created!", "Success", MessageBoxButtons.OK);
                     this.Close();
                 }

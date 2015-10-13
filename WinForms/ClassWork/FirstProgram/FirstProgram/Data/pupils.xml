@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPupil xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Pupil PupilID="0">
+    <name>Andrew</name>
+    <surname>Troyan</surname>
+  </Pupil>
+  <Pupil PupilID="1">
+    <name>Igor</name>
+    <surname>Saroko</surname>
+  </Pupil>
+  <Pupil PupilID="2">
+    <name>Kolya</name>
+    <surname>Morschinin</surname>
+  </Pupil>
+  <Pupil PupilID="3">
+    <name>Ira</name>
+    <surname>Lesina</surname>
+  </Pupil>
+  <Pupil PupilID="4">
+    <name>Andrew</name>
+    <surname>Pinchuk</surname>
+  </Pupil>
+  <Pupil PupilID="5">
+    <name>Olya</name>
+    <surname>Pirozhnik</surname>
+  </Pupil>
+  <Pupil PupilID="6">
+    <name>Arseniy</name>
+    <surname>Vinogradov</surname>
+  </Pupil>
+  <Pupil PupilID="7">
+    <name>Oleg</name>
+    <surname>Grebenko</surname>
+  </Pupil>
+</ArrayOfPupil>

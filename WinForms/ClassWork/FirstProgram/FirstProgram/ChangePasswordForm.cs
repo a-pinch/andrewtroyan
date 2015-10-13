@@ -27,20 +27,20 @@ namespace FirstProgram
             relativeTeacher = relativeTeacher_;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonChangePassword_Click(object sender, EventArgs e)
         {
-            if (this.textBox1.Text.Any() == false || this.textBox2.Text.Any() == false)
+            if (this.textBoxForOldPassword.Text.Any() == false || this.textBoxForNewPassword.Text.Any() == false)
             {
                 MessageBox.Show("You didn't fill all fields!", "Error", MessageBoxButtons.OK);
             }
-            else if (this.textBox1.Text.GetHashCode().ToString() != relativeTeacher.SelectSingleNode("password").InnerText)
+            else if (this.textBoxForOldPassword.Text.GetHashCode().ToString() != relativeTeacher.SelectSingleNode("password").InnerText)
             {
                 MessageBox.Show("You entered wrong old password!", "Error", MessageBoxButtons.OK);
             }
             else
             {
-                relativeTeacher.SelectSingleNode("password").InnerText = this.textBox2.Text.GetHashCode().ToString();
-                xmlDocument.Save("..\\..\\users.xml");
+                relativeTeacher.SelectSingleNode("password").InnerText = this.textBoxForNewPassword.Text.GetHashCode().ToString();
+                xmlDocument.Save(Data.teachersLocation);
                 MessageBox.Show("Your password was successfully changed!", "Success", MessageBoxButtons.OK);
                 this.Close();
             }

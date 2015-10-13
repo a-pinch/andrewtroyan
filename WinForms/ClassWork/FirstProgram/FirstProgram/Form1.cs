@@ -19,35 +19,47 @@ namespace FirstProgram
             InitializeComponent();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonEnter_Click(object sender, EventArgs e)
         {
-            if (this.textBox1.Text.Any() == false || this.textBox2.Text.Any() == false)
+            if (this.textBoxForLogin.Text.Any() == false || this.textBoxForPassword.Text.Any() == false)
             {
                 MessageBox.Show("You didn't fill all fields!", "Error", MessageBoxButtons.OK);
             }
             else
             {
                 XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.Load("..\\..\\users.xml");
+                xmlDocument.Load(Data.teachersLocation);
 
-                var existing = xmlDocument.SelectSingleNode("root/teacher[login='" + this.textBox1.Text + "' and password='"
-                    + this.textBox2.Text.GetHashCode() + "']");
+                var existingLogins = xmlDocument.SelectSingleNode("root/teacher[login='" +
+                    this.textBoxForLogin.Text + "']");
 
-                if (existing == null)
+                if (existingLogins == null)
                 {
                     MessageBox.Show("This user doesn't exist!", "Error", MessageBoxButtons.OK);
                 }
                 else
                 {
-                    new ExistingUserPageForm(this, xmlDocument, existing).Show();
-                    this.Hide();
+                    var existingTeacher = xmlDocument.SelectSingleNode("root/teacher[login='" + this.textBoxForLogin.Text + "' and password='"
+                        + this.textBoxForPassword.Text.GetHashCode() + "']");
+
+                    if (existingTeacher == null)
+                    {
+                        MessageBox.Show("Wrong password!", "Error", MessageBoxButtons.OK);
+                    }
+                    else
+                    {
+                        new ExistingUserPageForm(this, xmlDocument, existingTeacher).Show();
+                        this.textBoxForLogin.Clear();
+                        this.textBoxForPassword.Clear();
+                        this.Hide();
+                    }
                 }
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonNewUser_Click(object sender, EventArgs e)
         {
-            new NewUserForm().Show();
+            new NewUserForm().ShowDialog();
         }
     }
 }

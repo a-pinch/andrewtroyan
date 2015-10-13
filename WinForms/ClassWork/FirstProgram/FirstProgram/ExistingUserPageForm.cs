@@ -16,6 +16,7 @@ namespace FirstProgram
         Form1 parent;
         XmlDocument xmlDocument;
         XmlNode relativeTeacher;
+        System.Windows.Forms.Timer timer = null;
 
         public ExistingUserPageForm()
         {
@@ -27,17 +28,38 @@ namespace FirstProgram
             parent = parent_;
             xmlDocument = xmlDocument_;
             relativeTeacher = relativeTeacher_;
-            this.Text = "Welcome, " + relativeTeacher.SelectSingleNode("fullName").InnerText + "!";
+            this.Text = "Welcome, " + relativeTeacher.SelectSingleNode("name").InnerText + " " + 
+                relativeTeacher.SelectSingleNode("surname").InnerText + "!";
+
+            labelDate.Text = DateTime.Now.ToString();
+
+            timer = new Timer();
+            timer.Interval = 1000;
+            timer.Tick += new EventHandler(timerTick);
+            timer.Enabled = true;
+        }
+        private void timerTick(object sender, EventArgs e)
+        {
+            labelDate.Text = DateTime.Now.ToString();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonChangePassword_Click(object sender, EventArgs e)
         {
-            new ChangePasswordForm(xmlDocument, relativeTeacher).Show();
+            new ChangePasswordForm(xmlDocument, relativeTeacher).ShowDialog();
         }
 
         private void ExistingUserPageForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            parent.Close();
+            parent.Show();
+        }
+
+        private void buttonLogOut_Click(object sender, EventArgs e)
+        {
+            var answer = MessageBox.Show("Are you sure?", "Exit", MessageBoxButtons.YesNo);
+            if (answer == System.Windows.Forms.DialogResult.Yes)
+            {
+                this.Close();
+            }
         }
     }
 }
