@@ -5,4 +5,9 @@
     <fullName>andrew</fullName>
     <password>-1152142086</password>
   </teacher>
+  <teacher>
+    <login>max</login>
+    <fullName>Белов Максим</fullName>
+    <password>1290131443</password>
+  </teacher>
 </root>

@@ -29,12 +29,12 @@ namespace FirstProgram
             {
                 XmlDocument xmlDocument = new XmlDocument();
                 xmlDocument.Load("..\\..\\users.xml");
-                XmlNode root = xmlDocument.ChildNodes[1];
+                XmlNode root = xmlDocument.SelectSingleNode("root");
 
                 var existing = root.SelectSingleNode("teacher[login='" + this.textBox1.Text + "' and password='" 
                     + this.textBox3.Text.GetHashCode() + "']");
 
-                if (existing == null)
+                if (existing != null)
                 {
                     MessageBox.Show("This users already exists!", "Error", MessageBoxButtons.OK);
                 }
