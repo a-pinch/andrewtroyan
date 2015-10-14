@@ -13,7 +13,6 @@ namespace FirstProgram
 {
     public partial class ChangePasswordForm : Form
     {
-        XmlDocument xmlDocument;
         XmlNode relativeTeacher;
 
         public ChangePasswordForm()
@@ -21,9 +20,8 @@ namespace FirstProgram
             InitializeComponent();
         }
 
-        public ChangePasswordForm(XmlDocument xmlDocument_, XmlNode relativeTeacher_) : this()
+        public ChangePasswordForm(XmlNode relativeTeacher_) : this()
         {
-            xmlDocument = xmlDocument_;
             relativeTeacher = relativeTeacher_;
         }
 
@@ -40,7 +38,7 @@ namespace FirstProgram
             else
             {
                 relativeTeacher.SelectSingleNode("password").InnerText = this.textBoxForNewPassword.Text.GetHashCode().ToString();
-                xmlDocument.Save(Data.teachersLocation);
+                Teacher.xmlDocument.Save(Data.teachersLocation);
                 MessageBox.Show("Your password was successfully changed!", "Success", MessageBoxButtons.OK);
                 this.Close();
             }

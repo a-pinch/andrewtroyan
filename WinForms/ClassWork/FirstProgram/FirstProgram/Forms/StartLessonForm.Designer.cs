@@ -33,6 +33,10 @@
             this.labelSelectTime = new System.Windows.Forms.Label();
             this.comboBoxWithScheduleTime = new System.Windows.Forms.ComboBox();
             this.buttonStartLesson = new System.Windows.Forms.Button();
+            this.labelWithSubjectName = new System.Windows.Forms.Label();
+            this.labelWithGroupName = new System.Windows.Forms.Label();
+            this.labelWithTopics = new System.Windows.Forms.Label();
+            this.textBoxWithTopicNames = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // labelSelectDate
@@ -80,11 +84,49 @@
             this.buttonStartLesson.UseVisualStyleBackColor = true;
             this.buttonStartLesson.Click += new System.EventHandler(this.buttonStartLesson_Click);
             // 
+            // labelWithSubjectName
+            // 
+            this.labelWithSubjectName.AutoSize = true;
+            this.labelWithSubjectName.Location = new System.Drawing.Point(51, 119);
+            this.labelWithSubjectName.Name = "labelWithSubjectName";
+            this.labelWithSubjectName.Size = new System.Drawing.Size(46, 13);
+            this.labelWithSubjectName.TabIndex = 5;
+            this.labelWithSubjectName.Text = "Subject:";
+            // 
+            // labelWithGroupName
+            // 
+            this.labelWithGroupName.AutoSize = true;
+            this.labelWithGroupName.Location = new System.Drawing.Point(144, 119);
+            this.labelWithGroupName.Name = "labelWithGroupName";
+            this.labelWithGroupName.Size = new System.Drawing.Size(39, 13);
+            this.labelWithGroupName.TabIndex = 6;
+            this.labelWithGroupName.Text = "Group:";
+            // 
+            // labelWithTopics
+            // 
+            this.labelWithTopics.AutoSize = true;
+            this.labelWithTopics.Location = new System.Drawing.Point(51, 150);
+            this.labelWithTopics.Name = "labelWithTopics";
+            this.labelWithTopics.Size = new System.Drawing.Size(48, 13);
+            this.labelWithTopics.TabIndex = 7;
+            this.labelWithTopics.Text = "Topic(s):";
+            // 
+            // textBoxWithTopicNames
+            // 
+            this.textBoxWithTopicNames.Location = new System.Drawing.Point(116, 147);
+            this.textBoxWithTopicNames.Name = "textBoxWithTopicNames";
+            this.textBoxWithTopicNames.Size = new System.Drawing.Size(100, 20);
+            this.textBoxWithTopicNames.TabIndex = 8;
+            // 
             // StartLessonForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(395, 220);
+            this.Controls.Add(this.textBoxWithTopicNames);
+            this.Controls.Add(this.labelWithTopics);
+            this.Controls.Add(this.labelWithGroupName);
+            this.Controls.Add(this.labelWithSubjectName);
             this.Controls.Add(this.buttonStartLesson);
             this.Controls.Add(this.comboBoxWithScheduleTime);
             this.Controls.Add(this.labelSelectTime);
@@ -105,5 +147,9 @@
         private System.Windows.Forms.Label labelSelectTime;
         private System.Windows.Forms.ComboBox comboBoxWithScheduleTime;
         private System.Windows.Forms.Button buttonStartLesson;
+        private System.Windows.Forms.Label labelWithSubjectName;
+        private System.Windows.Forms.Label labelWithGroupName;
+        private System.Windows.Forms.Label labelWithTopics;
+        private System.Windows.Forms.TextBox textBoxWithTopicNames;
     }
 }

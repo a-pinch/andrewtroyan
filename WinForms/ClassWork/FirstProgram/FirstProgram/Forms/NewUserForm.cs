@@ -23,27 +23,25 @@ namespace FirstProgram
             if (this.textBoxForLogin.Text.Any() == false || this.textBoxForName.Text.Any() == false ||
                 this.textBoxForSurname.Text.Any() == false || this.textBoxForPassword.Text.Any() == false)
             {
-                MessageBox.Show("You didn't fill all fields!", "Error", MessageBoxButtons.OK);
+                MessageBox.Show("You didn't fill all fields!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.Load(Data.teachersLocation);
-                XmlNode root = xmlDocument.SelectSingleNode("root");
+                XmlNode root = Teacher.xmlDocument.SelectSingleNode("root");
 
                 var existing = root.SelectSingleNode("teacher[login='" + this.textBoxForLogin.Text + "' and password='" 
                     + this.textBoxForPassword.Text.GetHashCode() + "']");
 
                 if (existing != null)
                 {
-                    MessageBox.Show("This users already exists!", "Error", MessageBoxButtons.OK);
+                    MessageBox.Show("This users already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
                     var newTeacher = new Teacher(textBoxForName.Text, textBoxForSurname.Text, 
                         textBoxForLogin.Text, textBoxForPassword.Text.GetHashCode().ToString());
-                    newTeacher.AddNewTeacher();
-                    MessageBox.Show("This user has been successfully created!", "Success", MessageBoxButtons.OK);
+                    newTeacher.AddToXml();
+                    MessageBox.Show("This user has been successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     this.Close();
                 }
             }

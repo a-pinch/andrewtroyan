@@ -45,7 +45,7 @@ namespace FirstProgram
             password = password_;
         }
 
-        public void AddNewTeacher()
+        public void AddToXml()
         {
             XmlNode root = xmlDocument.SelectSingleNode("root");
             XmlElement newTeacherNode = xmlDocument.CreateElement("teacher");

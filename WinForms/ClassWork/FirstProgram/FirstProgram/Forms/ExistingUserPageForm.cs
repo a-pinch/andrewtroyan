@@ -14,19 +14,17 @@ namespace FirstProgram
     public partial class ExistingUserPageForm : Form
     {
         Form1 parent;
-        XmlDocument xmlDocument;
         XmlNode relativeTeacher;
-        System.Windows.Forms.Timer timer = null;
+        System.Windows.Forms.Timer timer;
 
         public ExistingUserPageForm()
         {
             InitializeComponent();
         }
 
-        public ExistingUserPageForm(Form1 parent_, XmlDocument xmlDocument_, XmlNode relativeTeacher_) : this()
+        public ExistingUserPageForm(Form1 parent_,  XmlNode relativeTeacher_) : this()
         {
             parent = parent_;
-            xmlDocument = xmlDocument_;
             relativeTeacher = relativeTeacher_;
             this.Text = "Welcome, " + relativeTeacher.SelectSingleNode("name").InnerText + " " + 
                 relativeTeacher.SelectSingleNode("surname").InnerText + "!";
@@ -45,7 +43,7 @@ namespace FirstProgram
 
         private void buttonChangePassword_Click(object sender, EventArgs e)
         {
-            new ChangePasswordForm(xmlDocument, relativeTeacher).ShowDialog();
+            new ChangePasswordForm(relativeTeacher).ShowDialog();
         }
 
         private void ExistingUserPageForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -55,7 +53,7 @@ namespace FirstProgram
 
         private void buttonLogOut_Click(object sender, EventArgs e)
         {
-            var answer = MessageBox.Show("Are you sure?", "Exit", MessageBoxButtons.YesNo);
+            var answer = MessageBox.Show("Are you sure?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (answer == System.Windows.Forms.DialogResult.Yes)
             {
                 this.Close();
@@ -64,12 +62,12 @@ namespace FirstProgram
 
         private void buttonWatchGivenLessons_Click(object sender, EventArgs e)
         {
-            new WatchGivenLessonsForm(xmlDocument, relativeTeacher).ShowDialog();
+            new WatchGivenLessonsForm(relativeTeacher).ShowDialog();
         }
 
         private void buttonStartNewLesson_Click(object sender, EventArgs e)
         {
-            new StartLessonForm(xmlDocument, relativeTeacher).ShowDialog();
+            new StartLessonForm(relativeTeacher).ShowDialog();
         }
     }
 }

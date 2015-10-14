@@ -13,28 +13,25 @@ namespace FirstProgram
 {
     public partial class WatchGivenLessonsForm : Form
     {
-        XmlDocument xmlDocument;
         XmlNode relativeTeacher;
         XmlNodeList givenLessons;
-
-        //GivenLessonInfo givenLessonInfo;
 
         public WatchGivenLessonsForm()
         {
             InitializeComponent();
         }
 
-        public WatchGivenLessonsForm(XmlDocument xmlDocument_, XmlNode relativeTeacher_) : this()
+        public WatchGivenLessonsForm(XmlNode relativeTeacher_) : this()
         {
-            xmlDocument = xmlDocument_;
             relativeTeacher = relativeTeacher_;
 
-            XmlDocument lessonsDocument = new XmlDocument();
-            lessonsDocument.Load(Data.lessonsLocation);
+            this.labelWithGroupName.Hide();
+            this.labelWithSubjectName.Hide();
+            this.labelWithTopics.Hide();
 
-            XmlNode lessonsRoot = lessonsDocument.SelectSingleNode("root");
-            var currentTeacherId = relativeTeacher.Attributes[0].Value;
-            givenLessons = lessonsRoot.SelectNodes("lesson[teacher='" + currentTeacherId + "']");
+            givenLessons = Lesson.xmlDocument.SelectNodes("root/lesson[teacher='" + 
+                relativeTeacher.Attributes[0].Value + "']");
+
             foreach (XmlNode lesson in givenLessons)
             {
                 this.comboBoxWithGivenLessonsDates.Items.Add(lesson.SelectSingleNode("date").InnerText +
@@ -47,31 +44,16 @@ namespace FirstProgram
             int index = this.comboBoxWithGivenLessonsDates.SelectedIndex;
             XmlNode selectedLesson = givenLessons[index];
 
-            XmlDocument subjectsDocument = new XmlDocument();
-            subjectsDocument.Load(Data.subjectsLocation);
-            XmlDocument groupsDocument = new XmlDocument();
-            groupsDocument.Load(Data.groupsLocation);
-            XmlDocument pupilsDocument = new XmlDocument();
-            pupilsDocument.Load(Data.pupilsLocation);
-
-            this.Controls.RemoveByKey("labelWithSubjectName");
-            this.Controls.RemoveByKey("labelWithTopics");
-            this.Controls.RemoveByKey("labelWithGroupName");
+            this.labelWithGroupName.Show();
+            this.labelWithSubjectName.Show();
+            this.labelWithTopics.Show();
             this.Controls.RemoveByKey("tableWithLessonData");
-
-            Label labelWithSubjectName = new Label();
-            labelWithSubjectName.Name = "labelWithSubjectName";
-            labelWithSubjectName.Text = "Subject: " + subjectsDocument.SelectSingleNode(
+            
+            labelWithSubjectName.Text = "Subject: " + Subject.xmlDocument.SelectSingleNode(
                 "root/subject[@id='" + selectedLesson.SelectSingleNode("subject").InnerText + "']/name").InnerText;
-            labelWithSubjectName.Location = new Point(LabelSelectDate.Location.X, LabelSelectDate.Location.Y 
+            labelWithSubjectName.Location = new Point(LabelSelectDate.Location.X, LabelSelectDate.Location.Y
                 + LabelSelectDate.Size.Height + 15);
-            labelWithSubjectName.Anchor = AnchorStyles.Left | AnchorStyles.Top;
-            labelWithSubjectName.AutoSize = true;
-            labelWithSubjectName.BringToFront();
-            this.Controls.Add(labelWithSubjectName);
 
-            Label labelWithTopics = new Label();
-            labelWithTopics.Name = "labelWithTopics";
             XmlNodeList topics = selectedLesson.SelectNodes("topics/topic");
             labelWithTopics.Text = "Topic(s): " + topics[0].InnerText;
             for (int i = 1; i < topics.Count; ++i)
@@ -80,24 +62,24 @@ namespace FirstProgram
             }
             labelWithTopics.Location = new Point(labelWithSubjectName.Location.X + labelWithSubjectName.Size.Width + 10
                 , labelWithSubjectName.Location.Y);
-            labelWithTopics.Anchor = AnchorStyles.Left | AnchorStyles.Top;
-            labelWithTopics.AutoSize = true;
-            this.Controls.Add(labelWithTopics);
-
-            Label labelWithGroupName = new Label();
-            labelWithGroupName.Name = "labelWithGroupName";
-            labelWithGroupName.Text = "Group: " + groupsDocument.SelectSingleNode("root/group[@id='" +
+            
+            labelWithGroupName.Text = "Group: " + Group.xmlDocument.SelectSingleNode("root/group[@id='" +
                 selectedLesson.SelectSingleNode("group").InnerText + "']/name").InnerText;
             labelWithGroupName.Location = new Point(labelWithTopics.Location.X + labelWithTopics.Size.Width + 10
                 , labelWithTopics.Location.Y);
-            labelWithGroupName.Anchor = AnchorStyles.Left | AnchorStyles.Top;
-            labelWithGroupName.AutoSize = true;
-            this.Controls.Add(labelWithGroupName);
 
-            TableLayoutPanel tableWithLessonData = new TableLayoutPanel();
-            tableWithLessonData.Name = "tableWithLessonData";
-            tableWithLessonData.ColumnCount = 3;
-            tableWithLessonData.RowCount = 1;
+            TableLayoutPanel tableWithLessonData = new TableLayoutPanel() {
+                Name = "tableWithLessonData",
+                ColumnCount = 3,
+                RowCount = 1,
+                CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
+                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Top,
+                Location = new Point(this.LabelSelectDate.Location.X, labelWithSubjectName.Location.Y +
+                    labelWithSubjectName.Size.Height + 10)
+            };
+            tableWithLessonData.Size = new Size(this.ClientRectangle.Width - labelWithSubjectName.Location.X * 2,
+                this.ClientRectangle.Height - tableWithLessonData.Location.Y - tableWithLessonData.Location.X);
+
             tableWithLessonData.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20f));
             tableWithLessonData.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15f));
             tableWithLessonData.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65f));
@@ -105,17 +87,10 @@ namespace FirstProgram
             tableWithLessonData.Controls.Add(new Label() { Text = "Pupil", AutoSize = true, TextAlign = ContentAlignment.MiddleCenter, Dock = DockStyle.Fill }, 0, 0);
             tableWithLessonData.Controls.Add(new Label() { Text = "Presence", AutoSize = true, TextAlign = ContentAlignment.MiddleCenter, Dock = DockStyle.Fill }, 1, 0);
             tableWithLessonData.Controls.Add(new Label() { Text = "Marks", AutoSize = true, TextAlign = ContentAlignment.MiddleCenter, Dock = DockStyle.Fill }, 2, 0);
-            tableWithLessonData.Location = new Point(this.LabelSelectDate.Location.X,
-                labelWithSubjectName.Location.Y + labelWithSubjectName.Size.Height + 10);
-            tableWithLessonData.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-            tableWithLessonData.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Top;
-            //tableWithLessonData.Width = this.ClientRectangle.Width - labelWithSubjectName.Location.X * 2;
-            tableWithLessonData.Size = new Size(this.ClientRectangle.Width - labelWithSubjectName.Location.X * 2,
-                this.ClientRectangle.Height - tableWithLessonData.Location.Y - tableWithLessonData.Location.X);
 
             // add pupils
 
-            XmlNode pupilIds = groupsDocument.SelectSingleNode("root/group[@id='" +
+            XmlNode pupilIds = Group.xmlDocument.SelectSingleNode("root/group[@id='" +
                 selectedLesson.SelectSingleNode("group").InnerText + "']/pupils");
             int amountOfPupils = pupilIds.ChildNodes.Count;
 
@@ -125,7 +100,7 @@ namespace FirstProgram
                 tableWithLessonData.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / amountOfPupils));
 
                 Label labelWithName = new Label() { AutoSize = true, TextAlign = ContentAlignment.MiddleCenter, Dock = DockStyle.Fill };
-                XmlNode pupil = pupilsDocument.SelectSingleNode("root/pupil[@id='" + pupilId.InnerText + "']");
+                XmlNode pupil = Pupil.xmlDocument.SelectSingleNode("root/pupil[@id='" + pupilId.InnerText + "']");
                 labelWithName.Text = pupil.SelectSingleNode("name").InnerText +
                     " " + pupil.SelectSingleNode("surname").InnerText;
                 tableWithLessonData.Controls.Add(labelWithName, 0, tableWithLessonData.RowCount - 1);

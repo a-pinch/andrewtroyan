@@ -30,6 +30,9 @@
         {
             this.LabelSelectDate = new System.Windows.Forms.Label();
             this.comboBoxWithGivenLessonsDates = new System.Windows.Forms.ComboBox();
+            this.labelWithGroupName = new System.Windows.Forms.Label();
+            this.labelWithSubjectName = new System.Windows.Forms.Label();
+            this.labelWithTopics = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // LabelSelectDate
@@ -47,14 +50,44 @@
             this.comboBoxWithGivenLessonsDates.Location = new System.Drawing.Point(82, 16);
             this.comboBoxWithGivenLessonsDates.Name = "comboBoxWithGivenLessonsDates";
             this.comboBoxWithGivenLessonsDates.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxWithGivenLessonsDates.TabIndex = 3;
+            this.comboBoxWithGivenLessonsDates.TabIndex = 1;
             this.comboBoxWithGivenLessonsDates.SelectedIndexChanged += new System.EventHandler(this.comboBoxWithGivenLessonsDates_SelectedIndexChanged);
+            // 
+            // labelWithGroupName
+            // 
+            this.labelWithGroupName.AutoSize = true;
+            this.labelWithGroupName.Location = new System.Drawing.Point(203, 52);
+            this.labelWithGroupName.Name = "labelWithGroupName";
+            this.labelWithGroupName.Size = new System.Drawing.Size(39, 13);
+            this.labelWithGroupName.TabIndex = 4;
+            this.labelWithGroupName.Text = "Group:";
+            // 
+            // labelWithSubjectName
+            // 
+            this.labelWithSubjectName.AutoSize = true;
+            this.labelWithSubjectName.Location = new System.Drawing.Point(12, 52);
+            this.labelWithSubjectName.Name = "labelWithSubjectName";
+            this.labelWithSubjectName.Size = new System.Drawing.Size(46, 13);
+            this.labelWithSubjectName.TabIndex = 2;
+            this.labelWithSubjectName.Text = "Subject:";
+            // 
+            // labelWithTopics
+            // 
+            this.labelWithTopics.AutoSize = true;
+            this.labelWithTopics.Location = new System.Drawing.Point(105, 52);
+            this.labelWithTopics.Name = "labelWithTopics";
+            this.labelWithTopics.Size = new System.Drawing.Size(48, 13);
+            this.labelWithTopics.TabIndex = 3;
+            this.labelWithTopics.Text = "Topic(s):";
             // 
             // WatchGivenLessonsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(719, 309);
+            this.Controls.Add(this.labelWithTopics);
+            this.Controls.Add(this.labelWithSubjectName);
+            this.Controls.Add(this.labelWithGroupName);
             this.Controls.Add(this.comboBoxWithGivenLessonsDates);
             this.Controls.Add(this.LabelSelectDate);
             this.Name = "WatchGivenLessonsForm";
@@ -69,5 +102,8 @@
 
         private System.Windows.Forms.Label LabelSelectDate;
         private System.Windows.Forms.ComboBox comboBoxWithGivenLessonsDates;
+        private System.Windows.Forms.Label labelWithGroupName;
+        private System.Windows.Forms.Label labelWithSubjectName;
+        private System.Windows.Forms.Label labelWithTopics;
     }
 }
