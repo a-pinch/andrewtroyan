@@ -66,5 +66,10 @@ namespace FirstProgram
         {
             new WatchGivenLessonsForm(xmlDocument, relativeTeacher).ShowDialog();
         }
+
+        private void buttonStartNewLesson_Click(object sender, EventArgs e)
+        {
+            new StartLessonForm(xmlDocument, relativeTeacher).ShowDialog();
+        }
     }
 }

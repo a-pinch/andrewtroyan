@@ -14,5 +14,7 @@ namespace FirstProgram
         public static string pupilsLocation = "..\\..\\Data\\pupils.xml";
         public static string groupsLocation = "..\\..\\Data\\groups.xml";
         public static string scheduleLocation = "..\\..\\Data\\schedule.xml";
+
+        public static string[] time = { "09:00", "10:30", "12:00", "13:30", "15:00", "16:30", "18:00" };
     }
 }

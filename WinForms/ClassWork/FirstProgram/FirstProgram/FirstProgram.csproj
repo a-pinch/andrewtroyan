@@ -63,15 +63,15 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GivenLessonInfo.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GivenLessonInfo.Designer.cs">
-      <DependentUpon>GivenLessonInfo.cs</DependentUpon>
-    </Compile>
     <Compile Include="Group.cs" />
     <Compile Include="Human.cs" />
     <Compile Include="Lesson.cs" />
+    <Compile Include="LessonInProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LessonInProgressForm.Designer.cs">
+      <DependentUpon>LessonInProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mark.cs" />
     <Compile Include="NewUserForm.cs">
       <SubType>Form</SubType>
@@ -82,6 +82,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Pupil.cs" />
+    <Compile Include="StartLessonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartLessonForm.Designer.cs">
+      <DependentUpon>StartLessonForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subject.cs" />
     <Compile Include="Teacher.cs" />
     <Compile Include="WatchGivenLessonsForm.cs">
@@ -99,8 +105,8 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GivenLessonInfo.resx">
-      <DependentUpon>GivenLessonInfo.cs</DependentUpon>
+    <EmbeddedResource Include="LessonInProgressForm.resx">
+      <DependentUpon>LessonInProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewUserForm.resx">
       <DependentUpon>NewUserForm.cs</DependentUpon>
@@ -114,6 +120,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="StartLessonForm.resx">
+      <DependentUpon>StartLessonForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WatchGivenLessonsForm.resx">
       <DependentUpon>WatchGivenLessonsForm.cs</DependentUpon>
     </EmbeddedResource>

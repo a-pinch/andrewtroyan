@@ -66,6 +66,7 @@
             this.buttonStartNewLesson.TabIndex = 1;
             this.buttonStartNewLesson.Text = "Start new lesson";
             this.buttonStartNewLesson.UseVisualStyleBackColor = true;
+            this.buttonStartNewLesson.Click += new System.EventHandler(this.buttonStartNewLesson_Click);
             // 
             // labelDate
             // 

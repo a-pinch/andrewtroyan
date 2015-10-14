@@ -42,7 +42,7 @@
             this.textBoxForLogin.Location = new System.Drawing.Point(93, 40);
             this.textBoxForLogin.Name = "textBoxForLogin";
             this.textBoxForLogin.Size = new System.Drawing.Size(175, 20);
-            this.textBoxForLogin.TabIndex = 1;
+            this.textBoxForLogin.TabIndex = 0;
             // 
             // textBoxForPassword
             // 
@@ -50,8 +50,9 @@
             this.textBoxForPassword.Location = new System.Drawing.Point(93, 78);
             this.textBoxForPassword.Name = "textBoxForPassword";
             this.textBoxForPassword.Size = new System.Drawing.Size(175, 20);
-            this.textBoxForPassword.TabIndex = 2;
+            this.textBoxForPassword.TabIndex = 1;
             this.textBoxForPassword.UseSystemPasswordChar = true;
+            this.textBoxForPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxForPassword_KeyDown);
             // 
             // labelLogin
             // 
@@ -79,7 +80,7 @@
             this.buttonNewUser.Location = new System.Drawing.Point(51, 120);
             this.buttonNewUser.Name = "buttonNewUser";
             this.buttonNewUser.Size = new System.Drawing.Size(75, 23);
-            this.buttonNewUser.TabIndex = 5;
+            this.buttonNewUser.TabIndex = 2;
             this.buttonNewUser.Text = "New user";
             this.buttonNewUser.UseVisualStyleBackColor = true;
             this.buttonNewUser.Click += new System.EventHandler(this.buttonNewUser_Click);
@@ -90,7 +91,7 @@
             this.buttonEnter.Location = new System.Drawing.Point(153, 120);
             this.buttonEnter.Name = "buttonEnter";
             this.buttonEnter.Size = new System.Drawing.Size(75, 23);
-            this.buttonEnter.TabIndex = 6;
+            this.buttonEnter.TabIndex = 3;
             this.buttonEnter.Text = "Enter";
             this.buttonEnter.UseVisualStyleBackColor = true;
             this.buttonEnter.Click += new System.EventHandler(this.buttonEnter_Click);

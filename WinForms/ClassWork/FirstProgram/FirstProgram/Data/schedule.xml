@@ -2,7 +2,7 @@
 <root>
 	<scheduleDay>
 		<lesson>
-			<date>2015-10-13</date>
+			<date>14.10.2015</date>
 			<time>09:00</time>
 			<teacher>0</teacher>
 			<group>0</group>
@@ -12,7 +12,7 @@
 			</topics>
 		</lesson>
 		<lesson>
-			<date>2015-10-13</date>
+			<date>14.10.2015</date>
 			<time>10:30</time>
 			<teacher>0</teacher>
 			<group>0</group>
@@ -21,5 +21,5 @@
 				<topic>Attributes</topic>
 			</topics>
 		</lesson>
-	</schedueDay>
+	</scheduleDay>
 </root>

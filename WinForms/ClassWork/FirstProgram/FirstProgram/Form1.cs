@@ -61,5 +61,13 @@ namespace FirstProgram
         {
             new NewUserForm().ShowDialog();
         }
+
+        private void textBoxForPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 13)
+            {
+                this.buttonEnter_Click(null, null);
+            }  
+        }
     }
 }
