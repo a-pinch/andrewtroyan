@@ -108,7 +108,7 @@ namespace FirstProgram
             tableWithLessonData.Location = new Point(this.LabelSelectDate.Location.X,
                 labelWithSubjectName.Location.Y + labelWithSubjectName.Size.Height + 10);
             tableWithLessonData.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-            tableWithLessonData.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+            tableWithLessonData.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Top;
             //tableWithLessonData.Width = this.ClientRectangle.Width - labelWithSubjectName.Location.X * 2;
             tableWithLessonData.Size = new Size(this.ClientRectangle.Width - labelWithSubjectName.Location.X * 2,
                 this.ClientRectangle.Height - tableWithLessonData.Location.Y - tableWithLessonData.Location.X);
