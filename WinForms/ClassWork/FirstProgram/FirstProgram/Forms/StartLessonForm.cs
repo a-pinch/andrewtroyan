@@ -90,7 +90,7 @@ namespace FirstProgram
 
         private void buttonStartLesson_Click(object sender, EventArgs e)
         {
-            new LessonInProgressForm(relativeTeacher, necessaryLesson, this.textBoxWithTopicNames.Text).Show();
+            new LessonInProgressForm(relativeTeacher, necessaryLesson, this.textBoxWithTopicNames.Text).ShowDialog();
         }
 
         private void dateTimePickerForLesson_ValueChanged(object sender, EventArgs e)
