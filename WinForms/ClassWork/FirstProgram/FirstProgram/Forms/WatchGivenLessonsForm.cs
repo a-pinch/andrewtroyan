@@ -68,6 +68,7 @@ namespace FirstProgram
             labelWithGroupName.Location = new Point(labelWithTopics.Location.X + labelWithTopics.Size.Width + 10
                 , labelWithTopics.Location.Y);
 
+            //DataGridView
             TableLayoutPanel tableWithLessonData = new TableLayoutPanel() {
                 Name = "tableWithLessonData",
                 ColumnCount = 3,

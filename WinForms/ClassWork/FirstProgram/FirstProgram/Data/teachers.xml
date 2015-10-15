@@ -12,4 +12,10 @@
     <login>user</login>
     <password>-1152142086</password>
   </teacher>
+  <teacher id="2">
+    <name>test</name>
+    <surname>test</surname>
+    <login>test</login>
+    <password>-354185609</password>
+  </teacher>
 </root>

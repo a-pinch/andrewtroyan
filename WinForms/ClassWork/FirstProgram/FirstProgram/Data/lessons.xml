@@ -7,7 +7,7 @@
     <topics>
       <topic>Serialization</topic>
     </topics>
-    <teacher>0</teacher>
+    <teacher>2</teacher>
     <group>0</group>
     <absent>
       <pupil>0</pupil>
@@ -47,7 +47,7 @@
     <topics>
       <topic>XML</topic>
     </topics>
-    <teacher>0</teacher>
+    <teacher>2</teacher>
     <group>0</group>
     <absent />
     <marks>
